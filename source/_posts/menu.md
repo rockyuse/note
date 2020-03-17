@@ -1,5 +1,4 @@
 * [Home](/note)
-* [Timeline](/note/timeline)
 
 ## OSDI
 
@@ -42,8 +41,6 @@
   - [Logistic Regression](/note/ml/supervised/logistic-regression)
 - Deep Learning
   - [Backpropagation](/note/ml/deep/backpropagation)
-- Reinforcement Learning
-  - [DQN](/note/ml/reinforcement/dqn)
 
 ## Network Services Adm.
 
