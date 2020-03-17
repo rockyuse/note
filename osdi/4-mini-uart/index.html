@@ -11,7 +11,7 @@
 
     <title>
         
-          osdi/4-mini-uart - kaiiiz/note
+          Mini UART - kaiiiz/note
         
     </title>
 
@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="book-menu">
   <ul>
 <li><a href="/note">Home</a></li>
-<li><a href="/note/timeline">Timeline</a></li>
 </ul>
 <h2 id="osdi">OSDI</h2>
 <ul>
@@ -128,11 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
 <li>Deep Learning
 <ul>
 <li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
-</ul>
-</li>
-<li>Reinforcement Learning
-<ul>
-<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
 </ul>
 </li>
 </ul>
@@ -192,7 +186,98 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         <div class="book-content">
           <div class="book-post">
-  
+  <h1 id="mini-uart">Mini UART</h1>
+<blockquote>
+<p><a href="https://github.com/kaiiiz/osdi2020/tree/bfc4ff176fd5051cff465d7bb22e30f3487a60e5" target="_blank" rel="noopener">https://github.com/kaiiiz/osdi2020/tree/bfc4ff176fd5051cff465d7bb22e30f3487a60e5</a></p>
+</blockquote>
+<p>Init:</p>
+<ol>
+<li>Set <code>AUXENB</code> register to enable mini UART. Then mini UART register can be accessed.</li>
+<li>Set <code>AUX_MU_CNTL_REG</code> to 0. Disable transmitter and receiver during configuration.</li>
+<li>Set <code>AUX_MU_IER_REG</code> to 0. Disable interrupt because currently you don’t need interrupt.</li>
+<li>Set <code>AUX_MU_LCR_REG</code> to 3. Set the data size to 8 bit.</li>
+<li>Set <code>AUX_MU_MCR_REG</code> to 0. Don’t need auto flow control.</li>
+<li>Set <code>AUX_MU_BAUD</code> to 270. Set baud rate to 115200Set</li>
+<li>AUX_MU_IIR_REG to 6. No FIFO.</li>
+<li>Set <code>AUX_MU_CNTL_REG</code> to 3. Enable the transmitter and receiver.</li>
+</ol>
+<p>Read:</p>
+<ol>
+<li>Check <code>AUX_MU_LSR_REG</code>’s data ready field.</li>
+<li>If set, read from <code>AUX_MU_IO_REG</code></li>
+</ol>
+<p>Write:</p>
+<ol>
+<li>Check <code>AUX_MU_LSR_REG</code>’s Transmitter empty field.</li>
+<li>If set, write to <code>AUX_MU_IO_REG</code></li>
+</ol>
+<h2 id="uart-c">uart.c</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"aux.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"gpio.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">uart_init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* Initialize UART */</span></span><br><span class="line">    *AUX_ENABLES |= <span class="number">1</span>;   <span class="comment">// Enable mini UART</span></span><br><span class="line">    *AUX_MU_CNTL = <span class="number">0</span>;    <span class="comment">// Disable TX, RX during configuration</span></span><br><span class="line">    *AUX_MU_IER = <span class="number">0</span>;     <span class="comment">// Disable interrupt</span></span><br><span class="line">    *AUX_MU_LCR = <span class="number">3</span>;     <span class="comment">// Set the data size to 8 bit</span></span><br><span class="line">    *AUX_MU_MCR = <span class="number">0</span>;     <span class="comment">// Don't need auto flow control</span></span><br><span class="line">    *AUX_MU_BAUD = <span class="number">270</span>;  <span class="comment">// Set baud rate to 115200</span></span><br><span class="line">    *AUX_MU_IIR = <span class="number">6</span>;     <span class="comment">// No FIFO</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Map UART to GPIO Pins */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. Change GPIO 14, 15 to alternate function</span></span><br><span class="line">    <span class="keyword">register</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> r = *GPFSEL1;</span><br><span class="line">    r &amp;= ~((<span class="number">7</span> &lt;&lt; <span class="number">12</span>) | (<span class="number">7</span> &lt;&lt; <span class="number">15</span>));  <span class="comment">// Reset GPIO 14, 15</span></span><br><span class="line">    r |= (<span class="number">2</span> &lt;&lt; <span class="number">12</span>) | (<span class="number">2</span> &lt;&lt; <span class="number">15</span>);     <span class="comment">// Set ALT5</span></span><br><span class="line">    *GPFSEL1 = r;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. Disable GPIO pull up/down (Because these GPIO pins use alternate functions, not basic input-output)</span></span><br><span class="line">    <span class="comment">// Set control signal to disable</span></span><br><span class="line">    *GPPUD = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// Wait 150 cycles</span></span><br><span class="line">    r = <span class="number">150</span>;</span><br><span class="line">    <span class="keyword">while</span> (r--) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">"nop"</span>)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Clock the control signal into the GPIO pads</span></span><br><span class="line">    *GPPUDCLK0 = (<span class="number">1</span> &lt;&lt; <span class="number">14</span>) | (<span class="number">1</span> &lt;&lt; <span class="number">15</span>);</span><br><span class="line">    <span class="comment">// Wait 150 cycles</span></span><br><span class="line">    r = <span class="number">150</span>;</span><br><span class="line">    <span class="keyword">while</span> (r--) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">"nop"</span>)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Remove the clock</span></span><br><span class="line">    *GPPUDCLK0 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. Enable TX, RX</span></span><br><span class="line">    *AUX_MU_CNTL = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">uart_read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Check data ready field</span></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">"nop"</span>)</span></span>;</span><br><span class="line">    &#125; <span class="keyword">while</span> (!(*AUX_MU_LSR &amp; <span class="number">0x01</span>));</span><br><span class="line">    <span class="comment">// Read</span></span><br><span class="line">    <span class="keyword">char</span> r = (<span class="keyword">char</span>)(*AUX_MU_IO);</span><br><span class="line">    <span class="comment">// Convert carrige return to newline</span></span><br><span class="line">    <span class="keyword">return</span> r == <span class="string">'\r'</span> ? <span class="string">'\n'</span> : r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">uart_write</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Check transmitter idle field</span></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">"nop"</span>)</span></span>;</span><br><span class="line">    &#125; <span class="keyword">while</span> (!(*AUX_MU_LSR &amp; <span class="number">0x20</span>));</span><br><span class="line">    <span class="comment">// Write</span></span><br><span class="line">    *AUX_MU_IO = c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="main-c">main.c</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"uart.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    uart_init();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        uart_write(uart_read());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="some-notes">Some Notes</h2>
+<h3 id="gpio-documents">GPIO Documents</h3>
+<h4 id="gpfseln">GPFSELn</h4>
+<blockquote>
+<p>GPIO Function Select Registers</p>
+</blockquote>
+<p>The function select registers are used to define the operation of the general-purpose I/O<br>
+pins.</p>
+<p><img src="https://i.imgur.com/Mslcbv0.png" alt=""></p>
+<h4 id="gppud">GPPUD</h4>
+<blockquote>
+<p>GPIO Pull-up/down Register</p>
+</blockquote>
+<p>The GPIO Pull-up/down Register controls the actuation of the internal pull-up/down control line to ALL the GPIO pins. This register must be used in conjunction with the 2 <code>GPPUDCLKn</code> registers.</p>
+<p><img src="https://i.imgur.com/sEHVnUi.png" alt=""></p>
+<h4 id="gppudclkn">GPPUDCLKn</h4>
+<blockquote>
+<p>GPIO Pull-up/down Clock Register</p>
+</blockquote>
+<p>The GPIO Pull-up/down Clock Registers control the actuation of internal pull-downs on the respective GPIO pins.</p>
+<p>These registers must be used in conjunction with the <code>GPPUD</code> register to effect GPIO Pull-up/down changes. The following sequence of events is required:</p>
+<ol>
+<li>Write to <code>GPPUD</code> to set the required control signal (i.e. Pull-up or Pull-Down or neither to remove the current Pull-up/down)</li>
+<li>Wait 150 cycles – this provides the required set-up time for the control signal</li>
+<li>Write to <code>GPPUDCLK0/1</code> to clock the control signal into the GPIO pads you wish to modify – NOTE only the pads which receive a clock will be modified, all others will retain their previous state.</li>
+<li>Wait 150 cycles – this provides the required hold time for the control signal</li>
+<li>Write to <code>GPPUD</code> to remove the control signal</li>
+<li>Write to <code>GPPUDCLK0/1</code> to remove the clock</li>
+</ol>
+<p><img src="https://i.imgur.com/KpM9XGr.png" alt=""></p>
+<h3 id="aux-documents">AUX Documents</h3>
+<h4 id="aux-mu-cntl">AUX_MU_CNTL</h4>
+<p>The <code>AUX_MU_CNTL_REG</code> provides access to some extra useful and nice features not found on a normal 16550 UART</p>
+<p><img src="https://i.imgur.com/7grZUS1.png" alt=""></p>
+<p><img src="https://i.imgur.com/CdLJnTE.png" alt=""></p>
+<h4 id="aux-mu-ier">AUX_MU_IER</h4>
+<p>The <code>AUX_MU_IIR_REG</code> register shows the interrupt status. It also has two FIFO enable status bits and (when writing) FIFO clear bits.</p>
+<p><img src="https://i.imgur.com/jvNQjht.png" alt=""></p>
+<h4 id="aux-mu-lcr">AUX_MU_LCR</h4>
+<p>The <code>AUX_MU_LCR_REG</code> register controls the line data format and gives access to the baudrate register</p>
+<p><img src="https://i.imgur.com/Uv8VN7I.png" alt=""></p>
+<h4 id="aux-mu-mcr">AUX_MU_MCR</h4>
+<p>The <code>AUX_MU_MCR_REG</code> register controls the ‘modem’ signals</p>
+<p><img src="https://i.imgur.com/PRhfreT.png" alt=""></p>
+<h4 id="aux-mu-baud">AUX_MU_BAUD</h4>
+<p>The <code>AUX_MU_BAUD</code> register allows direct access to the 16-bit wide baudrate counter</p>
+<p><img src="https://i.imgur.com/4JMb3MJ.png" alt=""></p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mtext>baud rate</mtext><mo>=</mo><mfrac><mtext>system clock freq</mtext><mrow><mn>8</mn><mo>×</mo><mtext>AUX_MU_BAUD</mtext><mo>+</mo><mn>1</mn></mrow></mfrac></mrow><annotation encoding="application/x-tex">\text{baud rate} = \frac{\text{system clock freq}}{8 \times \text{AUX\_MU\_BAUD} + 1}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord text"><span class="mord">baud rate</span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.3674399999999998em;vertical-align:-0.996em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714399999999998em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">8</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord text"><span class="mord">AUX_MU_BAUD</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord">system clock freq</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.996em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h4 id="aux-mu-iir">AUX_MU_IIR</h4>
+<p>The <code>AUX_MU_IER_REG</code> register is primary used to enable interrupts<br>
+If the DLAB bit in the line control register is set this register gives access to the MS 8 bits of the baud rate</p>
+<p><img src="https://i.imgur.com/vqVnBMx.png" alt=""></p>
+<h4 id="aux-mu-lsr">AUX_MU_LSR</h4>
+<p>The <code>AUX_MU_LSR_REG</code> register shows the data status</p>
+<p><img src="https://i.imgur.com/Sxrxvr6.png" alt=""></p>
+<h4 id="aux-mu-io">AUX_MU_IO</h4>
+<p>The <code>AUX_MU_IO_REG</code> register is primary used to write data to and read data from the UART FIFOs</p>
+<p>If the DLAB bit in the line control register is set this register gives access to the LS 8 bits of the baud rate</p>
+<p><img src="https://i.imgur.com/DfSTI6b.png" alt=""></p>
+<h2 id="reference">Reference</h2>
+<p><a href="https://cs140e.sergio.bz/docs/BCM2837-ARM-Peripherals.pdf" target="_blank" rel="noopener">BCM2835 ARM Peripher</a></p>
+
 </div>
 
 
@@ -241,6 +326,15 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
   </div>
 
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/OSDI/" rel="tag">#OSDI</a>
+    </div>
+    
   
 
   <div class="divider"></div>

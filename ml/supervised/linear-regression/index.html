@@ -11,7 +11,7 @@
 
     <title>
         
-          ml/supervised/linear-regression - kaiiiz/note
+          Linear Regression - kaiiiz/note
         
     </title>
 
@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="book-menu">
   <ul>
 <li><a href="/note">Home</a></li>
-<li><a href="/note/timeline">Timeline</a></li>
 </ul>
 <h2 id="osdi">OSDI</h2>
 <ul>
@@ -128,11 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
 <li>Deep Learning
 <ul>
 <li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
-</ul>
-</li>
-<li>Reinforcement Learning
-<ul>
-<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
 </ul>
 </li>
 </ul>
@@ -192,7 +186,31 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         <div class="book-content">
           <div class="book-post">
-  
+  <h1 id="linear-regression">Linear Regression</h1>
+<p><a href="/note/ml/supervised/linear-regression/linear_data.txt">linear_data.txt</a></p>
+<h2 id="反矩陣">反矩陣</h2>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mat_inv</span><span class="params">(mat)</span>:</span></span><br><span class="line">    n = mat.shape[<span class="number">0</span>]</span><br><span class="line">    m = mat.shape[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> n != m:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    iden = np.identity(n)</span><br><span class="line">    argu = np.concatenate((mat, iden), axis=<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># partial pivoting</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, n):</span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> reversed(range(i, n)):</span><br><span class="line">            <span class="keyword">if</span> (argu[row][i - <span class="number">1</span>] &gt; argu[row - <span class="number">1</span>][i - <span class="number">1</span>]):</span><br><span class="line">                argu[[row - <span class="number">1</span>, row]] = argu[[row, row - <span class="number">1</span>]]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># reduce to diagonal  matrix</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n): <span class="comment"># iterate all diagonal idx</span></span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">if</span> row != i:</span><br><span class="line">                k = argu[row][i] / argu[i][i]</span><br><span class="line">                argu[row] -= argu[i] * k</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># reducing to unit matrix</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        argu[i] /= argu[i][i]</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> argu[:, n:n*<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+<ol>
+<li>建立增廣矩陣</li>
+<li>透過交換 rows 讓 pivot 不要為 0</li>
+<li>將所有非對角的 elements 減為 0 (變成對角矩陣)</li>
+<li>將對角矩陣化為單位矩陣</li>
+<li>取增廣矩陣右方當作反矩陣</li>
+</ol>
+<h2 id="主程式">主程式</h2>
+<p>讀入資料</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x = np.array([] ,dtype=float)</span><br><span class="line">y = np.array([] ,dtype=float)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'data/linear_data.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">        xy = line.strip().split(<span class="string">','</span>)</span><br><span class="line">        x = np.append(x, float(xy[<span class="number">0</span>]))</span><br><span class="line">        y = np.append(y, float(xy[<span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+<p>定義 dimension，並建立矩陣</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">N &#x3D; 3</span><br><span class="line">X_T &#x3D; np.array([x ** i for i in range(N)])</span><br><span class="line">X &#x3D; X_T.transpose()</span><br></pre></td></tr></table></figure>
+<p>beta 為係數，可以透過線性代數求解：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">beta = mat_inv(X_T.dot(X)).dot(X_T).dot(y)</span><br></pre></td></tr></table></figure>
+<p>推得係數後，可以得到 fitting line 與 error：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ey = np.zeros(len(x))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">    ey += pow(x, i) * beta[i]</span><br><span class="line"></span><br><span class="line">beta_str = [<span class="string">"&#123;&#125; X^&#123;&#125;"</span>.format(i, idx) <span class="keyword">for</span> idx, i <span class="keyword">in</span> enumerate(beta)]</span><br><span class="line">fitting_line = <span class="string">" + "</span>.join(beta_str)</span><br><span class="line">error = sum((y - ey) ** <span class="number">2</span>)</span><br><span class="line">print(<span class="string">"Fitting line:"</span>, fitting_line)</span><br><span class="line">print(<span class="string">"Total error:"</span>, error)</span><br><span class="line"></span><br><span class="line">plt.scatter(x, y, color=<span class="string">'red'</span>)</span><br><span class="line">plt.plot(x, ey)</span><br></pre></td></tr></table></figure>
+<p>當 N = 2</p>
+<p><img src="https://i.imgur.com/hTpsDof.png" alt=""></p>
+<p>當 N = 3</p>
+<p><img src="https://i.imgur.com/b3pUcPf.png" alt=""></p>
+
 </div>
 
 
@@ -241,6 +259,15 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
   </div>
 
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/ML/" rel="tag">#ML</a>
+    </div>
+    
   
 
   <div class="divider"></div>

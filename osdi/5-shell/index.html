@@ -11,7 +11,7 @@
 
     <title>
         
-          osdi/5-shell - kaiiiz/note
+          Simple Shell - kaiiiz/note
         
     </title>
 
@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="book-menu">
   <ul>
 <li><a href="/note">Home</a></li>
-<li><a href="/note/timeline">Timeline</a></li>
 </ul>
 <h2 id="osdi">OSDI</h2>
 <ul>
@@ -128,11 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
 <li>Deep Learning
 <ul>
 <li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
-</ul>
-</li>
-<li>Reinforcement Learning
-<ul>
-<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
 </ul>
 </li>
 </ul>
@@ -192,7 +186,34 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         <div class="book-content">
           <div class="book-post">
-  
+  <h1 id="simple-shell">Simple Shell</h1>
+<blockquote>
+<p><a href="https://github.com/kaiiiz/osdi2020/tree/cda1a48b90bda0ac98a9d5cd3a711ae94c14bd63" target="_blank" rel="noopener">https://github.com/kaiiiz/osdi2020/tree/cda1a48b90bda0ac98a9d5cd3a711ae94c14bd63</a></p>
+</blockquote>
+<p>After setting up UART, you should implement a simple shell to let rpi3 interact with the host computer. The shell should be able to execute the following commands.</p>
+<ul>
+<li>help</li>
+<li>hello</li>
+<li>timestamp</li>
+<li>reboot</li>
+</ul>
+<h2 id="main-c">main.c</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"shell.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CMD_LEN 128</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> shell_status &#123;</span><br><span class="line">    Read,</span><br><span class="line">    Parse</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    shell_init();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">enum</span> shell_status status = Read;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">char</span> cmd[CMD_LEN];</span><br><span class="line">        <span class="keyword">switch</span> (status) &#123;</span><br><span class="line">            <span class="keyword">case</span> Read:</span><br><span class="line">                shell_input(cmd);</span><br><span class="line">                status = Parse;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> Parse:</span><br><span class="line">                shell_controller(cmd);</span><br><span class="line">                status = Read;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="some-notes">Some Notes</h2>
+<h3 id="cntfrq-el0">CNTFRQ_EL0</h3>
+<p>This register is provided so that software can discover the frequency of the system counter. It must be programmed with this value as part of system initialization. The value of the register is not interpreted by hardware.</p>
+<blockquote>
+<p><a href="https://developer.arm.com/docs/ddi0595/c/aarch64-system-registers/cntfrq_el0" target="_blank" rel="noopener">https://developer.arm.com/docs/ddi0595/c/aarch64-system-registers/cntfrq_el0</a></p>
+</blockquote>
+<h3 id="cntpct-el0">CNTPCT_EL0</h3>
+<p>Holds the 64-bit physical count value.</p>
+<blockquote>
+<p><a href="https://developer.arm.com/docs/ddi0595/b/aarch64-system-registers/cntpct_el0" target="_blank" rel="noopener">https://developer.arm.com/docs/ddi0595/b/aarch64-system-registers/cntpct_el0</a></p>
+</blockquote>
+<h3 id="gnu-inline-assembly">GNU Inline Assembly</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asm volatile (&quot;mrs %0, cntfrq_el0&quot; : &quot;&#x3D;r&quot;(f));</span><br></pre></td></tr></table></figure>
+<p><a href="http://wen00072.github.io/blog/2015/12/10/about-inline-asm/" target="_blank" rel="noopener">關於GNU Inline Assembly</a></p>
+
 </div>
 
 
@@ -241,6 +262,15 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
   </div>
 
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/OSDI/" rel="tag">#OSDI</a>
+    </div>
+    
   
 
   <div class="divider"></div>

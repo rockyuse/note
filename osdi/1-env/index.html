@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="book-menu">
   <ul>
 <li><a href="/note">Home</a></li>
-<li><a href="/note/timeline">Timeline</a></li>
 </ul>
 <h2 id="osdi">OSDI</h2>
 <ul>
@@ -128,11 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
 <li>Deep Learning
 <ul>
 <li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
-</ul>
-</li>
-<li>Reinforcement Learning
-<ul>
-<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
 </ul>
 </li>
 </ul>
@@ -193,6 +187,9 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="book-content">
           <div class="book-post">
   <h1 id="environment">Environment</h1>
+<blockquote>
+<p><a href="https://github.com/kaiiiz/osdi2020/tree/00083b91f1206ae29d88aa4e53240cad3dd46966" target="_blank" rel="noopener">https://github.com/kaiiiz/osdi2020/tree/00083b91f1206ae29d88aa4e53240cad3dd46966</a></p>
+</blockquote>
 <p>Development Environment:</p>
 <ul>
 <li>Arch Linux</li>
@@ -218,8 +215,6 @@ CACHE: L1:32KB, L2:512KB</p>
 <blockquote>
 <p>把 input files 的 <code>.text</code> 放到 output files 的 <code>.text</code> section，並將 output files 的 <code>.text</code> section 放在 <code>0x80000</code> 後</p>
 </blockquote>
-<h3 id="makefile">Makefile</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">TOOLCHAIN_PREFIX &#x3D; aarch64-linux-gnu-</span><br><span class="line">CC &#x3D; $(TOOLCHAIN_PREFIX)gcc</span><br><span class="line">LD &#x3D; $(TOOLCHAIN_PREFIX)ld</span><br><span class="line">OBJCPY &#x3D; $(TOOLCHAIN_PREFIX)objcopy</span><br><span class="line"></span><br><span class="line">CFLAGS &#x3D; -Wall</span><br><span class="line"></span><br><span class="line">.PHONY: all clean run</span><br><span class="line"></span><br><span class="line">all: kernel8.img clean</span><br><span class="line"></span><br><span class="line">main.o: main.s</span><br><span class="line">    $(CC) $(CFLAGS) -c main.s -o main.o</span><br><span class="line"></span><br><span class="line">kernel8.img: main.o</span><br><span class="line">    $(LD) -T linker.ld -o kernel8.elf main.o</span><br><span class="line">    $(OBJCPY) -O binary kernel8.elf kernel8.img</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm -f kernel8.elf *.o</span><br><span class="line"></span><br><span class="line">run:</span><br><span class="line">    qemu-system-aarch64 -M raspi3 -kernel kernel8.img -display none -d in_asm</span><br></pre></td></tr></table></figure>
 <h2 id="build-image">Build Image</h2>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
 <h2 id="run">Run</h2>

@@ -11,7 +11,7 @@
 
     <title>
         
-          ml/supervised/random-forest - kaiiiz/note
+          Random Forest - kaiiiz/note
         
     </title>
 
@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="book-menu">
   <ul>
 <li><a href="/note">Home</a></li>
-<li><a href="/note/timeline">Timeline</a></li>
 </ul>
 <h2 id="osdi">OSDI</h2>
 <ul>
@@ -128,11 +127,6 @@ document.addEventListener('DOMContentLoaded', function () {
 <li>Deep Learning
 <ul>
 <li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
-</ul>
-</li>
-<li>Reinforcement Learning
-<ul>
-<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
 </ul>
 </li>
 </ul>
@@ -192,7 +186,28 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         <div class="book-content">
           <div class="book-post">
-  <h1 id="random-forest">Random forest</h1>
+  <h1 id="random-forest">Random Forest</h1>
+<p>承接 <a href="/note/ml/supervised/decision-tree">Decision Tree</a></p>
+<h2 id="主程式">主程式</h2>
+<p>架構與 decision tree 相同，只有 model 的 instance 改為 RandomForest</p>
+<h2 id="data-preprocessing">Data Preprocessing</h2>
+<p>與 decision tree 完全相同</p>
+<h2 id="model">Model</h2>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> .decision_tree <span class="keyword">import</span> DecisionTree</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RandomForest</span><span class="params">()</span>:</span></span><br><span class="line">    forest = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, df, n_trees=<span class="number">5</span>, n_bootstrap=<span class="number">3000</span>, n_features=<span class="number">7</span>, max_depth=<span class="number">5</span>)</span>:</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n_trees):</span><br><span class="line">            df_bootstrapped = self.bootstrap(df, n_bootstrap)</span><br><span class="line">            tree = DecisionTree(df=df_bootstrapped,</span><br><span class="line">                                max_depth=max_depth, random_feature=n_features)</span><br><span class="line">            self.forest.append(tree)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bootstrap</span><span class="params">(self, df, n_bootstrap)</span>:</span></span><br><span class="line">        bootstrap_indices = np.random.randint(</span><br><span class="line">            low=<span class="number">0</span>, high=len(df), size=n_bootstrap)</span><br><span class="line">        df_bootstrapped = df.iloc[bootstrap_indices]</span><br><span class="line">        <span class="keyword">return</span> df_bootstrapped</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, entry)</span>:</span></span><br><span class="line">        predictions = []</span><br><span class="line">        <span class="keyword">for</span> tree <span class="keyword">in</span> self.forest:</span><br><span class="line">            prediction = tree.predict(entry)</span><br><span class="line">            predictions.append(prediction)</span><br><span class="line">        <span class="comment"># return most frequently elements in list</span></span><br><span class="line">        <span class="keyword">return</span> max(set(predictions), key=predictions.count)</span><br></pre></td></tr></table></figure>
+<p>建構式：</p>
+<ul>
+<li>建立 N 個 decision tree</li>
+<li>若有需要 bootstrap 則在 data 中 random 選出 n_bootstrap 筆資料</li>
+<li>把 tree append 到 forest 中</li>
+</ul>
+<p>predict:</p>
+<ul>
+<li>把 tree predict 的結果 append 到一個 list 中</li>
+<li>找出 list 中出現頻率最高的 element</li>
+</ul>
+<h2 id="result">Result</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1) Holdout validation with train&#x2F;test:7&#x2F;3</span><br><span class="line">        0      1</span><br><span class="line">0  4803.0  374.0</span><br><span class="line">1   716.0  945.0</span><br><span class="line">accuracy: 0.8405966656917228</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">2) K-fold cross-validation with K&#x3D;3</span><br><span class="line">-- fold 0</span><br><span class="line">        0      1</span><br><span class="line">0  5524.0  270.0</span><br><span class="line">1   854.0  949.0</span><br><span class="line">accuracy: 0.8520468606028696</span><br><span class="line">-- fold 1</span><br><span class="line">        0       1</span><br><span class="line">0  5362.0   349.0</span><br><span class="line">1   813.0  1073.0</span><br><span class="line">accuracy: 0.8470448861392655</span><br><span class="line">-- fold 2</span><br><span class="line">        0       1</span><br><span class="line">0  5455.0   304.0</span><br><span class="line">1   816.0  1022.0</span><br><span class="line">accuracy: 0.8525733842306173</span><br></pre></td></tr></table></figure>
 
 </div>
 
@@ -242,6 +257,15 @@ document.addEventListener('DOMContentLoaded', function () {
     </div>
   </div>
 
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/ML/" rel="tag">#ML</a>
+    </div>
+    
   
 
   <div class="divider"></div>

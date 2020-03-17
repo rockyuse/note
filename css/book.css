@@ -59,7 +59,7 @@ img {
     .off-canvas-content .book-content .book-post h6 {
       font-weight: bold;
       padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.8rem;
       border-bottom: 1px solid #ddd; }
     .off-canvas-content .book-content .book-post h2,
     .off-canvas-content .book-content .book-post h3,
@@ -80,11 +80,11 @@ img {
     .off-canvas-content .book-content .book-post h6 {
       font-size: 0.7rem; }
     .off-canvas-content .book-content .book-post p {
-      margin-bottom: 1rem; }
+      margin-bottom: 0.8rem; }
     .off-canvas-content .book-content .book-post hr {
       border: 0.5px solid #ddd;
       background-color: #ddd;
-      margin: 1rem 0; }
+      margin: 0.8rem 0; }
     .off-canvas-content .book-content .book-post .table-wrapper {
       max-width: 100%;
       margin: 1.25rem 0;
@@ -99,7 +99,7 @@ img {
     .off-canvas-content .book-content .book-post ul,
     .off-canvas-content .book-content .book-post ol {
       list-style-position: outside;
-      margin: 0 0 1rem 1.4rem; }
+      margin: 0.8rem 0 0.8rem 1.4rem; }
       .off-canvas-content .book-content .book-post ul ol,
       .off-canvas-content .book-content .book-post ol ol {
         margin-top: 0;
@@ -111,9 +111,6 @@ img {
       .off-canvas-content .book-content .book-post ul p,
       .off-canvas-content .book-content .book-post ol p {
         margin: 0; }
-    .off-canvas-content .book-content .book-post li {
-      margin-top: 0.4rem;
-      margin-bottom: 0.4rem; }
     .off-canvas-content .book-content .book-post blockquote {
       margin: 1.125rem 1.125rem 1.125rem 0;
       padding: 0.2rem 1rem; }
@@ -189,7 +186,7 @@ img {
       background: #f7f7f7;
       color: #4d4d4c;
       line-height: 1.14rem;
-      margin: 1rem auto 1rem; }
+      margin: 0.8rem auto 0.8rem; }
     .off-canvas-content .book-content .gutter {
       -moz-user-select: none;
       -ms-user-select: none;
