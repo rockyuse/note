@@ -5,13 +5,15 @@ tags: 'OSDI'
 
 # Basic Initialization
 
+> https://github.com/kaiiiz/osdi2020/tree/f42786b30764454936eb26c1d235c14863b3e7d3
+
 1. Let only one core proceed, and let others enter a busy loop.
 2. Initialize the BSS segment.
 3. Set the stack pointer to an appropriate position.
 
 ## start.s
 
-```armasm
+```asm
 .section ".text.boot"
 
 .global _start
@@ -82,45 +84,6 @@ __bss_size = (__bss_end - __bss_start) >> 3;
 
 > ALIGN: 對齊到數字的倍數
 
-## Makefile
-
-```mak
-TOOLCHAIN_PREFIX = aarch64-linux-gnu-
-CC = $(TOOLCHAIN_PREFIX)gcc
-LD = $(TOOLCHAIN_PREFIX)ld
-OBJCPY = $(TOOLCHAIN_PREFIX)objcopy
-
-SRCS = $(wildcard *.c)
-OBJS = $(SRCS:.c=.o)
-CFLAGS = -Wall
-
-.PHONY: all clean asm run debug
-
-all: kernel8.img clean
-
-start.o: start.s
-	$(CC) $(CFLAGS) -c start.s -o start.o
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-kernel8.img: start.o $(OBJS)
-	$(LD) start.o $(OBJS) -T linker.ld -o kernel8.elf
-	$(OBJCPY) -O binary kernel8.elf kernel8.img
-
-clean:
-	rm -f *.o
-
-asm:
-	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -display none -d in_asm
-
-run:
-	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -display none -serial null -serial mon:stdio
-
-debug: all
-	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -display none -S -s
-```
-
 ## Some Notes
 
 ### gdb
@@ -135,7 +98,7 @@ Switch thread
   3    Thread 1.3 (CPU#2 [running]) 0x0000000000000300 in ?? ()
   4    Thread 1.4 (CPU#3 [running]) 0x0000000000000300 in ?? ()
 
-> thread {number}
+> thread {Id}
 ```
 
 Print program counter
@@ -156,12 +119,13 @@ Print program counter
 
 #### Local labels
 
-* http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html
+Ref: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html
 
 #### AArch64 identification registers
 
-* [ARM® Cortex®-A53 MPCore Processor Technical Reference Manual](http://infocenter.arm.com/help/topic/com.arm.doc.ddi0500d/DDI0500D_cortex_a53_r0p2_trm.pdf) - 4.2.1
-* https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH
+Ref: [ARM® Cortex®-A53 MPCore Processor Technical Reference Manual](http://infocenter.arm.com/help/topic/com.arm.doc.ddi0500d/DDI0500D_cortex_a53_r0p2_trm.pdf) - 4.2.1
+
+> https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH
 
 #### Registers in AArch64 state
 
@@ -173,7 +137,7 @@ Print program counter
     * 使用 `xzr/wzr` 來存取即是 zero register
     * 使用 `sp/wsp` 來存取即是 stack pointer
 
-http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/BABBGCAC.html
+Ref: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/BABBGCAC.html
 
 ### Linker Script
 
@@ -186,4 +150,3 @@ http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/BABBGCAC.ht
 [^1]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0489c/CIHGJHHH.html
 [^2]: https://sourceware.org/binutils/docs/ld/Input-Section-Keep.html#Input-Section-Keep
 [^3]: https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_21.html
-

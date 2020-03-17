@@ -5,6 +5,8 @@ tags: OSDI
 
 # Environment
 
+> https://github.com/kaiiiz/osdi2020/tree/00083b91f1206ae29d88aa4e53240cad3dd46966
+
 Development Environment:
 
 * Arch Linux
@@ -59,34 +61,6 @@ SECTIONS
 ```
 
 > 把 input files 的 `.text` 放到 output files 的 `.text` section，並將 output files 的 `.text` section 放在 `0x80000` 後
-
-### Makefile
-
-```
-TOOLCHAIN_PREFIX = aarch64-linux-gnu-
-CC = $(TOOLCHAIN_PREFIX)gcc
-LD = $(TOOLCHAIN_PREFIX)ld
-OBJCPY = $(TOOLCHAIN_PREFIX)objcopy
-
-CFLAGS = -Wall
-
-.PHONY: all clean run
-
-all: kernel8.img clean
-
-main.o: main.s
-    $(CC) $(CFLAGS) -c main.s -o main.o
-
-kernel8.img: main.o
-    $(LD) -T linker.ld -o kernel8.elf main.o
-    $(OBJCPY) -O binary kernel8.elf kernel8.img
-
-clean:
-    rm -f kernel8.elf *.o
-
-run:
-    qemu-system-aarch64 -M raspi3 -kernel kernel8.img -display none -d in_asm
-```
 
 ## Build Image
 
