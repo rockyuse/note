@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Point-to-Point Communication - MPI - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="point-to-point-communication">Point-to-Point Communication</h1>
+<p>The message envelope consists of the following information:</p>
+<ul>
+<li>The rank of the receiver</li>
+<li>The rank of the sender</li>
+<li>A tag
+<ul>
+<li>Distinguish messages from a single process</li>
+</ul>
+</li>
+<li>A communicator</li>
+</ul>
+<h2 id="mpi-send">MPI_Send</h2>
+<p>Blocking send</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Send</span><span class="params">(<span class="keyword">void</span>*          message,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">int</span>            count,</span></span></span><br><span class="line"><span class="function"><span class="params">             MPI_Datatype   datatype,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">int</span>            dest,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">int</span>            tag,</span></span></span><br><span class="line"><span class="function"><span class="params">             MPIComm        comm)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="mpi-recv">MPI_Recv</h2>
+<p>Blocking receive</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Recv</span><span class="params">(<span class="keyword">void</span>*          message,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">int</span>            count,</span></span></span><br><span class="line"><span class="function"><span class="params">             MPI_Datatype   datatype,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">int</span>            source,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">int</span>            tag,</span></span></span><br><span class="line"><span class="function"><span class="params">             MPI_Comm       comm,</span></span></span><br><span class="line"><span class="function"><span class="params">             MPI_Status*    status)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="mpi-data-types">MPI Data Types</h2>
+<p><a href="https://www.mpi-forum.org/docs/mpi-2.1/mpi21-report-bw/node330.htm" target="_blank" rel="noopener">https://www.mpi-forum.org/docs/mpi-2.1/mpi21-report-bw/node330.htm</a></p>
+<h2 id="mpi-status-object">MPI_Status object</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MPI_Status status;</span><br></pre></td></tr></table></figure>
+<h2 id="example">Example</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mpi.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> my_rank;       <span class="comment">/* rank of process */</span></span><br><span class="line">    <span class="keyword">int</span> p;             <span class="comment">/* number of processes */</span></span><br><span class="line">    <span class="keyword">int</span> source;        <span class="comment">/* rank of sender */</span></span><br><span class="line">    <span class="keyword">int</span> dest;          <span class="comment">/* rank of receiver */</span></span><br><span class="line">    <span class="keyword">int</span> tag = <span class="number">0</span>;       <span class="comment">/* tag for messages */</span></span><br><span class="line">    <span class="keyword">char</span> message[<span class="number">100</span>]; <span class="comment">/* storage for message */</span></span><br><span class="line">    MPI_Status status; <span class="comment">/* return status for receive */</span></span><br><span class="line"></span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;my_rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;p);</span><br><span class="line">    <span class="keyword">if</span> (my_rank != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">sprintf</span>(message, <span class="string">"Greetings from process %d!"</span>, my_rank);</span><br><span class="line">        dest = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">/* Use strlen+1 so that \0 gets transmitted */</span></span><br><span class="line">        MPI_Send(message, <span class="built_in">strlen</span>(message) + <span class="number">1</span>, MPI_CHAR, dest, tag, MPI_COMM_WORLD);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (source = <span class="number">1</span>; source &lt; p; source++) &#123;</span><br><span class="line">            MPI_Recv(message, <span class="number">100</span>, MPI_CHAR, source, tag, MPI_COMM_WORLD, &amp;status);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%s\n"</span>, message);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Greetings from process %d!\n"</span>, my_rank);</span><br><span class="line">    &#125;</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="communication-mode">Communication Mode</h2>
+<ul>
+<li>Buffered</li>
+<li>Ready</li>
+<li>Standard</li>
+<li>Synchronous</li>
+</ul>
+<p>Each of these communication modes has both blocking and non-blocking primitives:</p>
+<ul>
+<li>blocking
+<ul>
+<li>The send call blocks until the send block can be reclaimed</li>
+<li>The receive function blocks until the buffer has successfully obtained the contents of the message</li>
+</ul>
+</li>
+<li>non-blocking
+<ul>
+<li>Allow the possible overlap of communication with computation</li>
+<li>Communication is usually done in 2 phases
+<ul>
+<li>the posting phase</li>
+<li>the test for completion phase</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="basic-concepts">Basic concepts</h3>
+<p><img src="2020-01-31-18-03-51.png" alt=""></p>
+<h3 id="blocking">Blocking</h3>
+<p><strong>Synchronization Overhead</strong><br>
+the time spent waiting for an event to occur on another task</p>
+<p><strong>System Overhead</strong><br>
+the time spent when copying the message data from sender’s message buffer to network and from network to the receiver’s message buffer.</p>
+<h4 id="synchronous-send">Synchronous Send</h4>
+<p><img src="2020-01-31-18-11-28.png" alt=""></p>
+<ol>
+<li><code>MPI_Ssend()</code>: “ready to send” message is sent from the sending task to receiving task.</li>
+<li><code>MPI_Recv()</code>: “ready to receive” message is sent, followed by the transfer of data</li>
+</ol>
+<p>Synchronization Overhead:</p>
+<ul>
+<li>Sender 要等待 Receiver 回覆 handshake 後才開始傳輸</li>
+<li>Receiver 要等待 Sender 回覆 handshake 後才開始接收</li>
+</ul>
+<p>System Overhead:</p>
+<ul>
+<li>copying from sender &amp; receiver buffers to the network.</li>
+</ul>
+<h4 id="ready-send">Ready Send</h4>
+<p><img src="2020-01-31-18-20-15.png" alt=""></p>
+<ul>
+<li><code>MPI_Rsend()</code>: Sender 收到 “ready to receive” 再將 user-supplied buffer 送往 Receiver</li>
+<li>If “ready to receive” message hasn’t arrived, the ready mode send will incur an error and exit.</li>
+</ul>
+<h4 id="buffered-send">Buffered Send</h4>
+<p><img src="2020-01-31-18-28-31.png" alt=""></p>
+<ol>
+<li><code>MPI_Bsend()</code>  先將數據複製到 user-supplied buffer，複製完馬上 return</li>
+<li>Sender 收到 “ready to receive” 再將 user-supplied buffer 送往 Receiver</li>
+</ol>
+<p>Synchronization overhead:</p>
+<ul>
+<li>Sender 不用等待 Receiver 回應</li>
+<li>receiving process can still be incurred, because if the receive is executed before the send, the process must wait before it can return to the execution sequence</li>
+</ul>
+<p>System Overhead:</p>
+<ul>
+<li>Replicated copies of the buffer</li>
+</ul>
+<h4 id="standard-send">Standard Send</h4>
+<p><img src="2020-01-31-19-53-13.png" alt=""></p>
+<p>When the data size is smaller than a threshold value:</p>
+<ul>
+<li><code>MPI_Send()</code> Sender 將數據複製到 Receiver 的 sysbuf</li>
+<li><code>MPI_Recv()</code> Receiver 將數據從 sysbuf 複製出來</li>
+</ul>
+<p>The decreased synchronization overhead is usually at the cost of increased system overhead due to the extra copy of buffers</p>
+<h4 id="buffered-standard-send">Buffered Standard Send</h4>
+<p>When the message size is greater than a threshold</p>
+<p><img src="2020-01-31-19-59-50.png" alt=""></p>
+<ul>
+<li>The behavior is same as for the synchronous mode</li>
+<li>Small messages benefit from the decreased chance of synchronization overhead</li>
+<li>Large messages results in increased cost of copying to the buffer and system overhead</li>
+</ul>
+<h3 id="non-blocking">Non-blocking</h3>
+<p><img src="2020-01-31-20-04-25.png" alt=""></p>
+<p>Sender:</p>
+<ul>
+<li><code>MPI_Isend()</code> posts a non-blocking <strong>standard send</strong> when the message buffer contents are ready to be transmitted</li>
+<li>The control returns immediately without waiting for the copy to the remote system buffer to complete</li>
+<li><code>MPI_Wait</code> is called just before the sending task needs to overwrite the message buffer</li>
+<li>Programmer is responsible for checking the status of the message to know whether data to be sent has been copied out of the send buffer</li>
+</ul>
+<p>Receiver:</p>
+<ul>
+<li><code>MPI_Irecv()</code> issues a non-blocking receive as soon as a message buffer is ready to hold the message</li>
+<li>The non-blocking receive returns without waiting for the message to arrive</li>
+<li>The receiving task calls <code>MPI_Wait</code> when it needs to use the incoming message data</li>
+</ul>
+<p>test without waiting using MPI_TEST:</p>
+<ul>
+<li><code>MPI_TEST(request, flag, status)</code></li>
+</ul>
+<h2 id="deadlock">Deadlock</h2>
+<p>A situation where the dependencies between processors are cyclic</p>
+<blockquote>
+<p>MPI does not have timeouts</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (rank == <span class="number">0</span>) &#123;</span><br><span class="line">    err = MPI_Send(sendbuf, count, datatype, <span class="number">1</span>, tag, comm);</span><br><span class="line">    err = MPI_Recv(recvbuf, count, datatype, <span class="number">1</span>, tag, comm, &amp;status);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    err = MPI_Send(sendbuf, count, datatype, <span class="number">0</span>, tag, comm);</span><br><span class="line">    err = MPI_Recv(recvbuf, count, datatype, <span class="number">0</span>, tag, comm, &amp;status);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>If the message sizes are small enough, this should work because of systems buffers</li>
+<li>If the messages are too large, or system buffering is not used, this will hang</li>
+</ul>
+<p>Solution:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (rank == <span class="number">0</span>) &#123;</span><br><span class="line">    err = MPI_Send(sendbuf, count, datatype, <span class="number">1</span>, tag, comm);</span><br><span class="line">    err = MPI_Recv(recvbuf, count, datatype, <span class="number">1</span>, tag, comm, &amp;status);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    err = MPI_Recv(recvbuf, count, datatype, <span class="number">0</span>, tag, comm, &amp;status);</span><br><span class="line">    err = MPI_Send(sendbuf, count, datatype, <span class="number">0</span>, tag, comm);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (rank == <span class="number">0</span>) &#123;</span><br><span class="line">    err = MPI_Isend(sendbuf, count, datatype, <span class="number">1</span>, tag, comm, &amp;req);</span><br><span class="line">    err = MPI_Irecv(recvbuf, count, datatype, <span class="number">1</span>, tag, comm);</span><br><span class="line">    err = MPI_Wait(req, &amp;status);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    err = MPI_Isend(sendbuf, count, datatype, <span class="number">0</span>, tag, comm, &amp;req);</span><br><span class="line">    err = MPI_Irecv(recvbuf, count, datatype, <span class="number">0</span>, tag, comm);</span><br><span class="line">    err = MPI_Wait(req, &amp;status);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/PP/" rel="tag">#PP</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

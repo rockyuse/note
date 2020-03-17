@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Logging - DNS Server - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="logging">Logging</h1>
+<p>為了讓資料更有結構，我們把 log 的設定放在 /etc/bind/<strong>named.conf.logging</strong>，並在 <strong>named.conf</strong> 中 include 它：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include &quot;&#x2F;etc&#x2F;bind&#x2F;named.conf.logging&quot;;</span><br></pre></td></tr></table></figure>
+<h2 id="config">Config</h2>
+<p>/etc/bind/named.cong.logging：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">logging</span><br><span class="line">&#123;</span><br><span class="line">    channel default-log &#123;</span><br><span class="line">        file &quot;&#x2F;var&#x2F;log&#x2F;named&#x2F;named.log&quot; versions unlimited size 1m;</span><br><span class="line">        severity info;</span><br><span class="line">        print-time yes;</span><br><span class="line">    &#125;;</span><br><span class="line">    channel lamer-log &#123;</span><br><span class="line">        file&quot;&#x2F;var&#x2F;log&#x2F;named&#x2F;named.log&quot; versions unlimited size 1m;</span><br><span class="line">        severity info;</span><br><span class="line">        print-severity yes;</span><br><span class="line">        print-time yes;</span><br><span class="line">        print-category yes;</span><br><span class="line">    &#125;;</span><br><span class="line">    channel query-log &#123;</span><br><span class="line">        file &quot;&#x2F;var&#x2F;log&#x2F;named&#x2F;named.log&quot; versions unlimited size 1m;</span><br><span class="line">        severity info;</span><br><span class="line">        print-time yes;</span><br><span class="line">    &#125;;</span><br><span class="line">    channel security-log &#123;</span><br><span class="line">        file&quot;&#x2F;var&#x2F;log&#x2F;named&#x2F;named.log&quot; versions unlimited size 1m;</span><br><span class="line">        severity info;</span><br><span class="line">        print-severity yes;</span><br><span class="line">        print-time yes;</span><br><span class="line">        print-category yes;</span><br><span class="line">    &#125;;</span><br><span class="line">    category lame-servers &#123; lamer-log; &#125;;</span><br><span class="line">    category security&#123; security-log;&#125;;</span><br><span class="line">    category queries &#123; query-log;&#125;;</span><br><span class="line">    category default &#123; default-log;&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我們把 log 都放在 <strong>/var/log/named/named.log</strong> 下，當 size 達到 1m 時就執行 rotate，rotate 的數量沒有限制。</p>
+<h2 id="測試">測試</h2>
+<p>到 /var/log/named 下看是否成功 rotate</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;var&#x2F;log&#x2F;named $ l</span><br><span class="line">total 4.1M</span><br><span class="line">drwxrwxr-x 2 bind bind   4.0K May  3 07:37 .</span><br><span class="line">drwxrwxr-x 9 root syslog 4.0K May  3 06:25 ..</span><br><span class="line">-rw-r--r-- 1 bind bind    36K May  3 17:44 named.log</span><br><span class="line">-rw-r--r-- 1 bind bind   1.1M May  3 13:04 named.log.0</span><br><span class="line">-rw-r--r-- 1 bind bind   1.1M Apr 24 18:23 named.log.1</span><br><span class="line">-rw-r--r-- 1 bind bind   1.1M Apr 24 18:20 named.log.2</span><br><span class="line">-rw-r--r-- 1 bind bind   1.1M Apr 25 01:42 named.log.3</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我們用來生log的方法：寫一個 SHELL script 瘋狂 query server 看會不會成功 rotate XD</p>
+</blockquote>
+<h2 id="問題與解法">問題與解法</h2>
+<h3 id="log-權限問題">log 權限問題</h3>
+<p>因為作業要求存log的位置有權限的問題，要直接改 server 系統的資料又有點噁心</p>
+<p>況且 bind 已經告訴我們有哪幾個資料夾可以直接使用了，於是我們就改變了log的位置到 bind 幫我們設定好的位址：<strong>/var/log/named</strong></p>
+<p>後來 demo 也沒有要求一定要存在哪</p>
+<h2 id="小結">小結</h2>
+<p>目前我們重要檔案的架構如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;</span><br><span class="line">└───var&#x2F;cache&#x2F;bind&#x2F;</span><br><span class="line">│   │</span><br><span class="line">│   └───zone</span><br><span class="line">│   │   │  db.kaiiiz.nctucs.net</span><br><span class="line">│   │   │  db.35.229.184</span><br><span class="line">│   │   │  db.sub.muller.nctucs.net</span><br><span class="line">│   │</span><br><span class="line">│   └───slaves</span><br><span class="line">│       │  db.sub.kaiiiz.nctucs.net</span><br><span class="line">│</span><br><span class="line">└───etc&#x2F;bind&#x2F;</span><br><span class="line">    │   named.conf</span><br><span class="line">    │   named.conf.local</span><br><span class="line">    │   named.conf.logging</span><br><span class="line">    │   named.conf.options</span><br><span class="line">    │   named.conf.default-zones</span><br></pre></td></tr></table></figure>
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/DNS/" rel="tag">#DNS</a> <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

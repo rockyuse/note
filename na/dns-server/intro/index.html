@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          DNS Server - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="dns-server">DNS Server</h1>
+<p>這次的 NA 作業，叫我們搭建一個 DNS Server，並要與另一個隊友搭配，在這裡把一些架設的細節記錄下來。</p>
+<h2 id="作業內容">作業內容</h2>
+<p>主要還是需要有點團隊合作的作業</p>
+<ul>
+<li>用 BIND 設置 DNS Server (20%)
+<ul>
+<li>讓自己的 DNS Server 提供服務 (<a href="http://exampleA.com" target="_blank" rel="noopener">exampleA.com</a>)</li>
+<li>讓隊友給你的 DNS Server 提供服務 (<a href="http://sub.exampleB.net" target="_blank" rel="noopener">sub.exampleB.net</a>)</li>
+<li>把自己的 Sub domain 給隊友管理 (<a href="http://sub.exampleA.com" target="_blank" rel="noopener">sub.exampleA.com</a>)</li>
+<li>從 Internet 可以 query 到 DNS Server 的資料 (e.g. workstations、140.113.235.1)</li>
+</ul>
+</li>
+<li>Common (10%)
+<ul>
+<li>把 ws.sub.{teammate’s domain} CNAME 到 demo.sub.{teammate’s domain}</li>
+<li>把自己 server 的 SSHFP record 加到 sub.{teammate’s domain}</li>
+</ul>
+</li>
+<li>View (20%)
+<ul>
+<li>添加 ws.sub.{teammate’s domain} 的 A record</li>
+<li>來自 <a href="http://bsd1-bsd4.cs.nctu.edu.tw" target="_blank" rel="noopener">bsd1-bsd4.cs.nctu.edu.tw</a> 的 query 回應 140.113.235.131</li>
+<li>來自 <a href="http://linux1-linux4.cs.nctu.edu.tw" target="_blank" rel="noopener">linux1-linux4.cs.nctu.edu.tw</a> 的 query 回應 140.113.235.151</li>
+<li>其他的 query 回應 not found</li>
+</ul>
+</li>
+<li>Logging (10%)
+<ul>
+<li>把全部的 log 丟到 /var/log/named.log</li>
+<li>log rotate</li>
+</ul>
+</li>
+<li>Security (15%)
+<ul>
+<li>只允許 隊友的IP、<a href="http://bsd1.cs.nctu.edu.tw" target="_blank" rel="noopener">bsd1.cs.nctu.edu.tw</a>、<a href="http://linux1.cs.nctu.edu.tw" target="_blank" rel="noopener">linux1.cs.nctu.edu.tw</a> 做 AXFR request</li>
+<li>No recursion</li>
+</ul>
+</li>
+<li>DNSSEC (15%)
+<ul>
+<li>在 sub.{teammate’s domain} 設置</li>
+<li>信任鏈要弄好</li>
+</ul>
+</li>
+<li>把 sub.{your domain} 設成 slave (10%)
+<ul>
+<li>由隊友管理</li>
+<li>同步更新</li>
+</ul>
+</li>
+</ul>
+<h2 id="環境">環境</h2>
+<h3 id="租借-vps">租借 VPS</h3>
+<p>我和我的隊友都是用<a href="https://cloud.google.com/?hl=zh-tw" target="_blank" rel="noopener">Google Cloud Platform</a>(以下簡稱GCP)搭建</p>
+<p>GCP第一次弄的話會送你300美金，使用期限是1年</p>
+<p><img src="2018-05-03-19-19-06.png" alt=""></p>
+<p>網路上教學還滿多的，可以去找找，CPU還有硬碟都能自己設自己要的大小，Zone 的話選離台灣進一點的，延遲會比較小。</p>
+<blockquote>
+<p>題外話，我們很奢侈的用了比較高級的CPU和SSD，google還說我們太浪費了叫我們少用點XD<br>
+<img src="2018-05-03-19-34-08.png" alt=""></p>
+</blockquote>
+<p>系統的話我們是裝他選項中的 ubuntu，一鍵裝好，還滿簡單的。</p>
+<h4 id="設置靜態-ip">設置靜態 IP</h4>
+<p>安裝完系統後，GCP預設的IP是臨時IP，為了我們之後操作的方便，記得要改成靜態的IP。</p>
+<p>到選項中的 <strong>VPC網路\外部IP位址</strong>，把臨時改成靜態，設一下名字就完成了。</p>
+<p><img src="2018-05-03-19-39-45.png" alt=""></p>
+<p>之後要 SSH 進去 server，就是透過申請的這個IP了。</p>
+<h3 id="申請-domain">申請 Domain</h3>
+<p>網路上教學很多，我們原本是打算用 namecheap 的，但作到中間因為一些原因放棄了，之後就用系計中給我們的 domain 來做，單純很多。</p>
+<p>網址如下：<a href="https://www.nctucs.net/" target="_blank" rel="noopener">https://www.nctucs.net/</a></p>
+<p>我申請到的 domain 叫做 <strong><a href="http://kaiiiz.nctucs.net" target="_blank" rel="noopener">kaiiiz.nctucs.net</a></strong><br>
+隊友申請到的 domain 叫做 <strong><a href="http://muller.nctucs.net" target="_blank" rel="noopener">muller.nctucs.net</a></strong></p>
+<h3 id="ssh">SSH</h3>
+<p>環境搞定後，就可以透過 terminal SSH 進去剛剛建好的 server 了。(記得<strong>中繼資料</strong>要加好SSH-key)</p>
+<p><img src="2018-05-03-19-49-22.png" alt=""></p>
+<p>可以裝一些能提高效率的工具，像是 zsh, tmux, vim…等等，這裡每個人習慣不同就不贅述了。</p>
+<h2 id="設定">設定</h2>
+<p>備份一下一些重要的檔案：</p>
+<ul>
+<li><a href="https://gist.github.com/kaiiiz/3f5aa652f872b4674ae5923ecaaf9608" target="_blank" rel="noopener">zone file</a></li>
+<li><a href="https://gist.github.com/kaiiiz/2ee8d093236db751b47667b6125b36a5" target="_blank" rel="noopener">named.conf</a></li>
+</ul>
+<p>有興趣的可以參考一下</p>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/DNS/" rel="tag">#DNS</a> <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

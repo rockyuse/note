@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          反詐騙郵件 - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="反詐騙郵件">反詐騙郵件</h1>
+<p>SPF // SRS // DKIM // DMARC</p>
+<p>環境：Ubuntu 16.04 (DigitalOcean)</p>
+<h2 id="spf">SPF</h2>
+<p>SPF(Sender Policy Framework)，讓某 domain 授權特定 IP Address 代表其發信，MTA收到後會驗證該地址 domain 的 SPF 紀錄的 range 是否跟信上的 IP Address 相同，目的是在確認電子郵件確實是由網域授權的郵件伺服器寄出</p>
+<p>/var/cache/bind/zone/db.kaiiiz.nctucs.net</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">; SPF record</span><br><span class="line">kaiiiz.nctucs.net. IN TXT &quot;v&#x3D;spf1 +a +mx -all&quot;</span><br><span class="line">kaiiiz.nctucs.net. IN SPF &quot;v&#x3D;spf1 +a +mx -all&quot;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>v=spf1：spf 所使用的版本</p>
+<p>+：Pass</p>
+<p>-：Fail，e.g. -all 表示除了有條列出來的主機允許其他都拒絕，標式為 Hard Fail 不會接受該信件</p>
+<p>~：Softfail，e.g. ~all 表示除了有條列出來的主機允許其他都拒絕，標式為 Soft Fail 還是接收了該信件</p>
+<p>?：Neutral</p>
+<p>a, mx：表示比對 DNS 記錄中的 A 及 MX record</p>
+</blockquote>
+<p>DNS 的架設可以參考<a href="https://kaiiiz.nctu.me/2018/05/03/dns-server-1/" target="_blank" rel="noopener">這篇</a></p>
+<h3 id="spf-check">SPF check</h3>
+<p>檢查進來的信有沒有符合 SPF</p>
+<p>官方的<a href="https://help.ubuntu.com/community/Postfix/SPF" target="_blank" rel="noopener">教學</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install postfix-policyd-spf-python</span></span><br></pre></td></tr></table></figure>
+<p>/etc/postfix/main.cf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># SPF</span><br><span class="line">policy-spf_time_limit &#x3D; 3600s</span><br><span class="line">...</span><br><span class="line">smtpd_recipient_restrictions &#x3D;</span><br><span class="line">     ...</span><br><span class="line">     check_policy_service unix:private&#x2F;policy-spf</span><br><span class="line">     ...</span><br></pre></td></tr></table></figure>
+<p>/etc/postfix/master.cf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">policy-spf  unix  -       n       n       -       -       spawn</span><br><span class="line">     user&#x3D;nobody argv&#x3D;&#x2F;usr&#x2F;bin&#x2F;policyd-spf</span><br></pre></td></tr></table></figure>
+<p>重啟服務</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl restart postfix</span></span><br></pre></td></tr></table></figure>
+<h2 id="srs">SRS</h2>
+<p>SPF 是嘗試防範電子郵件偽造的機制，方法是查找與電子郵件 <em>FROM: (訊息封寄件者)</em> 位址網域相關聯的特殊 <em>TXT</em> 記錄。</p>
+<p>想像一下，當你的機器 forward 別人的 mail 時，E-mail 上的 <em>FROM:</em> 應為原信件的 domain name</p>
+<p><img src="srsdetail_1.png" alt=""></p>
+<p>但 SPF check 查找發信的人的 DNS，會發現轉寄信的人不符合 DNS 上設定的 TXT record，因此沒有通過 SPF check</p>
+<p><img src="srsdetail_3.png" alt=""></p>
+<p>寄件者重寫機制 (SRS) 提供此問題的解決方案。SRS 使用寄件者的網域，將原始寄件者的位址封裝至新位址中。只有轉寄者自己的網域會顯露供 SPF 檢查</p>
+<p>詳細可參考：<a href="http://www.open-spf.org/srs" target="_blank" rel="noopener">這裡</a>以及<a href="https://docs.oracle.com/cd/E19957-01/820-0514/geyun/index.html" target="_blank" rel="noopener">這裡</a></p>
+<h3 id="安裝">安裝</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install postsrsd</span></span><br></pre></td></tr></table></figure>
+<p>/etc/postfix/main.cf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># PostSRSd settings.</span><br><span class="line">sender_canonical_maps &#x3D; tcp:localhost:10001</span><br><span class="line">sender_canonical_classes &#x3D; envelope_sender</span><br><span class="line">recipient_canonical_maps &#x3D; tcp:localhost:10002</span><br><span class="line">recipient_canonical_classes&#x3D; envelope_recipient,header_recipient</span><br></pre></td></tr></table></figure>
+<p>重啟服務</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl restart postfix</span></span><br></pre></td></tr></table></figure>
+<h2 id="dkim">DKIM</h2>
+<p>DKIM 的原理是用公私鑰來驗證寄件者的真偽。Public Key 放在 DNS TXT Record，而 Private Key 存放在 Server，而每封信都帶有 DKIM-Signature。這樣只要驗證 DKIM-Signature 是否和 Public key 相符就可以知道郵件的真偽。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install opendkim opendkim-tools</span></span><br></pre></td></tr></table></figure>
+<p>/etc/default/opendkim</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SOCKET&#x3D;&quot;inet:8891@localhost&quot;</span><br></pre></td></tr></table></figure>
+<p>生成 Public key 及 Private key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> opendkim-genkey -t -s mail -d kaiiiz.nctucs.net</span></span><br></pre></td></tr></table></figure>
+<p>會生成出 mail.txt 及 mail.private，把 mail.txt 的內容放到 DNS 中，把 mail.private 複製到 postfix 的資料夾方便管理</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo cp mail.private /etc/postfix/dkim.key</span></span><br></pre></td></tr></table></figure>
+<p>/etc/opendkim.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Domain                  kaiiiz.nctucs.net</span><br><span class="line">KeyFile                 &#x2F;etc&#x2F;postfix&#x2F;dkim.key</span><br><span class="line">Selector                mail</span><br></pre></td></tr></table></figure>
+<h3 id="dkim-check">DKIM check</h3>
+<p>檢查進來的信有沒有符合 DKIM</p>
+<p>/etc/postfix/main.cf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># DKIM</span><br><span class="line">milter_default_action &#x3D; accept</span><br><span class="line">milter_protocol &#x3D; 6</span><br><span class="line">smtpd_milters &#x3D; inet:localhost:8891</span><br><span class="line">non_smtpd_milters &#x3D; inet:localhost:8891</span><br></pre></td></tr></table></figure>
+<p>重啟服務</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl restart postfix</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl restart opendkim</span></span><br></pre></td></tr></table></figure>
+<h2 id="dmarc">DMARC</h2>
+<p><a href="https://support.google.com/a/answer/2466580?hl=zh-Hant&amp;ref_topic=2759254" target="_blank" rel="noopener">為什麼要DMARC？</a></p>
+<p>使用方法很簡單，加一個 txt record 就好了</p>
+<p>/var/cache/bind/zone/db.kaiiiz.nctucs.net</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">; DMARC</span><br><span class="line">_dmarc IN TXT &quot;v&#x3D;DMARC1; p&#x3D;reject; rua&#x3D;mailto:postmaster@mail.kaiiiz.nctucs.net&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="dmarc-check">DMARC check</h3>
+<p>檢查進來的信有沒有符合 DMARC</p>
+<p>/etc/postfix/main.cf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">smtpd_milters &#x3D; ...,inet:localhost:83682</span><br><span class="line">non_smtpd_milters &#x3D; ...,inet:localhost:83682</span><br></pre></td></tr></table></figure>
+<p>重啟服務</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl restart postfix</span></span><br></pre></td></tr></table></figure>
+<h2 id="測試">測試</h2>
+<p>寄一封信給 google，查看郵件原始檔，看是否有符合 SPF、DKIM、DMARC 的驗證</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">"This is the body"</span> | mutt -s <span class="string">"Test mail"</span> name@mail_address</span></span><br></pre></td></tr></table></figure>
+<p>從 google 寄信進來，看 SPF、DKIM、DMARC 有沒有 check</p>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/Mail/" rel="tag">#Mail</a> <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

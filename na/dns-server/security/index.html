@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Security - DNS Server - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="security">Security</h1>
+<h2 id="recursion">recursion</h2>
+<p>在 /etc/bind/named.conf.options 裡面加入一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">recursion no;</span><br></pre></td></tr></table></figure>
+<h2 id="axfr-限制">AXFR 限制</h2>
+<p>在 /etc/bind/named.conf.options 裡面加入一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">allow-transfer &#123; none; &#125;;</span><br></pre></td></tr></table></figure>
+<p>在 <a href="http://sub.muller.nctucs.net" target="_blank" rel="noopener">sub.muller.nctucs.net</a> 這個 zone 內加入允許傳輸的 IP：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">allow-transfer &#123; 35.229.252.239; 140.113.235.151; 140.113.235.131;&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="sshfp">SSHFP</h2>
+<p>在 terminal 生成 key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh-keygen -r sub.muller.nctucs.net.</span></span><br><span class="line">sub.muller.nctucs.net. IN SSHFP 1 1 80020b2ab8b1162915c5c9ffd3e08be4835e26fb</span><br><span class="line">sub.muller.nctucs.net. IN SSHFP 1 2 8bf38610edef9148d3856072ae77251df241d856bb47f5c0bb4496ed397886dd</span><br><span class="line">sub.muller.nctucs.net. IN SSHFP 2 1 881ada9e0ba72e61f1f1a1ab88a337fd6fb74df5</span><br><span class="line">sub.muller.nctucs.net. IN SSHFP 2 2 cc3805487fdb9e2d8a649b873b6f8ed688c45bdafd13e6d384ec0bc22a3eb7c8</span><br><span class="line">sub.muller.nctucs.net. IN SSHFP 3 1 297ef257d608dc5e4fb34a5cb340c22fcd4b241c</span><br><span class="line">sub.muller.nctucs.net. IN SSHFP 3 2 d19dad726f945a20beddd62c7fd974c6cb43fe39e6ebbd8281f60123c3e64dbd</span><br><span class="line">sub.muller.nctucs.net. IN SSHFP 4 1 1993c256a5281b536e859cabd97c052ac30e407e</span><br><span class="line">sub.muller.nctucs.net. IN SSHFP 4 2 ee0d8e0bbc3f768c710a12ad949eb1ea03d0415d1c498180fe211452da24c223</span><br></pre></td></tr></table></figure>
+<p>然後把這些 records 丟到各個 view 內的 zone file 裡面</p>
+<h2 id="dnssec">DNSSEC</h2>
+<h3 id="生成-dns-key">生成 DNS Key</h3>
+<p>先生成 KSK(Key Signing Key) 和 ZSK(Zone Signing Key)，我生成在 /var/cache/bind/key/ 下面，方便管理</p>
+<p>KSK：(/var/cache/bind/key/ksk/)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dnssec-keygen -r /dev/urandom -a RSASHA256 -b 2048 -f KSK -n zone sub.muller.nctucs.net</span></span><br><span class="line">Ksub.muller.nctucs.net.+008+30271</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Ksub.muller.nctucs.net.+008+30271.key</li>
+<li>Ksub.muller.nctucs.net.+008+30271.private</li>
+</ul>
+<p>ZSK：(/var/cache/bind/key/zsk/)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dnssec-keygen -r /dev/urandom -a RSASHA256 -b 2048 -n zone sub.muller.nctucs.net</span></span><br><span class="line">Ksub.muller.nctucs.net.+008+00738</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Ksub.muller.nctucs.net.+008+00738.key</li>
+<li>Ksub.muller.nctucs.net.+008+00738.private</li>
+</ul>
+<h3 id="include-key">Include Key</h3>
+<p>為了備份一下還沒有加入 DNSSEC 的 zone file，所以我複製原本的 zone file 並在每個檔案後加入 .dnssec 區別</p>
+<p>之後在改過名的 zone file 中 include 剛剛生成好的 key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$INCLUDE &#x2F;var&#x2F;cache&#x2F;bind&#x2F;key&#x2F;ksk&#x2F;Ksub.muller.nctucs.net.+008+30271.key KSK</span><br><span class="line">$INCLUDE &#x2F;var&#x2F;cache&#x2F;bind&#x2F;key&#x2F;zsk&#x2F;Ksub.muller.nctucs.net.+008+00738.key ZSK</span><br></pre></td></tr></table></figure>
+<p>記得 KSK 和 ZSK 的位置要打對</p>
+<h3 id="簽署-zone-file">簽署 Zone file</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo dnssec-signzone -o sub.muller.nctucs.net -g -t -k /var/cache/<span class="built_in">bind</span>/key/ksk/Ksub.muller.nctucs.net.+008+30271 db.sub.muller.nctucs.net.dnssec /var/cache/<span class="built_in">bind</span>/key/zsk/Ksub.muller.nctucs.net.+008+00738</span></span><br></pre></td></tr></table></figure>
+<p>-k 後面接上 KSK，ZSK 則不用</p>
+<p>可以寫一個 SHELL script，方便以後更新 DNS Server 時重新簽署，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">sudo dnssec-signzone -o sub.muller.nctucs.net -g -t -k /var/cache/bind/key/ksk/Ksub.muller.nctucs.net.+008+30271 db.sub.muller.nctucs.net.dnssec /var/cache/bind/key/zsk/Ksub.muller.nctucs.net.+008+00738</span><br><span class="line">sudo dnssec-signzone -o sub.muller.nctucs.net -g -t -k /var/cache/bind/key/ksk/Ksub.muller.nctucs.net.+008+30271 db.sub.muller.nctucs.net.internal-bsd.dnssec /var/cache/bind/key/zsk/Ksub.muller.nctucs.net.+008+00738</span><br><span class="line">sudo dnssec-signzone -o sub.muller.nctucs.net -g -t -k /var/cache/bind/key/ksk/Ksub.muller.nctucs.net.+008+30271 db.sub.muller.nctucs.net.internal-linux.dnssec /var/cache/bind/key/zsk/Ksub.muller.nctucs.net.+008+00738</span><br><span class="line"></span><br><span class="line">rndc reload</span><br></pre></td></tr></table></figure>
+<h3 id="更新-zone-file">更新 Zone file</h3>
+<p>簽署完域名後會發現資料夾多了幾個檔案：</p>
+<ul>
+<li>db.sub.muller.nctucs.net.dnssec.<strong>signed</strong></li>
+<li>db.sub.muller.nctucs.net.internal-bsd.dnssec.<strong>signed</strong></li>
+<li>db.sub.muller.nctucs.net.internal-linux.dnssec.<strong>signed</strong></li>
+</ul>
+<p>這些就是簽署完後的 Zone file，我們要回去 named.conf.local 改變 file 來指到到這些簽署完的檔案：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">zone &quot;sub.muller.nctucs.net&quot; IN &#123;</span><br><span class="line">    type master;</span><br><span class="line">    file &quot;zone&#x2F;db.sub.muller.nctucs.net.dnssec.signed&quot;;</span><br><span class="line">    allow-transfer &#123; 35.229.252.239; 140.113.235.151; 140.113.235.131;&#125;;</span><br><span class="line">    notify yes;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="開啟-dnssec">開啟 DNSSEC</h3>
+<p>在 <strong>named.conf.options</strong> 加入下面幾行設置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dnssec-enable yes;</span><br><span class="line">dnssec-validation yes;</span><br><span class="line">dnssec-lookaside auto;</span><br></pre></td></tr></table></figure>
+<h3 id="建立信任鏈">建立信任鏈</h3>
+<blockquote>
+<p>因為你的 public key 已經被上層紀錄了，所以當解析器查詢 <a href="http://abc.com.tw" target="_blank" rel="noopener">abc.com.tw</a> 的時候，會透過 <a href="http://com.tw" target="_blank" rel="noopener">com.tw</a> 去查詢 <a href="http://abc.com.tw" target="_blank" rel="noopener">abc.com.tw</a> 的 DS 紀錄，並跟 <a href="http://abc.com.tw" target="_blank" rel="noopener">abc.com.tw</a> 取得 DNSKEY 做 hash, 兩個一比對就知道了。</p>
+</blockquote>
+<p>詳細可參考：<a href="http://phorum.study-area.org/index.php?topic=60268.0" target="_blank" rel="noopener">DNSSEC 入門介紹</a></p>
+<p>剛剛我們簽署域名的時候加了一個參數 -g，這個參數會生成簽署的 Zone 的 DS record 檔案，我的叫做 <a href="http://dsset-sub.muller.nctucs.net" target="_blank" rel="noopener">dsset-sub.muller.nctucs.net</a>.</p>
+<p>把檔案的內容丟到上層域名，也就是 <a href="http://muller.nctucs.net" target="_blank" rel="noopener">muller.nctucs.net</a>，如此就可以建立信任鏈了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sub.muller.nctucs.net.  IN DS 30271 8 1 C4992664A311C5042D345D59963637CCF936993A</span><br><span class="line">sub.muller.nctucs.net.  IN DS 30271 8 2 EF3872D4D16B1E5DF6624B8ABF60A7279C08C09B5CD3E6D0A18F2689 99A54C80</span><br></pre></td></tr></table></figure>
+<p>如果簽署域名的時候沒有加 -g 這個參數，也能用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dnssec-signzone -g ...</span></span><br></pre></td></tr></table></figure>
+<p>這行指令生成 DS record</p>
+<h2 id="測試">測試</h2>
+<h3 id="sshfp-v2">SSHFP</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ssh sub.muller.nctucs.net -o VerifyHostKeyDNS=yes</span></span><br><span class="line">ECDSA key fingerprint is SHA256:0Z2tcm+UWiC+3dYsf9l0xstD/jnm672CgfYBI8PmTb0.</span><br><span class="line">Matching host key fingerprint found in DNS.</span><br></pre></td></tr></table></figure>
+<p>有 Matching 代表設定成功了</p>
+<h3 id="dnsviz">DNSviz</h3>
+<p><img src="2018-05-05-00-58-52.png" alt=""></p>
+<p>檢查信任鏈，如果狀態是 Security 且沒有 error，代表設定成功了 (可能需要花一段時間才會更新)</p>
+<h2 id="問題與解決方案">問題與解決方案</h2>
+<h3 id="dnssec-一直設定不成功">DNSSEC 一直設定不成功</h3>
+<p>檢查一下幾個問題：</p>
+<ul>
+<li><strong>有沒有為簽署的域名加一個 A record</strong>
+<ul>
+<li>我有被這個問題雷到，就是沒有為當前的 zone 設 A record：&quot;@ IN A 35.229.184.206&quot;，設完之後就好了</li>
+</ul>
+</li>
+<li><strong>Key 有沒有對好</strong></li>
+<li><strong>Zone file 的序號有沒有增加</strong>
+<ul>
+<li>好像也被這個雷很多次，總之有改 slave 的東西就加一下序號吧</li>
+</ul>
+</li>
+<li><strong>還在慢慢更新，睡一覺起床就好了</strong></li>
+</ul>
+<h2 id="總結">總結</h2>
+<p>作業的需求都完成了，整理一下我們檔案的架構：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;</span><br><span class="line">└───var&#x2F;cache&#x2F;bind&#x2F;</span><br><span class="line">│   │</span><br><span class="line">│   └───zone</span><br><span class="line">│   │   │  db.kaiiiz.nctucs.net</span><br><span class="line">│   │   │  db.35.229.184</span><br><span class="line">│   │   │  db.sub.muller.nctucs.net.dnssec.signed</span><br><span class="line">│   │   │  db.sub.muller.nctucs.net.internal-linux.dnssec.signed</span><br><span class="line">│   │   │  db.sub.muller.nctucs.net.internal-bsd.dnssec.signed</span><br><span class="line">│   │</span><br><span class="line">│   └───slaves</span><br><span class="line">│   │   │  db.sub.kaiiiz.nctucs.net</span><br><span class="line">│   │   │  db.sub.kaiiiz.nctucs.net.linux</span><br><span class="line">│   │   │  db.sub.kaiiiz.nctucs.net.bsd</span><br><span class="line">│   │</span><br><span class="line">│   └───key</span><br><span class="line">│       └───KSK</span><br><span class="line">│       │   │  Ksub.muller.nctucs.net.+008+30271.key</span><br><span class="line">│       │   │  Ksub.muller.nctucs.net.+008+30271.private</span><br><span class="line">│       │</span><br><span class="line">│       └───ZSK</span><br><span class="line">│           │  Ksub.muller.nctucs.net.+008+00738.key</span><br><span class="line">│           │  Ksub.muller.nctucs.net.+008+00738.private</span><br><span class="line">│</span><br><span class="line">└───etc&#x2F;bind&#x2F;</span><br><span class="line">    │   named.conf</span><br><span class="line">    │   named.conf.local</span><br><span class="line">    │   named.conf.logging</span><br><span class="line">    │   named.conf.options</span><br><span class="line">    │   named.conf.default-zones</span><br></pre></td></tr></table></figure>
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/DNS/" rel="tag">#DNS</a> <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

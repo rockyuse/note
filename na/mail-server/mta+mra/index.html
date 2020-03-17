@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          MTA (postfix)、MRA (dovecot) - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="mta-mra">MTA、MRA</h1>
+<p>環境：Ubuntu 16.04 (DigitalOcean)</p>
+<p>Mail Server 相關知識可以參考<a href="http://linux.vbird.org/linux_server/0380mail.php" target="_blank" rel="noopener">鳥哥</a></p>
+<p>筆記一下幾個名詞：</p>
+<blockquote>
+<p><strong>MUA</strong> (Mail User Agent)：郵件使用者代理人，如 Thunderbird, Outlook… MUA 主要的功能就是收受郵件主機的電子郵件，以及提供使用者瀏覽與編寫郵件的功能</p>
+<p><strong>MTA</strong> (Mail Transfer Agent)：郵件傳送代理人</p>
+<blockquote>
+<p>收受信件：使用 <strong>SMTP</strong> (port 25)<br>
+轉遞信件：若目的地不是本身的用戶，則 MTA 會將該信傳送給下一部主機</p>
+</blockquote>
+<p><strong>MDA</strong> (Mail Delivery Agent)：郵件遞送代理人，掛在 MTA 下的小程式，用來分析由 MTA 所收到的信件表頭或內容等資料， 來決定這封郵件的去向。</p>
+<p><strong>MRA</strong> (Mail Retrieval Agent)：使用者可以透過 MRA 伺服器提供的郵政服務協定收受信件</p>
+<blockquote>
+<p><strong>POP3</strong> (Post Office Protocol)</p>
+<ul>
+<li>MUA 透過 POP3 連接到 MRA 的 port 110</li>
+<li>MRA 確認該使用者帳號/密碼沒有問題後，會前往該使用者的 Mailbox 取得使用者的信件並傳送給使用者的 MUA</li>
+<li>當所有的信件傳送完畢後，使用者的 mailbox 內的資料將會被刪除</li>
+</ul>
+</blockquote>
+<blockquote>
+<p><strong>IMAP</strong> (Internet Message Access Protocol)</p>
+<ul>
+<li>讓你將 mailbox 的資料轉存到你主機上的家目錄，亦即 /home/帳號/ 的目錄下</li>
+</ul>
+</blockquote>
+</blockquote>
+<h2 id="mta：postfix">MTA：postfix</h2>
+<h3 id="安裝">安裝</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install postfix</span></span><br></pre></td></tr></table></figure>
+<h3 id="基本設定">基本設定</h3>
+<p>/etc/postfix/main.cf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">myhostname &#x3D; kaiiiz.nctucs.net</span><br><span class="line">...</span><br><span class="line">mydestination &#x3D; $myhostname, kaiiiz.nctucs.net, na-server-2, localhost.localdomain, localhost</span><br><span class="line">...</span><br><span class="line">mynetworks &#x3D; 127.0.0.0&#x2F;8 [::ffff:127.0.0.0]&#x2F;104 [:～:1]&#x2F;128</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mydestination：The mydestination parameter specifies what domains this machine will deliver locally, instead of forwarding to another machine.<br>
+mynetworks：設定可以幫忙relay的位址，設定這個值會取代 mynetworks_style 的參數</p>
+</blockquote>
+<h3 id="測試">測試</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> telnet localhost 25</span></span><br></pre></td></tr></table></figure>
+<h2 id="mra：dovecot">MRA：dovecot</h2>
+<h3 id="安裝-v2">安裝</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install dovecot-imapd dovecot-pop3d</span></span><br></pre></td></tr></table></figure>
+<h3 id="基本設定-v2">基本設定</h3>
+<p>config 都放在 /etc/dovecot/conf.d 這個目錄下，裝完不用做設定就能用了</p>
+<h3 id="測試-v2">測試</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> netstat -tlnp | grep dovecot</span></span><br><span class="line">tcp        0      0 0.0.0.0:110             0.0.0.0:*               LISTEN      1634/dovecot</span><br><span class="line">tcp        0      0 0.0.0.0:143             0.0.0.0:*               LISTEN      1634/dovecot</span><br><span class="line">tcp6       0      0 :::110                  :::*                    LISTEN      1634/dovecot</span><br><span class="line">tcp6       0      0 :::143                  :::*                    LISTEN      1634/dovecot</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-t：tcp<br>
+-l：Show only listening sockets.<br>
+-n：Show numerical addresses instead of trying to determine symbolic host, port or user names.<br>
+-p：Show the PID and name of the program to which each socket belongs.</p>
+</blockquote>
+<h2 id="常用指令">常用指令</h2>
+<h3 id="list-queue">list queue</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> postqueue -p</span></span><br></pre></td></tr></table></figure>
+<p>或是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mailq</span></span><br></pre></td></tr></table></figure>
+<h3 id="flush-queue">flush queue</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> postqueue -f</span></span><br></pre></td></tr></table></figure>
+<h3 id="clean-queue">clean queue</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> postsuper -d ALL</span></span><br></pre></td></tr></table></figure>
+<h2 id="後記">後記</h2>
+<p>備份一些檔案，可以當作參考</p>
+<ul>
+<li><a href="https://gist.github.com/3f4505f446c5c24b7db4fe26f39f38f8.git" target="_blank" rel="noopener">postfix</a></li>
+<li><a href="https://gist.github.com/536e0a6502aa7c9a5ed51fdef382bd46.git" target="_blank" rel="noopener">dovecot</a></li>
+</ul>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/Mail/" rel="tag">#Mail</a> <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

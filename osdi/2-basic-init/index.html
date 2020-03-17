@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Basic Initialization - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="basic-initialization">Basic Initialization</h1>
+<ol>
+<li>Let only one core proceed, and let others enter a busy loop.</li>
+<li>Initialize the BSS segment.</li>
+<li>Set the stack pointer to an appropriate position.</li>
+</ol>
+<h2 id="start-s">start.s</h2>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">.section</span> <span class="string">".text.boot"</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">.global</span> _start</span><br><span class="line"></span><br><span class="line"><span class="symbol">_start</span>:</span><br><span class="line">    // <span class="meta">get</span> cpu id</span><br><span class="line">    <span class="keyword">mrs </span>    x1, MPIDR_EL1</span><br><span class="line">    <span class="keyword">and </span>    x1, x1, <span class="number">#3</span></span><br><span class="line">    <span class="keyword">cbz </span>    x1, <span class="number">2</span>f</span><br><span class="line">    // <span class="meta">if</span> cpu_id &gt; <span class="number">0</span>, stop</span><br><span class="line"><span class="number">1</span>:</span><br><span class="line">    <span class="keyword">wfe</span></span><br><span class="line"><span class="keyword"> </span>   <span class="keyword">b </span>      <span class="number">1</span>b</span><br><span class="line">    // <span class="meta">if</span> cpu_id == <span class="number">0</span></span><br><span class="line"><span class="number">2</span>:</span><br><span class="line">    // set stack pointer</span><br><span class="line">    <span class="keyword">ldr </span>    x1, <span class="symbol">=_start</span></span><br><span class="line">    <span class="keyword">mov </span>    <span class="built_in">sp</span>, x1</span><br><span class="line"></span><br><span class="line">    // clear <span class="keyword">bss</span></span><br><span class="line"><span class="keyword"> </span>   <span class="keyword">ldr </span>    x1, <span class="symbol">=__bss_start</span></span><br><span class="line">    <span class="keyword">ldr </span>    x2, <span class="symbol">=__bss_size</span></span><br><span class="line"><span class="number">3</span>:  <span class="keyword">cbz </span>    x2, <span class="number">4</span>f</span><br><span class="line">    <span class="keyword">str </span>    xzr, [x1], <span class="number">#8</span></span><br><span class="line">    <span class="keyword">sub </span>    x2, x2, <span class="number">#1</span></span><br><span class="line">    <span class="keyword">cbnz </span>   x2, <span class="number">3</span>b</span><br><span class="line"></span><br><span class="line">    // jump to main <span class="meta">function</span> in C</span><br><span class="line"><span class="number">4</span>:  <span class="keyword">bl </span>     main</span><br><span class="line">    // halt this core <span class="meta">if</span> return</span><br><span class="line">    <span class="keyword">b </span>      <span class="number">1</span>b</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>mrs: Move to ARM register from system coprocessor register<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+</blockquote>
+<h2 id="linker-ld">linker.ld</h2>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">SECTIONS</span><br><span class="line">&#123;</span><br><span class="line">  . &#x3D; 0x80000;</span><br><span class="line">  .text :</span><br><span class="line">  &#123;</span><br><span class="line">    KEEP(*(.text.boot))</span><br><span class="line">    *(.text)</span><br><span class="line">  &#125;</span><br><span class="line">  .data :</span><br><span class="line">  &#123;</span><br><span class="line">    *(.data)</span><br><span class="line">  &#125;</span><br><span class="line">  .bss ALIGN(16) (NOLOAD) :</span><br><span class="line">  &#123;</span><br><span class="line">    __bss_start &#x3D; .;</span><br><span class="line"></span><br><span class="line">    *(.bss)</span><br><span class="line"></span><br><span class="line">    __bss_end &#x3D; .;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">__bss_size &#x3D; (__bss_end - __bss_start) &gt;&gt; 3;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>KEEP: Mark sections that should not be eliminated when link-time garbage collection is in use<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+</blockquote>
+<blockquote>
+<p>NOLOAD: Mark a section to not be loaded at run time.<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup></p>
+</blockquote>
+<blockquote>
+<p>ALIGN: 對齊到數字的倍數</p>
+</blockquote>
+<h2 id="makefile">Makefile</h2>
+<figure class="highlight mak"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">TOOLCHAIN_PREFIX = aarch64-linux-gnu-</span><br><span class="line">CC = <span class="variable">$(TOOLCHAIN_PREFIX)</span>gcc</span><br><span class="line">LD = <span class="variable">$(TOOLCHAIN_PREFIX)</span>ld</span><br><span class="line">OBJCPY = <span class="variable">$(TOOLCHAIN_PREFIX)</span>objcopy</span><br><span class="line"></span><br><span class="line">SRCS = <span class="variable">$(<span class="built_in">wildcard</span> *.c)</span></span><br><span class="line">OBJS = $(SRCS:.c=.o)</span><br><span class="line">CFLAGS = -Wall</span><br><span class="line"></span><br><span class="line"><span class="meta"><span class="meta-keyword">.PHONY</span>: all clean asm run debug</span></span><br><span class="line"></span><br><span class="line"><span class="section">all: kernel8.img clean</span></span><br><span class="line"></span><br><span class="line"><span class="section">start.o: start.s</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -c start.s -o start.o</span><br><span class="line"></span><br><span class="line"><span class="section">%.o: %.c</span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"></span><br><span class="line"><span class="section">kernel8.img: start.o <span class="variable">$(OBJS)</span></span></span><br><span class="line">	<span class="variable">$(LD)</span> start.o <span class="variable">$(OBJS)</span> -T linker.ld -o kernel8.elf</span><br><span class="line">	<span class="variable">$(OBJCPY)</span> -O binary kernel8.elf kernel8.img</span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f *.o</span><br><span class="line"></span><br><span class="line"><span class="section">asm:</span></span><br><span class="line">	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -display none -d in_asm</span><br><span class="line"></span><br><span class="line"><span class="section">run:</span></span><br><span class="line">	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -display none -serial null -serial mon:stdio</span><br><span class="line"></span><br><span class="line"><span class="section">debug: all</span></span><br><span class="line">	qemu-system-aarch64 -M raspi3 -kernel kernel8.img -display none -S -s</span><br></pre></td></tr></table></figure>
+<h2 id="some-notes">Some Notes</h2>
+<h3 id="gdb">gdb</h3>
+<p>Switch thread</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; info threads</span><br><span class="line">  Id   Target Id                    Frame </span><br><span class="line">  1    Thread 1.1 (CPU#0 [running]) 0x0000000000000000 in ?? ()</span><br><span class="line">* 2    Thread 1.2 (CPU#1 [running]) 0x0000000000000300 in ?? ()</span><br><span class="line">  3    Thread 1.3 (CPU#2 [running]) 0x0000000000000300 in ?? ()</span><br><span class="line">  4    Thread 1.4 (CPU#3 [running]) 0x0000000000000300 in ?? ()</span><br><span class="line"></span><br><span class="line">&gt; thread &#123;number&#125;</span><br></pre></td></tr></table></figure>
+<p>Print program counter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; x&#x2F;3i $pc</span><br><span class="line">&#x3D;&gt; 0x300:       mov     x5, #0xd8                       &#x2F;&#x2F; #216</span><br><span class="line">   0x304:       mrs     x6, mpidr_el1</span><br><span class="line">   0x308:       and     x6, x6, #0x3</span><br></pre></td></tr></table></figure>
+<h3 id="makefile-v2">Makefile</h3>
+<ul>
+<li><a href="https://ephrain.net/linux-%E7%B0%A1%E5%96%AE%E7%9A%84-makefile-%E4%BD%BF%E7%94%A8-%E8%90%AC%E7%94%A8%E5%AD%97%E5%85%83%E3%80%81-%E7%89%B9%E6%AE%8A%E7%AC%A6%E8%99%9F%E3%80%81-phony-%E5%81%87%E7%9B%AE%E6%A8%99/" target="_blank" rel="noopener">[Linux] 簡單的 Makefile 使用 (% 萬用字元、$@ 特殊符號、.PHONY 假目標)</a></li>
+<li><a href="https://blog.xuite.net/auster.lai/twblog/520512252-%5BLinux%5D+Makefile%E4%B8%ADwildcard+notdir+patsubst%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95+" target="_blank" rel="noopener">[Linux] Makefile中wildcard notdir patsubst使用方法</a></li>
+</ul>
+<h3 id="arm-asm">ARM ASM</h3>
+<h4 id="local-labels">Local labels</h4>
+<ul>
+<li><a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html" target="_blank" rel="noopener">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html</a></li>
+</ul>
+<h4 id="aarch64-identification-registers">AArch64 identification registers</h4>
+<ul>
+<li><a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0500d/DDI0500D_cortex_a53_r0p2_trm.pdf" target="_blank" rel="noopener">ARM® Cortex®-A53 MPCore Processor Technical Reference Manual</a> - 4.2.1</li>
+<li><a href="https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH" target="_blank" rel="noopener">https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH</a></li>
+</ul>
+<h4 id="registers-in-aarch64-state">Registers in AArch64 state</h4>
+<p><img src="https://i.imgur.com/CCj3wsl.png" alt=""></p>
+<ul>
+<li><code>r0 - r31</code> 是 32 個通用暫存器</li>
+<li>使用 <code>x1 - x30</code> 會拿到 64-bits ，使用 <code>w0 - w30</code> 會拿到 Lower 32-bits</li>
+<li><code>x31</code> 不直接存取
+<ul>
+<li>使用 <code>xzr/wzr</code> 來存取即是 zero register</li>
+<li>使用 <code>sp/wsp</code> 來存取即是 stack pointer</li>
+</ul>
+</li>
+</ul>
+<p><a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/BABBGCAC.html" target="_blank" rel="noopener">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/BABBGCAC.html</a></p>
+<h3 id="linker-script">Linker Script</h3>
+<ul>
+<li><code>.gnu.linkonce.XXX</code>: Mostly filled with zeroes (as it is used by the LKM loader internally)
+<ul>
+<li><a href="https://www.oreilly.com/library/view/mastering-assembly-programming/9781787287488/0cebebcf-1089-4933-ba0e-9078b154c156.xhtml" target="_blank" rel="noopener">https://www.oreilly.com/library/view/mastering-assembly-programming/9781787287488/0cebebcf-1089-4933-ba0e-9078b154c156.xhtml</a></li>
+</ul>
+</li>
+<li><code>PROVIDE</code>: Define a symbol only if it is referenced and is not defined by any object included in the link
+<ul>
+<li><a href="https://sourceware.org/binutils/docs/ld/PROVIDE.html#PROVIDE" target="_blank" rel="noopener">https://sourceware.org/binutils/docs/ld/PROVIDE.html#PROVIDE</a></li>
+</ul>
+</li>
+</ul>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1"  class="footnote-item"><p><a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0489c/CIHGJHHH.html" target="_blank" rel="noopener">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0489c/CIHGJHHH.html</a> <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2"  class="footnote-item"><p><a href="https://sourceware.org/binutils/docs/ld/Input-Section-Keep.html#Input-Section-Keep" target="_blank" rel="noopener">https://sourceware.org/binutils/docs/ld/Input-Section-Keep.html#Input-Section-Keep</a> <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn3"  class="footnote-item"><p><a href="https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_21.html" target="_blank" rel="noopener">https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_21.html</a> <a href="#fnref3" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/OSDI/" rel="tag">#OSDI</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

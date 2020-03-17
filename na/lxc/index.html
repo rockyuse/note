@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          LXC - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="lxc">LXC</h1>
+<p><a href="https://linuxcontainers.org/" target="_blank" rel="noopener">https://linuxcontainers.org/</a></p>
+<h2 id="前言">前言</h2>
+<p>環境：Ubuntu 16.04 (DigitalOcean)</p>
+<h2 id="安裝">安裝</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install lxc</span></span><br></pre></td></tr></table></figure>
+<p>安裝完後可以用 ifconfig 看一下有沒有多出一個 lxcbr0 這個網卡，若沒有有可能是不同服務跟 lxc 這個衝突了，我遇到的是 DNS Server 裝的 bind9 跟 lxc 衝突</p>
+<p>解決方法就是先 stop bind9 和 lxc 再 start lxc 再 start bind9</p>
+<h2 id="unprivilged-user">Unprivilged User</h2>
+<p>詳細教學：<a href="https://linuxcontainers.org/lxc/getting-started/" target="_blank" rel="noopener">LXC- Getting started</a></p>
+<h3 id="etc-lxc-lxc-usernet">/etc/lxc/lxc-usernet</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">andy veth lxcbr0 2</span><br></pre></td></tr></table></figure>
+<h3 id="subuid-subgid">subuid &amp; subgid</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> grep <span class="string">'andy'</span> /etc/sub?id</span></span><br><span class="line">/etc/subgid:andy:165536:65536</span><br><span class="line">/etc/subuid:andy:165536:65536</span><br></pre></td></tr></table></figure>
+<h3 id="config">config</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> mkdir -p ~/.config/lxc</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cp /etc/lxc/default.conf ~/.config/lxc</span></span><br></pre></td></tr></table></figure>
+<p>在 ~/.config/lxc 內加入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lxc.id_map &#x3D; u 0 165536 65536</span><br><span class="line">lxc.id_map &#x3D; g 0 165536 65536</span><br></pre></td></tr></table></figure>
+<p>後面兩個改成剛剛查詢到的 uid 和 gid 的值</p>
+<h2 id="create-container">Create Container</h2>
+<p>可以用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lxc remote list</span></span><br></pre></td></tr></table></figure>
+<p>列出 image 的儲藏庫，找到需要的再用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lxc-create -t download -n hosta -- -d ubuntu -r xenial -a amd64</span></span><br></pre></td></tr></table></figure>
+<p>建立 Container</p>
+<h2 id="open-container">Open Container</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lxc-start -n hosta -d</span></span><br></pre></td></tr></table></figure>
+<p>若遇到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lxc-start: tools&#x2F;lxc_start.c: main: 366 The container failed to start.</span><br><span class="line">lxc-start: tools&#x2F;lxc_start.c: main: 368 To get more details, run the container in foreground mode.</span><br><span class="line">lxc-start: tools&#x2F;lxc_start.c: main: 370 Additional information can be obtained by setting the --logfile and --logpriority options.</span><br></pre></td></tr></table></figure>
+<p>代表沒有 start 起來，可以用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lxc-start -n hosta --logfile=logfile.log --logpriority=debug</span></span><br></pre></td></tr></table></figure>
+<p>來輸出 logfile，預設位址是在 ~/.local/share/lxc 下</p>
+<h2 id="問題與解法">問題與解法</h2>
+<h3 id="cgroup-權限問題">cgroup 權限問題</h3>
+<p>若 log 檔跑出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lxc-start 20180623060452.624 ERROR    lxc_utils - utils.c:mkdir_p:254 - Permission denied - failed to create directory &#39;&#x2F;sys&#x2F;fs&#x2F;cgroup&#x2F;hugetlb&#x2F;lxc&#39;</span><br><span class="line">lxc-start 20180623060452.624 ERROR    lxc_utils - utils.c:mkdir_p:254 - Permission denied - failed to create directory &#39;&#x2F;sys&#x2F;fs&#x2F;cgroup&#x2F;cpuset&#x2F;lxc&#39;</span><br><span class="line">lxc-start 20180623060452.624 ERROR    lxc_utils - utils.c:mkdir_p:254 - Permission denied - failed to create directory &#39;&#x2F;sys&#x2F;fs&#x2F;cgroup&#x2F;memory&#x2F;user.slice&#x2F;lxc&#39;</span><br><span class="line">lxc-start 20180623060452.624 ERROR    lxc_utils - utils.c:mkdir_p:254 - Permission denied - failed to create directory &#39;&#x2F;sys&#x2F;fs&#x2F;cgroup&#x2F;blkio&#x2F;user.slice&#x2F;lxc&#39;</span><br><span class="line">lxc-start 20180623060452.624 ERROR    lxc_utils - utils.c:mkdir_p:254 - Permission denied - failed to create directory &#39;&#x2F;sys&#x2F;fs&#x2F;cgroup&#x2F;devices&#x2F;user.slice&#x2F;lxc&#39;</span><br><span class="line">lxc-start 20180623060452.624 ERROR    lxc_utils - utils.c:mkdir_p:254 - Permission denied -  failed to create directory &#39;&#x2F;sys&#x2F;fs&#x2F;cgroup&#x2F;pids&#x2F;user.slice&#x2F;user-1000.slice&#x2F;lxc&#39;</span><br><span class="line">lxc-start 20180623060452.624 ERROR    lxc_utils - utils.c:mkdir_p:254 - Permission denied - failed to create directory &#39;&#x2F;sys&#x2F;fs&#x2F;cgroup&#x2F;freezer&#x2F;lxc&#39;</span><br></pre></td></tr></table></figure>
+<p>可以在 /etc/group 下方的 lxc-dnsmasq 加入自己</p>
+<h3 id="network">Network</h3>
+<p>若 log 檔跑出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lxc-start 20180623061551.112 ERROR    lxc_start - start.c:lxc_spawn:1222 - Failed to create the configured network.</span><br></pre></td></tr></table></figure>
+<p>記得在 /etc/lxc/lxc-usernet 加入網卡的設定</p>
+<h2 id="lxc-commands">LXC Commands</h2>
+<p>lxc start 成功後，就可以對它做一些操作</p>
+<h3 id="啟動-container">啟動 Container</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lxc-attach -n hosta</span></span><br></pre></td></tr></table></figure>
+<h3 id="關閉-container">關閉 Container</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lxc-stop -n hosta</span></span><br></pre></td></tr></table></figure>
+<h3 id="列出-container">列出 Container</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lxc-ls</span></span><br></pre></td></tr></table></figure>
+<h3 id="複製-container">複製 Container</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lxc-copy -n hosta -N hostb</span></span><br></pre></td></tr></table></figure>
+<p>-n 接原本的 container 的名字，-N 接複製過去的 container 的名字</p>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/lxc/" rel="tag">#lxc</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

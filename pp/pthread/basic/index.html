@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Pthread - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="pthread">Pthread</h1>
+<p>The POSIX threading <strong>interface</strong>. The implementation of pthread depends on the platform. (e.g. Linux: kernel thread, Windows: Win32 threads)</p>
+<h2 id="process-vs-thread">Process vs Thread</h2>
+<p><img src="2020-01-27-22-35-55.png" alt="multi-threading"></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Multi-processing</th>
+<th>Multi-threading</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Variables</td>
+<td>copies all variables</td>
+<td>share global variables</td>
+</tr>
+<tr>
+<td>IDs</td>
+<td>new process ID</td>
+<td>same process ID, unique thread ID</td>
+</tr>
+<tr>
+<td>Communication</td>
+<td>explicitly communicate (e.g. pipe)</td>
+<td>may communicate with return value or shared variables</td>
+</tr>
+<tr>
+<td>Parallelism (one CPU)</td>
+<td>concurrent</td>
+<td>concurrent</td>
+</tr>
+<tr>
+<td>Parallelism (multiple CPUs)</td>
+<td>may be executed simultaneously</td>
+<td>kernel threads may be executed simultaneously</td>
+</tr>
+</tbody>
+</table>
+<h2 id="operations">Operations</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>Compile and link with -pthread.</p>
+<h3 id="pthread-create">pthread_create</h3>
+<p>create a thread</p>
+<p><img src="2020-01-27-23-16-27.png" alt=""></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_create</span><span class="params">(<span class="keyword">pthread_t</span>            *thread,                    <span class="comment">// pthread_t object</span></span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">const</span> <span class="keyword">pthread_attr_t</span> *attr,                      <span class="comment">// thread attribute</span></span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">void</span>                 *(*start_routine) (<span class="keyword">void</span> *), <span class="comment">// function</span></span></span></span><br><span class="line"><span class="function"><span class="params">                   <span class="keyword">void</span>                 *arg)</span></span>;                      <span class="comment">// function arguments</span></span><br></pre></td></tr></table></figure>
+<p>Ref:</p>
+<ul>
+<li><a href="https://pages.mtu.edu/~shene/NSF-3/e-Book/FUNDAMENTALS/thread-management.html" target="_blank" rel="noopener">https://pages.mtu.edu/~shene/NSF-3/e-Book/FUNDAMENTALS/thread-management.html</a></li>
+<li><a href="http://man7.org/linux/man-pages/man3/pthread_create.3.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man3/pthread_create.3.html</a></li>
+</ul>
+<h3 id="pthread-join">pthread_join</h3>
+<p>wait for a thread</p>
+<p><img src="2020-01-27-23-34-19.png" alt=""></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pthread_join</span><span class="params">(<span class="keyword">pthread_t</span>  thread,</span></span></span><br><span class="line"><span class="function"><span class="params">                 <span class="keyword">void</span>       **retval)</span></span>;  <span class="comment">// return value of thread</span></span><br></pre></td></tr></table></figure>
+<p>Ref: <a href="http://man7.org/linux/man-pages/man3/pthread_join.3.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man3/pthread_join.3.html</a></p>
+<h3 id="pthread-exit">pthread_exit</h3>
+<p>exit a thread without exiting process</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pthread_exit</span><span class="params">(<span class="keyword">void</span> *retval)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>Ref: <a href="http://man7.org/linux/man-pages/man3/pthread_exit.3.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man3/pthread_exit.3.html</a></p>
+<h3 id="pthread-detach">pthread_detach</h3>
+<p>set thread to release resources</p>
+<p>Ref: <a href="http://man7.org/linux/man-pages/man3/pthread_detach.3.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man3/pthread_detach.3.html</a></p>
+<h3 id="pthread-equal">pthread_equal</h3>
+<p>test two thread IDs for equality</p>
+<p>Ref: <a href="http://man7.org/linux/man-pages/man3/pthread_equal.3.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man3/pthread_equal.3.html</a></p>
+<h3 id="pthread-kill">pthread_kill</h3>
+<p>send a signal to a thread</p>
+<p>Ref: <a href="http://man7.org/linux/man-pages/man3/pthread_kill.3.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man3/pthread_kill.3.html</a></p>
+<h3 id="pthread-cancel">pthread_cancel</h3>
+<p>send a cancellation request to a thread</p>
+<p>Ref: <a href="http://man7.org/linux/man-pages/man3/pthread_cancel.3.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man3/pthread_cancel.3.html</a></p>
+<h3 id="pthread-self">pthread_self</h3>
+<p>find out own thread ID</p>
+<p>Ref: <a href="http://man7.org/linux/man-pages/man3/pthread_self.3.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man3/pthread_self.3.html</a></p>
+<h2 id="thread-attributes">Thread Attributes</h2>
+<p>A thread may be created as a</p>
+<ul>
+<li><strong>joinable</strong> thread (the default)
+<ul>
+<li>When it terminates, its exit state is still <strong>kept</strong> in the system until another thread calls <code>pthread_join()</code> to obtain its return value</li>
+</ul>
+</li>
+<li><strong>detached</strong> thread
+<ul>
+<li>cleaned up automatically after thread terminates</li>
+<li>can’t <code>pthread_join</code> or obtain its return value</li>
+</ul>
+</li>
+</ul>
+<h3 id="basic-management">Basic management</h3>
+<p>Create (initialize with default values) and destroy a thread attribute object</p>
+<ul>
+<li><a href="http://man7.org/linux/man-pages/man3/pthread_attr_init.3.html" target="_blank" rel="noopener">pthread_attr_init</a></li>
+<li><a href="http://man7.org/linux/man-pages/man3/pthread_attr_destroy.3p.html" target="_blank" rel="noopener">pthread_attr_destroy</a></li>
+</ul>
+<h3 id="specifying-stack-information">Specifying stack information</h3>
+<p>Get and set the stack size in the attribute object for new threads</p>
+<ul>
+<li><a href="http://man7.org/linux/man-pages/man3/pthread_attr_getstacksize.3p.html" target="_blank" rel="noopener">pthread_attr_getstacksize</a></li>
+<li><a href="http://man7.org/linux/man-pages/man3/pthread_attr_setstacksize.3.html" target="_blank" rel="noopener">pthread_attr_setstacksize</a></li>
+</ul>
+<h3 id="thread-scheduling-attributes">Thread scheduling attributes</h3>
+<p>Get and set the value of the schedule policy attribute of a thread attributes object</p>
+<ul>
+<li><a href="http://man7.org/linux/man-pages/man3/pthread_attr_getschedpolicy.3p.html" target="_blank" rel="noopener">pthread_attr_getschedpolicy</a></li>
+<li><a href="http://man7.org/linux/man-pages/man3/pthread_attr_setschedpolicy.3.html" target="_blank" rel="noopener">pthread_attr_setschedpolicy</a></li>
+</ul>
+<h3 id="detachable-or-joinable-undetachable">Detachable or joinable (undetachable)</h3>
+<p>Control whether the thread is created in the joinable state</p>
+<ul>
+<li><a href="http://man7.org/linux/man-pages/man3/pthread_attr_getdetachstate.3p.html" target="_blank" rel="noopener">pthread_attr_getdetachstate</a></li>
+<li><a href="http://man7.org/linux/man-pages/man3/pthread_attr_setdetachstate.3.html" target="_blank" rel="noopener">pthread_attr_setdetachstate</a></li>
+</ul>
+<h3 id="example">Example</h3>
+<p>Set attribute to detached state</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">pthread_attr_t</span> attr;</span><br><span class="line">    <span class="keyword">pthread_t</span> thread;</span><br><span class="line"></span><br><span class="line">    pthread_attr_init(&amp;attr);</span><br><span class="line">    pthread_attr_setdetachstate(&amp;attr, PTHREAD_CREATE_DETACHED);</span><br><span class="line">    pthread_create(&amp;thread, &amp;attr, &amp;thread_function, <span class="literal">NULL</span>);</span><br><span class="line">    pthread_attr_destroy(&amp;attr);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// no need to join thread</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/PP/" rel="tag">#PP</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

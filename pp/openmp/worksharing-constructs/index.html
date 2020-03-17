@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Worksharing Constructs - OpenMP - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="worksharing-constructs">Worksharing Constructs</h1>
+<p>A worksharing construct distributes the execution of the corresponding region among the members of the team that encounters it. Threads execute portions of the region in the context of the implicit tasks that each one is executing.</p>
+<h2 id="loop-construct">Loop Construct</h2>
+<p><img src="2020-01-28-22-51-36.png" alt=""></p>
+<p>Sequential:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">    a[i] = a[i] + b[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若用 Parallel 就會變得很冗長：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">int</span> id, Nthrds, istart, iend;</span><br><span class="line">  id = omp_get_thread_num();</span><br><span class="line">  Nthrds = omp_get_num_threads();</span><br><span class="line">  istart = id * N / Nthrds;</span><br><span class="line">  iend = (id + <span class="number">1</span>) * N / Nthrds;</span><br><span class="line">  <span class="keyword">if</span> (id == Nthrds - <span class="number">1</span>) iend = N;</span><br><span class="line">  <span class="keyword">for</span> (i = istart; i &lt; iend; i++) &#123;</span><br><span class="line">    a[i] = a[i] + b[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用 loop construct：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp for</span></span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">    a[i] = a[i] + b[i];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或是</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for</span></span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">    a[i] = a[i] + b[i];</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>預設變數 <code>i</code> 為 private</p>
+</blockquote>
+<p>也可以使用 <code>collapse</code> 來表達 Nested Loop，會展開成 N * M 的單層 for loop</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for collapse(2)</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; M; j++) &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="schedule">Schedule</h3>
+<ul>
+<li><code>schedule(static[,chunk])</code></li>
+<li><code>schedule(dynamic[,chunk])</code>
+<ul>
+<li>有些 Iteration 做比較久，在 Runtime 才知道</li>
+<li>一次先拿固定量的 chunk，做完再拿下一份</li>
+<li>缺點：在 Runtime 才決定要拿哪些 Task 會花時間、chunk 切太小會影響效能</li>
+</ul>
+</li>
+<li><code>schedule(guided[,chunk])</code>
+<ul>
+<li>為了解決 dynamic 的缺點</li>
+<li>Thread 一次拿剩下的 Iteration 的一半來做</li>
+<li>直到剩下的 Iteration 數量小於 chunk，就直接做完</li>
+</ul>
+</li>
+<li><code>schedule(runtime)</code>
+<ul>
+<li><code>$ export OMP_SCHEDULE=&quot;static,1&quot;</code></li>
+</ul>
+</li>
+<li><code>schedule(auto)</code></li>
+</ul>
+<p>Default: <code>schedule(static, total_iterations/thread_count)</code></p>
+<p>For example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">schedule(static, 1):</span><br><span class="line">Thread 0: 0, 3, 6, 9</span><br><span class="line">Thread 1: 1, 4, 7, 10</span><br><span class="line">Thread 2: 2, 5, 8, 11</span><br><span class="line"></span><br><span class="line">schedule(static, 2):</span><br><span class="line">Thread 0: 0, 1, 6, 7</span><br><span class="line">Thread 1: 2, 3, 8, 9</span><br><span class="line">Thread 2: 4, 5, 10, 11</span><br></pre></td></tr></table></figure>
+<h3 id="reduction">Reduction</h3>
+<p><img src="2020-01-28-22-54-13.png" alt=""></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> ave = <span class="number">0.0</span>, A[MAX];</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; MAX; i++) &#123;</span><br><span class="line">  ave += A[i];</span><br><span class="line">&#125;</span><br><span class="line">ave = ave / MAX;</span><br></pre></td></tr></table></figure>
+<p>透過 <code>reduction (op : list)</code> 來處理平行化後 thread 間的 dependency (<code>ave</code>)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> ave = <span class="number">0.0</span>, A[MAX];</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for reduction(+ : ave)</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; MAX; i++) &#123;</span><br><span class="line">  ave += A[i];</span><br><span class="line">&#125;</span><br><span class="line">ave = ave / MAX;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>list variable 在 thread 中初始化時會依照 op 來決定初始值</p>
+</blockquote>
+<h3 id="caveats">Caveats</h3>
+<ul>
+<li><code>parallel for</code> 不會檢查 dependency</li>
+<li>沒有辦法平行化 <code>while</code> 或 <code>do-while</code></li>
+<li>for loops 要是 <a href="https://www.openmp.org/spec-html/5.0/openmpsu40.html" target="_blank" rel="noopener">canonical form</a>
+<ul>
+<li>index 要是 int or pointer type</li>
+<li>start, end, and incr 要 compatible</li>
+<li>start, end, and incr 在 loop body 中不會被改變</li>
+</ul>
+</li>
+</ul>
+<h2 id="master-single-construct">Master/Single Construct</h2>
+<p>只有 Master Thread 會執行：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line">  do_many_things();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp master</span></span><br><span class="line">  &#123; exchange_boundaries(); &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp barrier</span></span><br><span class="line">  do_many_other_things();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只有單一個 Thread 會執行：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line">  do_many_things();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp single</span></span><br><span class="line">  &#123; exchange_boundaries(); &#125;</span><br><span class="line">  do_many_other_things();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>single</code> 後有一個 barrier (可以用 <code>nowait</code> 移除 barrier)</p>
+</blockquote>
+<h2 id="sections-section-construct">Sections/Section Construct</h2>
+<p>不同 Thread 執行不同 section</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel sections</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">  <span class="keyword">double</span> a = alice();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">  <span class="keyword">double</span> b = bob();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp section</span></span><br><span class="line">  <span class="keyword">double</span> c = cy();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>sections</code> 後有一個 barrier (可以用 <code>nowait</code> 移除 barrier)</p>
+</blockquote>
+<h2 id="task-construct">Task Construct</h2>
+<p><img src="2020-01-28-23-10-34.png" alt=""></p>
+<p>Handle irregular patterns and recursive function calls</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp single</span></span><br><span class="line">  &#123;</span><br><span class="line">    node *p = head; <span class="comment">// block 1</span></span><br><span class="line">    <span class="keyword">while</span> (p) &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task firstprivate(p) <span class="comment">// single thread create a task with local value of pointer p</span></span></span><br><span class="line">      process(p); <span class="comment">// block 2</span></span><br><span class="line">      p = p-&gt;next; <span class="comment">// block 3</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="barriers">Barriers</h3>
+<p>Thread barriers: Applies to all tasks generated in the current parallel region up to the barrier</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task</span></span><br><span class="line">  foo(); <span class="comment">// multiple foo() tasks created</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp barrier <span class="comment">// All foo tasks guaranteed to be completed here</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp single</span></span><br><span class="line">  &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task <span class="comment">// one bar() task created</span></span></span><br><span class="line">    bar();</span><br><span class="line">  &#125; <span class="comment">// bar task guaranteed to be complete here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Task barriers: Applies only to tasks generated in the current task (i.e. wait until all tasks defined in the current task have completed)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task  <span class="comment">// Task 1</span></span></span><br><span class="line">&#123;</span><br><span class="line">  ...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task  <span class="comment">// Task 2</span></span></span><br><span class="line">  &#123;</span><br><span class="line">    do_work1();</span><br><span class="line">  &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task  <span class="comment">// Task 3</span></span></span><br><span class="line">  &#123;</span><br><span class="line">    ...</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task  <span class="comment">// Task 4</span></span></span><br><span class="line">    &#123;</span><br><span class="line">      do_work2();</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp taskwait <span class="comment">// Task 3 wait for the completion of Task 4.</span></span></span><br><span class="line">                     <span class="comment">// It does not wait for the completion of Task 2 or Task 1</span></span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="if-clause">if Clause</h3>
+<p>expression 為 true 則建立一個 task</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task <span class="meta-keyword">if</span> (expression)</span></span><br></pre></td></tr></table></figure>
+<h3 id="final-clause">final Clause</h3>
+<p>expression 為 true 則不要再繼續建立 task</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task final (expression)</span></span><br></pre></td></tr></table></figure>
+<h3 id="untied-clause">untied Clause</h3>
+<p>Specifies that the task is never tied to the thread that started its execution. Any thread in the team can resume the task region after a suspension. (thread switch)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task untied</span></span><br></pre></td></tr></table></figure>
+<h3 id="mergeable-clause">mergeable Clause</h3>
+<p>A merged task is a task whose data environment is the same as that of its generating task region, which allows the implementation to reuse the environment from another task</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp task mergeable</span></span><br></pre></td></tr></table></figure>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/PP/" rel="tag">#PP</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          FTP Server with LDAP-Backend - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="ftp-server-with-ldap-backend">FTP Server with LDAP-Backend</h1>
+<p>建立一個以 LDAP 管理用戶，且只有 LDAP 中特定的 group 能登錄的 FTP Server。</p>
+<p>環境：Ubuntu 16.04 (DigitalOcean)</p>
+<h2 id="openldap">OpenLDAP</h2>
+<h3 id="安裝">安裝</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt-get install slapd ldap-utils</span></span><br></pre></td></tr></table></figure>
+<h3 id="config">Config</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo dpkg-reconfigure slapd</span></span><br></pre></td></tr></table></figure>
+<h3 id="新增-ou">新增 OU</h3>
+<p>添加 People 和 Groups 兩個 ou</p>
+<p>add_nodes.ldif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dn: ou&#x3D;people,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">ou: People</span><br><span class="line"></span><br><span class="line">dn: ou&#x3D;groups,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">ou: Groups</span><br></pre></td></tr></table></figure>
+<p>之後加入 LDAP 中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapadd -x -W -D cn=admin,dc=kaiiiz,dc=nctucs,dc=net -f add_nodes.ldif</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-x: Use simple authentication instead of SASL.</p>
+<p>-W: Prompt for simple authentication.</p>
+<p>-D <strong>binddn</strong>: Use the Distinguished Name <strong>binddn</strong> to bind to the LDAP directory.For SASL binds, the server is expected to ignore this value.</p>
+<p>-f <strong>file</strong>: Read the entry modification information from <strong>file</strong> instead of from standard input.</p>
+</blockquote>
+<h3 id="ldap-資料庫">LDAP 資料庫</h3>
+<p>檔案存在 /etc/openldap/slapd.d/cn=config</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ls /etc/openldap/slapd.d/cn=config</span></span><br><span class="line">cn=module&#123;0&#125;.ldif  cn=schema  cn=schema.ldif  olcBackend=&#123;0&#125;mdb.ldif  olcDatabase=&#123;0&#125;config.ldif  olcDatabase=&#123;-1&#125;frontend.ldif  olcDatabase=&#123;1&#125;mdb.ldif</span><br></pre></td></tr></table></figure>
+<p>要注意的是下面兩條：</p>
+<ul>
+<li>cn=module{0}.ldif</li>
+<li>olcDatabase={1}mdb.ldif</li>
+</ul>
+<h3 id="memberof">memberOf</h3>
+<p>參考資料：<a href="https://tw.saowen.com/a/51575ba6787a4141906bbedc777549af7dc4bb19044d67c4e06a8105184f2100" target="_blank" rel="noopener">在openLdap上新增memberOf屬性</a></p>
+<p>有幾個新舊版的差異：</p>
+<ul>
+<li>使用者組的objectClass從 <strong>groupOfNames</strong> 變成了 <strong>groupOfUniqueNames</strong></li>
+<li>組裡邊的使用者的屬性的名稱從 <strong>member</strong> 變成了 <strong>uniqueMember</strong></li>
+</ul>
+<h4 id="新增模組">新增模組</h4>
+<p>memberof_config.ldif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">dn: cn&#x3D;module,cn&#x3D;config</span><br><span class="line">cn: module</span><br><span class="line">objectClass: olcModuleList</span><br><span class="line">olcModuleLoad: memberof</span><br><span class="line">olcModulePath: &#x2F;usr&#x2F;lib&#x2F;ldap</span><br><span class="line"></span><br><span class="line">dn: olcOverlay&#x3D;&#123;0&#125;memberof,olcDatabase&#x3D;&#123;1&#125;mdb,cn&#x3D;config</span><br><span class="line">objectClass: olcConfig</span><br><span class="line">objectClass: olcMemberOf</span><br><span class="line">objectClass: olcOverlayConfig</span><br><span class="line">objectClass: top</span><br><span class="line">olcOverlay: memberof</span><br><span class="line">olcMemberOfDangling: ignore</span><br><span class="line">olcMemberOfRefInt: TRUE</span><br><span class="line">olcMemberOfGroupOC: groupOfUniqueNames</span><br><span class="line">olcMemberOfMemberAD: uniqueMember</span><br><span class="line">olcMemberOfMemberOfAD: memberOf</span><br></pre></td></tr></table></figure>
+<p>加進 LDAP 中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapadd -Q -Y EXTERNAL -H ldapi:/// -f memberof_config.ldif</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-Q: Enable SASL Quiet mode.  Never prompt.</p>
+<p>-Y <strong>mech</strong>: Specify the SASL mechanism to be used for authentication. If it’s not specified, the program will  choose  the  best  mechanism  the  server knows.</p>
+<p>-H <strong>ldapuri</strong>: Specify  URI(s)  referring  to the ldap server(s); only the protocol/host/port fields are allowed; a list of URI, separated by whitespace or commas is expected.</p>
+</blockquote>
+<p>檢查是否有多一個模組</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ls /etc/openldap/slapd.d/cn=config</span></span><br><span class="line">cn=module&#123;0&#125;.ldif  cn=schema       olcBackend=&#123;0&#125;mdb.ldif      olcDatabase=&#123;-1&#125;frontend.ldif  olcDatabase=&#123;1&#125;mdb.ldif</span><br><span class="line">cn=module&#123;1&#125;.ldif  cn=schema.ldif  olcDatabase=&#123;0&#125;config.ldif  olcDatabase=&#123;1&#125;mdb</span><br></pre></td></tr></table></figure>
+<p>確認 {0} 和 {1} 哪個模組是 memberOf 的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo cat cn=config/cn=module&#123;1&#125;.ldif</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> AUTO-GENERATED FILE - DO NOT EDIT!! Use ldapmodify.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> CRC32 3b859294</span></span><br><span class="line">dn: cn=module&#123;1&#125;</span><br><span class="line">objectClass: olcModuleList</span><br><span class="line">cn: module&#123;1&#125;</span><br><span class="line">olcModulePath: /usr/lib/ldap</span><br><span class="line">olcModuleLoad: &#123;0&#125;memberof</span><br><span class="line">structuralObjectClass: olcModuleList</span><br><span class="line">entryUUID: 54d20f40-0ef2-1038-95a9-c9d65903e937</span><br><span class="line">creatorsName: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth</span><br><span class="line">createTimestamp: 20180628074053Z</span><br><span class="line">entryCSN: 20180628074053.872377Z#000000#000#000000</span><br><span class="line">modifiersName: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth</span><br><span class="line">modifyTimestamp: 20180628074053Z</span><br></pre></td></tr></table></figure>
+<p>確認 cn=module{1} 這個模組是 memberOf 的模組</p>
+<h4 id="load-refint">Load refint</h4>
+<p>refint1.ldif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dn: cn&#x3D;module&#123;1&#125;,cn&#x3D;config</span><br><span class="line">add: olcmoduleload</span><br><span class="line">olcmoduleload: refint</span><br></pre></td></tr></table></figure>
+<p>載入 refint 模組</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f refint1.ldif</span></span><br></pre></td></tr></table></figure>
+<p>比較一下差異：</p>
+<p>Before:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">olcModulePath: &#x2F;usr&#x2F;lib&#x2F;ldap</span><br><span class="line">olcModuleLoad: &#123;0&#125;memberof</span><br><span class="line">structuralObjectClass: olcModuleList</span><br><span class="line">entryUUID: 54d20f40-0ef2-1038-95a9-c9d65903e937</span><br><span class="line">creatorsName: gidNumber&#x3D;0+uidNumber&#x3D;0,cn&#x3D;peercred,cn&#x3D;external,cn&#x3D;auth</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>After:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">olcModulePath: &#x2F;usr&#x2F;lib&#x2F;ldap</span><br><span class="line">olcModuleLoad: &#123;0&#125;memberof</span><br><span class="line">olcModuleLoad: &#123;1&#125;refint</span><br><span class="line">structuralObjectClass: olcModuleList</span><br><span class="line">entryUUID: 54d20f40-0ef2-1038-95a9-c9d65903e937</span><br><span class="line">creatorsName: gidNumber&#x3D;0+uidNumber&#x3D;0,cn&#x3D;peercred,cn&#x3D;external,cn&#x3D;auth</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>中間多了一個 olcModuleLoad: {1}refint</p>
+<h4 id="configure-refint">Configure refint</h4>
+<p>refint2.ldif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dn: olcOverlay&#x3D;&#123;1&#125;refint,olcDatabase&#x3D;&#123;1&#125;mdb,cn&#x3D;config</span><br><span class="line">objectClass: olcConfig</span><br><span class="line">objectClass: olcOverlayConfig</span><br><span class="line">objectClass: olcRefintConfig</span><br><span class="line">objectClass: top</span><br><span class="line">olcOverlay: &#123;1&#125;refint</span><br><span class="line">olcRefintAttribute: memberof uniqueMember manager owner</span><br></pre></td></tr></table></figure>
+<p>{1}refint 要寫對，最後新增</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapadd -Q -Y EXTERNAL -H ldapi:/// -f refint2.ldif</span></span><br></pre></td></tr></table></figure>
+<h3 id="新增-member">新增 member</h3>
+<p>add_member.ldif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">dn: uid&#x3D;andy,ou&#x3D;people,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net</span><br><span class="line">cn: Andy Zheng</span><br><span class="line">gn: Andy</span><br><span class="line">sn: Lee</span><br><span class="line">uid: andy</span><br><span class="line">uidNumber: 5001</span><br><span class="line">gidNumber: 10000</span><br><span class="line">homeDirectory: &#x2F;home&#x2F;andy</span><br><span class="line">mail: andy@kaiiiz.nctucs.net</span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: posixAccount</span><br><span class="line">objectClass: shadowAccount</span><br><span class="line">objectClass: inetOrgPerson</span><br><span class="line">objectClass: organizationalPerson</span><br><span class="line">objectClass: person</span><br><span class="line">loginShell: &#x2F;bin&#x2F;bash</span><br><span class="line">userPassword: &#123;SHA&#125;YOURPASSWORD</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>gn: givenName<br>
+sn: surname</p>
+</blockquote>
+<p>生成加密後的密碼的指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> slappasswd -h &#123;SHA&#125; -s your_password</span></span><br></pre></td></tr></table></figure>
+<p>把 member 加入 LDAP</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapadd -x -W -D cn=admin,dc=kaiiiz,dc=nctucs,dc=net -f add_member.ldif</span></span><br></pre></td></tr></table></figure>
+<p>測試一下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapsearch -x -LLL -H ldap:/// -b uid=andy,ou=people,dc=kaiiiz,dc=nctucs,dc=net dn</span></span><br><span class="line">dn: uid=andy,ou=people,dc=kaiiiz,dc=nctucs,dc=net</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-LLL: Search results are display in LDAP Data Interchange Format detailed in ldif(5). A single -L restricts the output to <strong>LDIFv1</strong>. A second -L <strong>disables comments</strong>.  A third -L <strong>disables printing of the LDIF version</strong>.  The default is to use an extended version of LDIF</p>
+<p>-b <strong>searchbase</strong>: Use <strong>searchbase</strong> as the starting point for the search instead of the default.</p>
+</blockquote>
+<h3 id="新增-group">新增 group</h3>
+<p>sysgroup.ldif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dn: cn&#x3D;sysgroup,ou&#x3D;groups,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net</span><br><span class="line">objectClass: groupOfUniqueNames</span><br><span class="line">cn: sysgroup</span><br><span class="line">description: All users</span><br><span class="line">uniqueMember: uid&#x3D;andy,ou&#x3D;people,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net</span><br></pre></td></tr></table></figure>
+<p>把 group 加入 LDAP</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapadd -x -W -D cn=admin,dc=kaiiiz,dc=nctucs,dc=net -f sysgroup.ldif</span></span><br></pre></td></tr></table></figure>
+<p>測試一下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapsearch -x -LLL -H ldap:/// -b cn=sysgroup,ou=groups,dc=kaiiiz,dc=nctucs,dc=net dn</span></span><br><span class="line">dn: cn=sysgroup,ou=groups,dc=kaiiiz,dc=nctucs,dc=net</span><br></pre></td></tr></table></figure>
+<h3 id="把-member-加入-group-中">把 member 加入 group 中</h3>
+<p>add_member_to_group.ldif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dn: cn&#x3D;sysgroup,ou&#x3D;groups,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net</span><br><span class="line">changetype: modify</span><br><span class="line">add: uniqueMember</span><br><span class="line">uniqueMember: uid&#x3D;andy,ou&#x3D;people,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net</span><br></pre></td></tr></table></figure>
+<p>加進 LDAP</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapmodify -x -W -D cn=admin,dc=kaiiiz,dc=nctucs,dc=net -f add_member_to_group.ldif</span></span><br></pre></td></tr></table></figure>
+<p>測試一下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ldapsearch -x -LLL -H ldap:/// -b uid=andy,ou=people,dc=kaiiiz,dc=nctucs,dc=net dn memberof</span></span><br><span class="line">dn: uid=andy,ou=people,dc=kaiiiz,dc=nctucs,dc=net</span><br><span class="line">memberOf: cn=sysgroup,ou=groups,dc=kaiiiz,dc=nctucs,dc=net</span><br></pre></td></tr></table></figure>
+<h3 id="刪除-entry">刪除 entry</h3>
+<p>delete.ldif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dn: cn&#x3D;sysgroup,ou&#x3D;groups,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net</span><br><span class="line">changetype: delete</span><br></pre></td></tr></table></figure>
+<p>用 ldapmodify 修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ldapmodify -x -W -H ldap:/// -D cn=admin,dc=kaiiiz,dc=nctucs,dc=net -f delete.ldif</span></span><br></pre></td></tr></table></figure>
+<h3 id="取代-entry">取代 entry</h3>
+<p>replace.ldif</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dn: uid&#x3D;andy,ou&#x3D;people,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net</span><br><span class="line">changetype: modify</span><br><span class="line">replace: userPassword</span><br><span class="line">userPassword: &#123;SHA&#125;YOURPASSWORD</span><br></pre></td></tr></table></figure>
+<p>用 ldapmodify 修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ldapmodify -x -W -H ldap:/// -D cn=admin,dc=kaiiiz,dc=nctucs,dc=net -f replace.ldif</span></span><br></pre></td></tr></table></figure>
+<h2 id="ftp-ldap">FTP + LDAP</h2>
+<p>先進入 hostb</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> lxc-attach -n hostb</span></span><br></pre></td></tr></table></figure>
+<h3 id="安裝-v2">安裝</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install proftpd proftpd-mod-ldap</span></span><br></pre></td></tr></table></figure>
+<h3 id="standalone-v-s-inetd">standalone v.s. inetd</h3>
+<p>standalone：FTP 會常駐於記憶體，優點是反應快<br>
+inetd：當外部連線發送請求時才調用 FTP，優點是不佔用系統資源</p>
+<h3 id="設定-proftpd">設定 proftpd</h3>
+<p>/etc/proftpd/proftpd.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Server &quot;kaiiiz.nctucs.net&quot;</span><br><span class="line">...</span><br><span class="line">DefaultRoot ~</span><br><span class="line">...</span><br><span class="line">RequireValidShell off</span><br><span class="line">...</span><br><span class="line">Include &#x2F;etc&#x2F;proftpd&#x2F;ldap.conf</span><br></pre></td></tr></table></figure>
+<h3 id="開啟-ldap-的模組">開啟 LDAP 的模組</h3>
+<p>/etc/proftpd/modules.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LoadModule mod_ldap.c</span><br></pre></td></tr></table></figure>
+<h3 id="接上-server-的-ldap">接上 Server 的 LDAP</h3>
+<p>/etc/proftpd/ldap.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;IfModule mod_ldap.c&gt;</span><br><span class="line"></span><br><span class="line">LDAPServer ldap:&#x2F;&#x2F;10.0.3.1</span><br><span class="line">LDAPBindDN &quot;cn&#x3D;admin,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net&quot; &quot;password&quot;</span><br><span class="line">LDAPUsers &quot;uid&#x3D;%u,ou&#x3D;people,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net&quot; &quot;memberOf&#x3D;cn&#x3D;sysgroup,ou&#x3D;groups,dc&#x3D;kaiiiz,dc&#x3D;nctucs,dc&#x3D;net&quot;</span><br><span class="line"></span><br><span class="line">LDAPDefaultUID 107</span><br><span class="line">LDAPDefaultGID 65534</span><br><span class="line"></span><br><span class="line">LDAPGenerateHomedir on</span><br><span class="line">LDAPGenerateHomedirPrefix &#x2F;home&#x2F;ftp</span><br><span class="line">LDAPForceGeneratedHomedir on</span><br><span class="line">LDAPGenerateHomedirPrefixNoUsername off</span><br><span class="line">CreateHome on</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;IfModule&gt;</span><br></pre></td></tr></table></figure>
+<p>LDAPDefaultUID 及 LDAPDefaultGID 可由下方這條指令得到：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /etc/passwd | grep proftpd</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>LDAPUsers: 要 memberOf sysgroup 的成員才能 Login FTP</p>
+<p>LDAPGenerateHomedir, LDAPGenerateHomedirPrefix, LDAPForceGeneratedHomedir: 設定家目錄為 /home/ftp ，作為 LDAP 用戶登入的家目錄</p>
+<p>LDAPGenerateHomedirPrefixNoUsername: 在家目錄下，建立用戶的個人目錄，若設為 on 則所有人共享同個目錄</p>
+<p>CreateHome: 若家目錄不存在即建立它</p>
+</blockquote>
+<h3 id="測試">測試</h3>
+<p>在 Server 中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ftp 10.0.3.150</span></span><br><span class="line">Connected to 10.0.3.150.</span><br><span class="line">220 ProFTPD 1.3.5a Server (kaiiiz.nctucs.net) [::ffff:10.0.3.150]</span><br><span class="line">Name (10.0.3.150:andy): andy</span><br><span class="line">331 Password required for andy</span><br><span class="line">Password:</span><br><span class="line">230 User andy logged in</span><br><span class="line">Remote system type is UNIX.</span><br><span class="line">Using binary mode to transfer files.</span><br><span class="line"><span class="meta">ftp&gt;</span></span><br></pre></td></tr></table></figure>
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2018-06-28</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a> <a class="tag-link" href="/note/tags/openldap/" rel="tag">#openldap</a> <a class="tag-link" href="/note/tags/proftpd/" rel="tag">#proftpd</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

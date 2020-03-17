@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Consolidating Data - MPI - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="consolidating-data">Consolidating Data</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> x[<span class="number">1000</span>];</span><br><span class="line">...</span><br><span class="line"><span class="keyword">if</span> (my rank == <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++)</span><br><span class="line">        MPI_Send(&amp;x[i], <span class="number">1</span>, MPI DOUBLE, <span class="number">1</span>, <span class="number">0</span>, comm);</span><br><span class="line"><span class="keyword">else</span> <span class="comment">/* my rank == 1 */</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++)</span><br><span class="line">        MPI_Recv(&amp;x[i], <span class="number">1</span>, MPI DOUBLE, <span class="number">0</span>, <span class="number">0</span>, comm, &amp;status);</span><br></pre></td></tr></table></figure>
+<p>is much slower than</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> x[<span class="number">1000</span>];</span><br><span class="line"><span class="keyword">if</span> (my rank == <span class="number">0</span>)</span><br><span class="line">    MPI_Send(x, <span class="number">1000</span>, MPI DOUBLE, <span class="number">1</span>, <span class="number">0</span>, comm);</span><br><span class="line"><span class="keyword">else</span> <span class="comment">/* my rank == 1 */</span></span><br><span class="line">    MPI_Recv(x, <span class="number">1000</span>, MPI DOUBLE, <span class="number">0</span>, <span class="number">0</span>, comm, &amp;status);</span><br></pre></td></tr></table></figure>
+<p>MPI provides three basic approaches to consolidating data that might otherwise require multiple messages</p>
+<ul>
+<li>the count argument to the various communication functions</li>
+<li>derived datatypes</li>
+<li>MPI_Pack/Unpack</li>
+</ul>
+<h2 id="derived-datatypes">Derived Datatypes</h2>
+<ul>
+<li>A sending process can pack noncontiguous data into contiguous buffer and send the buffered data to a receiving process that can unpack the contiguous buffer and store the data to noncontiguous location</li>
+<li>A derived datatype is an opaque object that specifies
+<ul>
+<li>A sequence of primitive datatypes</li>
+<li>A sequence of integer (byte) displacements</li>
+</ul>
+</li>
+</ul>
+<p>MPI Basic Data Types: <a href="https://www.mpi-forum.org/docs/mpi-2.1/mpi21-report-bw/node330.htm" target="_blank" rel="noopener">https://www.mpi-forum.org/docs/mpi-2.1/mpi21-report-bw/node330.htm</a></p>
+<h3 id="contiguous">Contiguous</h3>
+<p>Contiguous datatype constructors create a new datatype by making count copies of existing data type (old_type)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Type_contiguous</span><span class="params">(<span class="keyword">int</span>             count,</span></span></span><br><span class="line"><span class="function"><span class="params">                        MPI_Datatype    old_type,</span></span></span><br><span class="line"><span class="function"><span class="params">                        MPI_Datatype*   new_type)</span></span></span><br></pre></td></tr></table></figure>
+<p>Send a row of data once.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mpi.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIZE 4</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> numtasks, rank, source = <span class="number">0</span>, dest, tag = <span class="number">1</span>, i;</span><br><span class="line">    MPI_Request req;</span><br><span class="line">    <span class="keyword">float</span> a[SIZE][SIZE] = &#123;<span class="number">1.0</span>, <span class="number">2.0</span>,  <span class="number">3.0</span>,  <span class="number">4.0</span>,  <span class="number">5.0</span>,  <span class="number">6.0</span>,  <span class="number">7.0</span>,  <span class="number">8.0</span>,</span><br><span class="line">                           <span class="number">9.0</span>, <span class="number">10.0</span>, <span class="number">11.0</span>, <span class="number">12.0</span>, <span class="number">13.0</span>, <span class="number">14.0</span>, <span class="number">15.0</span>, <span class="number">16.0</span>&#125;;</span><br><span class="line">    <span class="keyword">float</span> b[SIZE];</span><br><span class="line">    MPI_Status stat;</span><br><span class="line">    MPI_Datatype rowtype;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;numtasks);</span><br><span class="line">    MPI_Type_contiguous(SIZE, MPI_FLOAT, &amp;rowtype); <span class="comment">/* Homogenous datastructure of size 4 */</span></span><br><span class="line">    MPI_Type_commit(&amp;rowtype);</span><br><span class="line">    <span class="keyword">if</span> (numtasks == SIZE) &#123;</span><br><span class="line">        <span class="keyword">if</span> (rank == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; numtasks; i++) &#123;</span><br><span class="line">                dest = i;</span><br><span class="line">                MPI_Isend(&amp;a[i][<span class="number">0</span>], <span class="number">1</span>, rowtype, dest, tag, MPI_COMM_WORLD, &amp;req);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        MPI_Recv(b, SIZE, MPI_FLOAT, source, tag, MPI_COMM_WORLD, &amp;stat);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"rank = %d b = %3.1f %3.1f %3.1f %3.1f\n"</span>, rank, b[<span class="number">0</span>], b[<span class="number">1</span>], b[<span class="number">2</span>], b[<span class="number">3</span>]);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Must specify %d processors.Terminating.\n"</span>, SIZE);</span><br><span class="line">    &#125;</span><br><span class="line">    MPI_Type_free(&amp;rowtype);</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="vector">Vector</h3>
+<p>Returns a new datatype that represents equally spaced blocks. The spacing between the start of each block is given in units of extent (oldtype).</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Type_vector</span><span class="params">(<span class="keyword">int</span>                 count,      <span class="comment">/* the number of blocks */</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">int</span>                 blocklen,   <span class="comment">/* the number of elements in each block */</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    <span class="keyword">int</span>                 stride,     <span class="comment">/* the number of elements between start of each block of the old_type */</span></span></span></span><br><span class="line"><span class="function"><span class="params">                    MPI_Datatype        old_type,</span></span></span><br><span class="line"><span class="function"><span class="params">                    MPI_Datatype*       newtype)</span></span></span><br></pre></td></tr></table></figure>
+<p><img src="2020-01-31-22-08-59.png" alt=""></p>
+<p>Send a coloumn of data once.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mpi.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIZE 4</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> numtasks, rank, source = <span class="number">0</span>, dest, tag = <span class="number">1</span>, i;</span><br><span class="line">    MPI_Request req;</span><br><span class="line">    <span class="keyword">float</span> a[SIZE][SIZE] = &#123;<span class="number">1.0</span>, <span class="number">2.0</span>,  <span class="number">3.0</span>,  <span class="number">4.0</span>,  <span class="number">5.0</span>,  <span class="number">6.0</span>,  <span class="number">7.0</span>,  <span class="number">8.0</span>,</span><br><span class="line">                           <span class="number">9.0</span>, <span class="number">10.0</span>, <span class="number">11.0</span>, <span class="number">12.0</span>, <span class="number">13.0</span>, <span class="number">14.0</span>, <span class="number">15.0</span>, <span class="number">16.0</span>&#125;;</span><br><span class="line">    <span class="keyword">float</span> b[SIZE];</span><br><span class="line">    MPI_Status stat;</span><br><span class="line">    MPI_Datatype columntype;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;numtasks);</span><br><span class="line">    MPI_Type_vector(SIZE, <span class="number">1</span>, SIZE, MPI_FLOAT, &amp;columntype);</span><br><span class="line">    MPI_Type_commit(&amp;columntype);</span><br><span class="line">    <span class="keyword">if</span> (numtasks == SIZE) &#123;</span><br><span class="line">        <span class="keyword">if</span> (rank == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; numtasks; i++)</span><br><span class="line">                MPI_Isend(&amp;a[<span class="number">0</span>][i], <span class="number">1</span>, columntype, i, tag, MPI_COMM_WORLD, &amp;req);</span><br><span class="line">        &#125;</span><br><span class="line">        MPI_Recv(b, SIZE, MPI_FLOAT, source, tag, MPI_COMM_WORLD, &amp;stat);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"rank= %d b= %3.1f %3.1f %3.1f %3.1f\n"</span>, rank, b[<span class="number">0</span>], b[<span class="number">1</span>], b[<span class="number">2</span>], b[<span class="number">3</span>]);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Must specify %d processors. Terminating.\n"</span>, SIZE);</span><br><span class="line">    &#125;</span><br><span class="line">    MPI_Type_free(&amp;columntype);</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="indexed">Indexed</h3>
+<ul>
+<li>Returns a new datatype that represents count blocks.</li>
+<li>Displacements are expressed in units of extent(oldtype).</li>
+<li>The <code>count</code> is
+<ul>
+<li>the number of blocks</li>
+<li>the number of entries in <code>array_of_displacements</code> (displacement of each block in units of the oldtype) and <code>array_of_blocklengths</code> (number of instances of oldtype in each block)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Type_indexed</span><span class="params">(<span class="keyword">int</span>                count,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">int</span>*               array_of_blocklengths,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">int</span>*               array_of_displacements,</span></span></span><br><span class="line"><span class="function"><span class="params">                     MPI_Datatype       oldtype,</span></span></span><br><span class="line"><span class="function"><span class="params">                     MPI_datatype*      newtype)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><img src="2020-01-31-22-17-12.png" alt=""></p>
+<ul>
+<li>從 0 (displacements[0]) 開始後 2 個 (blocklengths[0])</li>
+<li>從 4 (displacements[1]) 開始後 4 個 (blocklengths[1])</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mpi.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NELEMENTS 6</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> numtasks, rank, source = <span class="number">0</span>, dest, tag = <span class="number">1</span>, i;</span><br><span class="line">    MPI_Request req;</span><br><span class="line">    <span class="keyword">float</span> a[<span class="number">16</span>] = &#123;<span class="number">1.0</span>, <span class="number">2.0</span>,  <span class="number">3.0</span>,  <span class="number">4.0</span>,  <span class="number">5.0</span>,  <span class="number">6.0</span>,  <span class="number">7.0</span>,  <span class="number">8.0</span>,</span><br><span class="line">                   <span class="number">9.0</span>, <span class="number">10.0</span>, <span class="number">11.0</span>, <span class="number">12.0</span>, <span class="number">13.0</span>, <span class="number">14.0</span>, <span class="number">15.0</span>, <span class="number">16.0</span>&#125;;</span><br><span class="line">    <span class="keyword">float</span> b[NELEMENTS];</span><br><span class="line">    MPI_Status stat;</span><br><span class="line">    MPI_Datatype indextype;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;numtasks);</span><br><span class="line">    <span class="keyword">int</span> blocklengths[<span class="number">2</span>] = &#123;<span class="number">4</span>, <span class="number">2</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> displacements[<span class="number">2</span>] = &#123;<span class="number">5</span>, <span class="number">12</span>&#125;;</span><br><span class="line">    MPI_Type_indexed(<span class="number">2</span>, blocklengths, displacements, MPI_FLOAT, &amp;indextype);</span><br><span class="line">    MPI_Type_commit(&amp;indextype);</span><br><span class="line">    <span class="keyword">if</span> (rank == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; numtasks; i++)</span><br><span class="line">            MPI_Isend(a, <span class="number">1</span>, indextype, i, tag, MPI_COMM_WORLD, &amp;req);</span><br><span class="line">    &#125;</span><br><span class="line">    MPI_Recv(b, NELEMENTS, MPI_FLOAT, source, tag, MPI_COMM_WORLD, &amp;stat);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"rank= %d b= %3.1f %3.1f %3.1f %3.1f %3.1f %3.1f\n"</span>, rank, b[<span class="number">0</span>], b[<span class="number">1</span>], b[<span class="number">2</span>], b[<span class="number">3</span>], b[<span class="number">4</span>], b[<span class="number">5</span>]);</span><br><span class="line">    MPI_Type_free(&amp;indextype);</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rank&#x3D; 0 b &#x3D; 6.0 7.0 8.0 9.0 13.0 14.0</span><br><span class="line">rank&#x3D; 2 b &#x3D; 6.0 7.0 8.0 9.0 13.0 14.0</span><br><span class="line">rank&#x3D; 1 b &#x3D; 6.0 7.0 8.0 9.0 13.0 14.0</span><br><span class="line">rank&#x3D; 3 b &#x3D; 6.0 7.0 8.0 9.0 13.0 14.0</span><br></pre></td></tr></table></figure>
+<h3 id="struct">Struct</h3>
+<ul>
+<li>Returns a new datatype that represents count blocks.</li>
+<li>Displacements are expressed in <code>bytes</code>.</li>
+<li><code>count</code> is an integer that specifies the number of blocks (number of entries in arrays).</li>
+<li><code>array_of_blocklengths</code> is the number of elements in each blocks</li>
+<li><code>array_of_displacements</code> specifies the byte displacement of each block.</li>
+<li><code>array_of_types</code> represent type of elements in each block.</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Type_create_struct</span><span class="params">(<span class="keyword">int</span>              count,</span></span></span><br><span class="line"><span class="function"><span class="params">                           <span class="keyword">int</span>*             array_of_blocklengths,</span></span></span><br><span class="line"><span class="function"><span class="params">                           MPI_Aint*        array_of_displacements,</span></span></span><br><span class="line"><span class="function"><span class="params">                           MPI_Datatype*    array_of_types,</span></span></span><br><span class="line"><span class="function"><span class="params">                           MPI_Datatype*    newtype)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"mpi.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NELEM 25</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">float</span> x, y, z;</span><br><span class="line">    <span class="keyword">float</span> velocity;</span><br><span class="line">    <span class="keyword">int</span> n, type;</span><br><span class="line">&#125; Particle;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> numtasks, rank, source = <span class="number">0</span>, dest, tag = <span class="number">1</span>, i;</span><br><span class="line">    Particle p[NELEM], particles[NELEM];</span><br><span class="line">    <span class="comment">/* MPI_Aint type used to be consistent with syntax of */</span></span><br><span class="line">    <span class="comment">/* MPI_Type_get_extent routine */</span></span><br><span class="line">    MPI_Aint lb, float_extent;</span><br><span class="line">    MPI_Status stat;</span><br><span class="line">    <span class="comment">/* Float, Float, Float, Float, Int, Int */</span></span><br><span class="line">    <span class="keyword">int</span> blockcounts[<span class="number">2</span>] = &#123;<span class="number">4</span>, <span class="number">2</span>&#125;;</span><br><span class="line">    MPI_Aint offsets[<span class="number">2</span>] = &#123;<span class="number">0</span>, <span class="number">4</span> * float_extent&#125;;</span><br><span class="line">    MPI_Datatype particletype, oldtypes[<span class="number">2</span>] = &#123;MPI_FLOAT, MPI_INT&#125;;</span><br><span class="line">    MPI_Init(&amp;argc, &amp;argv);</span><br><span class="line">    MPI_Comm_rank(MPI_COMM_WORLD, &amp;rank);</span><br><span class="line">    MPI_Comm_size(MPI_COMM_WORLD, &amp;numtasks);</span><br><span class="line">    MPI_Type_get_extent(MPI_FLOAT, &amp;lb, &amp;float_extent);</span><br><span class="line">    MPI_Type_create_struct(<span class="number">2</span>, blockcounts, offsets, oldtypes, &amp;particletype);</span><br><span class="line">    MPI_Type_commit(&amp;particletype);</span><br><span class="line">    <span class="keyword">if</span> (rank == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; NELEM; i++) &#123;</span><br><span class="line">            particles[i].x = i * <span class="number">1.0</span>;</span><br><span class="line">            particles[i].y = i * <span class="number">-1.0</span>;</span><br><span class="line">            particles[i].z = i * <span class="number">1.0</span>;</span><br><span class="line">            particles[i].velocity = <span class="number">0.25</span>;</span><br><span class="line">            particles[i].n = i;</span><br><span class="line">            particles[i].type = i % <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; numtasks; i++)</span><br><span class="line">            MPI_Send(particles, NELEM, particletype, i, tag, MPI_COMM_WORLD);</span><br><span class="line">    &#125;</span><br><span class="line">    MPI_Recv(p, NELEM, particletype, source, tag, MPI_COMM_WORLD, &amp;stat);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"rank= %d %3.2f %3.2f %3.2f %3.2f %d %d\n"</span>, rank, p[<span class="number">3</span>].x, p[<span class="number">3</span>].y, p[<span class="number">3</span>].z, p[<span class="number">3</span>].velocity, p[<span class="number">3</span>].n, p[<span class="number">3</span>].type);</span><br><span class="line">    MPI_Type_free(&amp;particletype);</span><br><span class="line">    MPI_Finalize();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="mpi-pack-mpi-unpack">MPI_Pack/MPI_Unpack</h2>
+<ul>
+<li>We explicitly pack non-contiguous data into a contiguous buffer for transmission, then unpack it at the other end.</li>
+<li>When sending/receiving packed messages, must use <code>MPI_PACKED</code> datatype in send/receive calls.</li>
+</ul>
+<h3 id="packing">Packing</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Pack</span><span class="params">(<span class="keyword">void</span>*          inbuf,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">int</span>            incount, </span></span></span><br><span class="line"><span class="function"><span class="params">             MPI_Datatype   datatype,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">void</span>*          outbuf,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">int</span>            outsize,</span></span></span><br><span class="line"><span class="function"><span class="params">             <span class="keyword">int</span>*           position,</span></span></span><br><span class="line"><span class="function"><span class="params">             MPI_Comm       comm)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>will pack the information specified by <code>inbuf</code> and <code>incount</code> into the buffer space provided by <code>outbuf</code> and <code>outsize</code></li>
+<li>the current packing call will pack this data starting at offset <code>position</code> in the <code>outbuf</code></li>
+<li><code>position</code> is incremented by the size of the packed message</li>
+</ul>
+<h3 id="unpacking">Unpacking</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MPI_Unpack</span><span class="params">(<span class="keyword">void</span>*        inbuf,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">int</span>          insize,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">int</span>*         position,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">void</span>*        outbuf,</span></span></span><br><span class="line"><span class="function"><span class="params">               <span class="keyword">int</span>          outcount, </span></span></span><br><span class="line"><span class="function"><span class="params">               MPI_Datatype datatype,</span></span></span><br><span class="line"><span class="function"><span class="params">               MPI_Comm     comm)</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>unpacks message to <code>outbuf</code></li>
+<li>updates the <code>position</code> argument so it can be used in a subsequent call to <code>MPI_Unpack</code></li>
+</ul>
+<h3 id="example">Example</h3>
+<p>Sender:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i, position = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> c[<span class="number">100</span>], buffer[<span class="number">110</span>];</span><br><span class="line"><span class="comment">// pack</span></span><br><span class="line">MPI_Pack(&amp;i, <span class="number">1</span>, MPI_INT, buffer, <span class="number">110</span>, &amp;position, MPI_COMM_WORLD);</span><br><span class="line">MPI_Pack(c, <span class="number">100</span>, MPI_CHAR, buffer, <span class="number">110</span>, &amp;position, MPI_COMM_WORLD);</span><br><span class="line"><span class="comment">// send</span></span><br><span class="line">MPI_Send(buffer, position, MPI_PACKED, <span class="number">1</span>, <span class="number">0</span>, MPI_COMM_WORLD);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Receiver:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i, position = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> c[<span class="number">100</span>], buffer[<span class="number">110</span>];</span><br><span class="line">MPI_Recv(buffer, <span class="number">110</span>, MPI_PACKED, <span class="number">0</span>, <span class="number">0</span>, MPI_COMM_WORLD, &amp;status);</span><br><span class="line"><span class="comment">// and unpack</span></span><br><span class="line">MPI_Unpack(buffer, <span class="number">110</span>, &amp;position, &amp;i, <span class="number">1</span>, MPI_INT, MPI_COMM_WORLD);</span><br><span class="line">MPI_Unpack(buffer, <span class="number">110</span>, &amp;position, c, <span class="number">100</span>, MPI_CHAR, MPI_COMM_WORLD);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="comparision">Comparision</h2>
+<ul>
+<li>Pack/Unpack is quicker/easier to program.</li>
+<li>Derived datatypes are more flexible in allowing complex derived datatypes to be defined.</li>
+<li>Pack/Unpack has higher overhead.</li>
+<li>Derived datatypes are better if the datatype is regularly reused</li>
+</ul>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/PP/" rel="tag">#PP</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

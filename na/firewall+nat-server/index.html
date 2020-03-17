@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Firewall &amp; NAT Server - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="firewall-nat-server">Firewall &amp; NAT Server</h1>
+<p>環境：Ubuntu 16.04 (DigitalOcean)</p>
+<p>防火牆相關知識，可以參考<a href="http://linux.vbird.org/linux_server/0250simple_firewall.php" target="_blank" rel="noopener">鳥哥</a></p>
+<h2 id="清理-table">清理 table</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br><span class="line">iptables -t nat -F</span><br><span class="line">iptables -X</span><br><span class="line">iptables -Z</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-F: Flush chains</p>
+<p>-t: Table</p>
+<p>-X: Delete chains</p>
+<p>-Z: Zero the packet and byte counters in all chains</p>
+</blockquote>
+<h2 id="設定預設-policy">設定預設 policy</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -P INPUT ACCEPT</span><br><span class="line">iptables -P OUTPUT ACCEPT</span><br><span class="line">iptables -P FORWARD ACCEPT</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-P: Policy</p>
+</blockquote>
+<h2 id="基本設置">基本設置</h2>
+<p>允許 localhost 的封包進入本機</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -i lo -j ACCEPT</span><br><span class="line">iptables -A INPUT -i $EXTIF -m state --state RELATED,ESTABLISHED -j ACCEPT</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-A: Append one or more rules to the end of the chain</p>
+<p>-i: Interface name</p>
+<p>-m: Load match module</p>
+<p>-j: Target of the rule(e.g. what to do if the packet matches it)</p>
+<p>ESTABLISHED: 有效的封包，且此封包屬於一個已建立的連結，這個連結的兩端都已經有數據發送。</p>
+<p>RELATED: 封包正在建立一個新的連結，此連結是與一個已建立的連結相關的。例如，FTP data transfer。</p>
+</blockquote>
+<h2 id="拒絕-client">拒絕 Client</h2>
+<h3 id="reject">Reject</h3>
+<p>拒絕並回應 TCP RST / ICMP host unreachable</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -s $ip -p tcp -m tcp --dport 222 -j REJECT --reject-with tcp-reset</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-p: Protocal</p>
+<p>–dport: 是 tcp module 的一個功能，用來限制目標的埠口號碼。</p>
+<p>–reject-with: 以什麼方法reject，(e.g. tcp-reset, icmp-host-unreachable, icmp-port-unreachable)</p>
+</blockquote>
+<h3 id="drop">Drop</h3>
+<p>拒絕且不回應任何訊息</p>
+<p>拒絕目標為 222 port 的封包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp -m tcp --dport 222 -j DROP</span><br></pre></td></tr></table></figure>
+<p>拒絕 ICMP ECHO-REPLY</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A OUTPUT -p icmp -m icmp --icmp-type 0 -j DROP</span><br></pre></td></tr></table></figure>
+<h2 id="nat-routing">NAT Routing</h2>
+<p>相關知識可以參考：<a href="http://linux.vbird.org/linux_server/0250simple_firewall.php#nat" target="_blank" rel="noopener">鳥哥</a></p>
+<ol>
+<li>先經過 NAT table 的 PREROUTING 鏈；</li>
+<li>經由路由判斷確定這個封包是要進入本機與否，若不進入本機，則下一步；</li>
+<li>再經過 Filter table 的 FORWARD 鏈；</li>
+<li>通過 NAT table 的 POSTROUTING 鏈，最後傳送出去。</li>
+</ol>
+<p>簡單理解：POSTROUTING 在修改<strong>來源IP</strong> (SNAT)，PREROUTING 則在修改<strong>目標IP</strong> (DNAT)。</p>
+<h3 id="讓-server-有-forward-的功能">讓 Server 有 FORWARD 的功能</h3>
+<p>/etc/sysctl.conf，註解掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_forward&#x3D;1</span><br></pre></td></tr></table></figure>
+<h3 id="postrouting">POSTROUTING</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -t nat -A PREROUTING -s $ip -i $EXTIF -p tcp -m tcp --dport 222 -j DNAT --to-destination 10.0.3.150:22</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-s: Source Address(Network name, hostname, network IP address(with /mask), plain IP address)</p>
+</blockquote>
+<h3 id="prerouting">PREROUTING</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -t nat -A POSTROUTING -s $INTIF -o $EXTIF -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-o: Out interface</p>
+</blockquote>
+<h3 id="masquerade-v-s-snat">MASQUERADE V.S. SNAT</h3>
+<p>MASQUERADE 的作用是，從服務器的網卡上，自動獲取當前ip地址來做NAT<br>
+SNAT 則是直接修改一個或多個來源IP</p>
+<h3 id="foward">FOWARD</h3>
+<ul>
+<li>FORWARD 政策允許系統管理員控制封包在區網內部的傳送。</li>
+<li>讓防火牆之後的系統存取內部網路。</li>
+<li>Router 會將某個區域網路節點上的封包，透過 $INTIF 裝置，送到目的地節點去。</li>
+</ul>
+<p>詳細可參考：<a href="http://web.mit.edu/rhel-doc/4/RH-DOCS/rhel-sg-zh_tw-4/s1-firewall-ipt-fwd.html" target="_blank" rel="noopener">FORWARD 與 NAT 規則</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -A FORWARD -o $INTIF -j ACCEPT</span><br><span class="line">iptables -A FORWARD -i $INTIF -j ACCEPT</span><br></pre></td></tr></table></figure>
+<p>i.e. 若把 -o 那行後方改為 DROP，則內網要出去的封包即會被丟棄。</p>
+<h2 id="指令">指令</h2>
+<h3 id="列出-iptables">列出 iptables</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -L -nv</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-L: List all rules</p>
+<p>-n: Numeric output(IP addresses and port numbers will be printed in numeric format)</p>
+<p>-v: Verbose output(Show interface name, rule options, TOS(Type of Service) mask)</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables -t nat -L -nv</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>-t: Table</p>
+</blockquote>
+<h3 id="備份-rules">備份 rules</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables-save</span><br></pre></td></tr></table></figure>
+<p>列出目前設定</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables-save &gt; filename</span><br></pre></td></tr></table></figure>
+<p>可以這樣存成一個檔案</p>
+<h3 id="還原-rules">還原 rules</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iptables-restore &lt; filename</span><br></pre></td></tr></table></figure>
+<h2 id="後記">後記</h2>
+<p>有興趣可以參考完整的 sh 檔：<a href="https://gist.github.com/1f69fbac0bb557de360be2fac294f6e3.git" target="_blank" rel="noopener">NA homework 3 - firewall</a></p>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2018-06-23</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a> <a class="tag-link" href="/note/tags/iptables/" rel="tag">#iptables</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

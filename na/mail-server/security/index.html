@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Security - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="security">Security</h1>
+<p>SASL // SMTP over TLS // SMTPs // POP3s // IMAPs</p>
+<p>環境：Ubuntu 16.04 (DigitalOcean)</p>
+<p><a href="https://wiki.centos.org/zh-tw/HowTos/postfix_sasl#head-8efee0f83ff18b81caf3308ed554a94b7d6e5d00" target="_blank" rel="noopener">為什麼需要它？</a></p>
+<h2 id="sasl">SASL</h2>
+<p>SASL(Simple Authentication and Security Layer)：簡單來說，使用者發信前要先以帳號密碼認證，通過後才能寄信，這邊我們使用 dovecot-sasl 來設置</p>
+<p>/etc/postfix/main.cf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"># SASL</span><br><span class="line">smtpd_sasl_type &#x3D; dovecot</span><br><span class="line">smtpd_sasl_path &#x3D; private&#x2F;auth</span><br><span class="line">smtpd_sasl_security_options &#x3D; noanonymous</span><br><span class="line"></span><br><span class="line">smtpd_recipient_restrictions &#x3D;</span><br><span class="line">    permit_mynetworks,</span><br><span class="line">    permit_sasl_authenticated,</span><br><span class="line">    reject_unauth_destination</span><br></pre></td></tr></table></figure>
+<p>啟動 SASL 及設定 SASL 支援非標準 E-mail Client 的認證動作</p>
+<p>/etc/postfix/master.cf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">smtp      inet  n       -       y       -       -       smtpd</span><br><span class="line">  -o smtpd_sasl_auth_enable&#x3D;yes</span><br><span class="line">  -o broken_sasl_auth_clients&#x3D;yes</span><br></pre></td></tr></table></figure>
+<p>創建 Unix socket 所在的文件夾</p>
+<p>/etc/dovecot/conf.d/10-master.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">service auth &#123;</span><br><span class="line">  # auth_socket_path points to this userdb socket by default. It&#39;s typically</span><br><span class="line">  # used by dovecot-lda, doveadm, possibly imap process, etc. Its default</span><br><span class="line">  # permissions make it readable only by root, but you may need to relax these</span><br><span class="line">  # permissions. Users that have access to this socket are able to get a list</span><br><span class="line">  # of all usernames and get results of everyone&#39;s userdb lookups.</span><br><span class="line">#  unix_listener auth-userdb &#123;</span><br><span class="line">  unix_listener &#x2F;var&#x2F;spool&#x2F;postfix&#x2F;private&#x2F;auth &#123;</span><br><span class="line">    mode &#x3D; 0666</span><br><span class="line">    user &#x3D; postfix</span><br><span class="line">    group &#x3D; postfix</span><br><span class="line">  &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>指定授權機制，即在 SMTP Command 中 auth 後面顯示的內容</p>
+<p>/etc/dovecot/conf.d/10-auth.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auth_mechanisms &#x3D; plain login</span><br></pre></td></tr></table></figure>
+<p>重啟服務</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl restart dovecot</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> systemctl restart postfix</span></span><br></pre></td></tr></table></figure>
+<h3 id="測試">測試</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> telnet localhost 25</span></span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">Connected to localhost.</span><br><span class="line">Escape character is '^]'.</span><br><span class="line">220 kaiiiz.nctucs.net ESMTP Postfix (Ubuntu)</span><br></pre></td></tr></table></figure>
+<p>有出現下面兩行表示設置成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ehlo localhost</span><br><span class="line">...</span><br><span class="line">250-AUTH PLAIN LOGIN</span><br><span class="line">250-AUTH&#x3D;PLAIN LOGIN</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ehlo 是 helo 的擴展，即extend helo，可以支援用戶認證。</p>
+</blockquote>
+<h2 id="smtp-over-tls">SMTP over TLS</h2>
+<h3 id="生成憑證">生成憑證</h3>
+<p>這邊用 letsencrypt 生 key，比較方便</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo letsencrypt certonly --standalone -d kaiiiz.nctucs.net</span></span><br></pre></td></tr></table></figure>
+<p>key 會存在 /etc/letsencrypt/live/kaiiiz.nctucs.net/ 這個目錄中</p>
+<p>若遇到下面這個問題</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Problem binding to port 80: Could not bind to IPv4 or IPv6.</span><br></pre></td></tr></table></figure>
+<p>記得先停用佔著 80 port 的程式（e.g. Apache）</p>
+<h3 id="設定-postfix">設定 Postfix</h3>
+<p>把註解改掉，然後改一下 key 的位置，再改一下 TLS 的設定</p>
+<p>/etc/postfix/main.cf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">smtpd_tls_cert_file&#x3D;&#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;kaiiiz.nctucs.net&#x2F;fullchain.pem</span><br><span class="line">smtpd_tls_key_file&#x3D;&#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;kaiiiz.nctucs.net&#x2F;privkey.pem</span><br><span class="line">...</span><br><span class="line">smtp_use_tls&#x3D;yes</span><br><span class="line">smtpd_use_tls&#x3D;yes</span><br><span class="line">smtp_tls_note_starttls_offer&#x3D;yes</span><br><span class="line">smtpd_tls_session_cache_database &#x3D; btree:$&#123;data_directory&#125;&#x2F;smtpd_scache</span><br><span class="line">smtp_tls_session_cache_database &#x3D; btree:$&#123;data_directory&#125;&#x2F;smtp_scache</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="測試-v2">測試</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> telnet localhost 25</span></span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">Connected to localhost.</span><br><span class="line">Escape character is '^]'.</span><br><span class="line">220 kaiiiz.nctucs.net ESMTP Postfix (Ubuntu)</span><br></pre></td></tr></table></figure>
+<p>應該會看到下面這個</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ehlo localhost</span><br><span class="line">...</span><br><span class="line">250-STARTTLS</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="smtps">SMTPs</h2>
+<p>/etc/postfix/master.cf</p>
+<p>應該會看到下面這行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">#smtps     inet  n       -       y       -       -       smtpd</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>把下面的內容設置一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#smtps     inet  n       -       y       -       -       smtpd</span><br><span class="line">465     inet  n       -       y       -       -       smtpd</span><br><span class="line">  -o smtpd_tls_security_level&#x3D;encrypt</span><br><span class="line">  -o syslog_name&#x3D;postfix&#x2F;smtps</span><br><span class="line">  -o smtpd_tls_wrappermode&#x3D;yes</span><br><span class="line">  -o smtpd_sasl_auth_enable&#x3D;yes</span><br><span class="line">  -o smtpd_reject_unlisted_recipient&#x3D;no</span><br><span class="line">  -o smtpd_client_restrictions&#x3D;permit_sasl_authenticated,reject</span><br><span class="line">#  -o smtpd_client_restrictions&#x3D;$mua_client_restrictions</span><br><span class="line">#  -o smtpd_helo_restrictions&#x3D;$mua_helo_restrictions</span><br><span class="line">#  -o smtpd_sender_restrictions&#x3D;$mua_sender_restrictions</span><br><span class="line">  -o smtpd_recipient_restrictions&#x3D;</span><br><span class="line">  -o smtpd_relay_restrictions&#x3D;permit_sasl_authenticated,reject</span><br><span class="line">  -o milter_macro_daemon_name&#x3D;ORIGINATING</span><br></pre></td></tr></table></figure>
+<h3 id="測試-v3">測試</h3>
+<p>看有沒有 465</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo netstat -tlnp | grep 465</span></span><br><span class="line">tcp        0      0 0.0.0.0:465             0.0.0.0:*               LISTEN      19843/master</span><br><span class="line">tcp6       0      0 :::465                  :::*                    LISTEN      19843/master</span><br></pre></td></tr></table></figure>
+<p>看能不能透過 465 連進去</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> openssl s_client -connect localhost:465</span></span><br></pre></td></tr></table></figure>
+<h2 id="關閉-smtp-登入">關閉 SMTP 登入</h2>
+<p>既然已經有較安全的 SMTP with TLS 及 SMTPs，我們可以把 SMTP 純文字的 SASL 關掉，保證連線的安全。</p>
+<p>在 /etc/postfix/master.cf 下，加入設定：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">smtp      inet  n       -       y       -       -       smtpd</span><br><span class="line">  -o smtpd_tls_auth_only&#x3D;yes</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>smtpd_tls_auth_only=yes：強迫 SASL 驗證採用 TLS 並禁止純文字驗證發生</p>
+</blockquote>
+<h3 id="測試-v4">測試</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> telnet localhost 25</span></span><br><span class="line">...</span><br><span class="line">ehlo localhost</span><br></pre></td></tr></table></figure>
+<p>如果一切正常，我們應該會看見伺服器提供 STARTTLS，而且因為我們指定 ‘smtpd_tls_auth_only = yes’，純文字 SASL 驗證（AUTH PLAIN LOGIN 及 AUTH=PLAIN LOGIN）已不再被支援。</p>
+<h2 id="pop3s-imaps">POP3s / IMAPs</h2>
+<p>填一下剛剛用 letsencrypt 生成 key 的位置</p>
+<p>/etc/dovecot/conf.d/10-ssl.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"># SSL&#x2F;TLS support: yes, no, required. &lt;doc&#x2F;wiki&#x2F;SSL.txt&gt;</span><br><span class="line">ssl &#x3D; required</span><br><span class="line"></span><br><span class="line"># PEM encoded X.509 SSL&#x2F;TLS certificate and private key. They&#39;re opened before</span><br><span class="line"># dropping root privileges, so keep the key file unreadable by anyone but</span><br><span class="line"># root. Included doc&#x2F;mkcert.sh can be used to easily generate self-signed</span><br><span class="line"># certificate, just make sure to update the domains in dovecot-openssl.cnf</span><br><span class="line">ssl_cert &#x3D; &lt;&#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;kaiiiz.nctucs.net&#x2F;fullchain.pem</span><br><span class="line">ssl_key &#x3D; &lt;&#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;kaiiiz.nctucs.net&#x2F;privkey.pem</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>重啟 dovecot</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo systemctl restart dovecot</span></span><br></pre></td></tr></table></figure>
+<h3 id="強制使用者開啟-ssl">強制使用者開啟 SSL</h3>
+<p>/etc/dovecot/conf.d/10-auth.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">disable_plaintext_auth &#x3D; yes</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>disable_plaintext_auth：停用一切純文字的驗證方法</p>
+</blockquote>
+<h3 id="測試-v5">測試</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo netstat -tlnp</span></span><br></pre></td></tr></table></figure>
+<p>看看 port 995 (POP3s) 和 993 (IMAPs) 有沒有 work</p>
+<h2 id="後記">後記</h2>
+<p>備份一些檔案，可以當作參考</p>
+<ul>
+<li><a href="https://gist.github.com/3f4505f446c5c24b7db4fe26f39f38f8.git" target="_blank" rel="noopener">postfix</a></li>
+<li><a href="https://gist.github.com/536e0a6502aa7c9a5ed51fdef382bd46.git" target="_blank" rel="noopener">dovecot</a></li>
+</ul>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/Mail/" rel="tag">#Mail</a> <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

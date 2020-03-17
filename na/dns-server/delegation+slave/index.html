@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          Delegation &amp; Slave - DNS Server - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="delegation-slave">Delegation &amp; Slave</h1>
+<p>用 Sub-domain 來做託管與備援，讓兩個 DNS Server 間同步 zone file。</p>
+<h2 id="delegation">Delegation</h2>
+<p>在 named.conf.local 新增一個 zone</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">zone &quot;sub.muller.nctucs.net&quot; IN &#123;</span><br><span class="line">    type master;</span><br><span class="line">    file &quot;zone&#x2F;db.sub.muller.nctucs.net&quot;;</span><br><span class="line">    notify yes;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這是隊友託管給我們的 domain，所以我們就是<strong>這個 domain 的 master</strong></p>
+<blockquote>
+<p><strong>notify</strong> 的意思是每次重啟一次 bind 的服務，就通知隊友的 slave 該來同步資料了！</p>
+</blockquote>
+<p>因為我們是 master ，所以也要新增這個 zone 的 zone file：</p>
+<p>/var/cache/bind/zone/db.sub.muller.nctucs.net</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$TTL 600</span><br><span class="line">@       IN      SOA     dns.kaiiiz.nctucs.net. admin.kaiiiz.nctucs.net. (</span><br><span class="line">                        2018042407</span><br><span class="line">                        1800</span><br><span class="line">                        900</span><br><span class="line">                        1W</span><br><span class="line">                        1D )</span><br><span class="line">@ IN NS dns.kaiiiz.nctucs.net.</span><br><span class="line">@ IN NS dns.muller.nctucs.net.</span><br><span class="line"></span><br><span class="line">ns1     IN      A       192.168.1.1</span><br><span class="line">sub     IN      A       192.168.1.2</span><br><span class="line">test    IN      A       192.168.1.3</span><br></pre></td></tr></table></figure>
+<p>因為這個 domain 是給兩個 server 管理的，所以也要加上兩個 NS record</p>
+<p>至於後面可以自己新增一些 A record，方便之後的測試。</p>
+<h2 id="slave">Slave</h2>
+<p>在 named.conf.local 新增一個 zone</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">zone &quot;sub.kaiiiz.nctucs.net&quot; IN &#123;</span><br><span class="line">    type slave;</span><br><span class="line">    file &quot;slaves&#x2F;db.sub.kaiiiz.nctucs.net&quot;;</span><br><span class="line">    masters &#123; 35.229.252.239; &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>這是我們要給隊友託管的 domain，並且讓我們的 server(<a href="http://dns.kaiiiz.nctucs.net" target="_blank" rel="noopener">dns.kaiiiz.nctucs.net</a>) 做為隊友的備援</p>
+<p>file 那行是設定從隊友的 server 同步過來的資料的儲存位址，也就是 /var/cache/bind/slaves/db.sub.kaiiiz.nctucs.net</p>
+<p>因為這個檔案就是從隊友那裡同步過來的，所以 <strong>不需要</strong> 建立 <a href="http://db.sub.kaiiiz.nctucs.net" target="_blank" rel="noopener">db.sub.kaiiiz.nctucs.net</a> 這個 zone file</p>
+<h2 id="測試">測試</h2>
+<h3 id="delegation-v2">Delegation</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dig test.sub.muller.nctucs.net</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;test.sub.muller.nctucs.net.	IN	A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">test.sub.muller.nctucs.net. 581	IN	A	192.168.1.3</span><br><span class="line"></span><br><span class="line">;; AUTHORITY SECTION:</span><br><span class="line">sub.muller.nctucs.net.	581	IN	NS	dns.muller.nctucs.net.</span><br><span class="line">sub.muller.nctucs.net.	581	IN	NS	dns.kaiiiz.nctucs.net.</span><br><span class="line"></span><br><span class="line">;; ADDITIONAL SECTION:</span><br><span class="line">dns.muller.nctucs.net.	598205	IN	A	35.229.252.239</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>有拿到 A record 代表沒問題</p>
+<h3 id="slave-v2">Slave</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dig test.sub.kaiiiz.nctucs.net @dns.kaiiiz.nctucs.net</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;test.sub.kaiiiz.nctucs.net.	IN	A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">test.sub.kaiiiz.nctucs.net. 600	IN	A	35.229.252.239</span><br><span class="line"></span><br><span class="line">;; AUTHORITY SECTION:</span><br><span class="line">sub.kaiiiz.nctucs.net.	600	IN	NS	dns.muller.nctucs.net.</span><br><span class="line">sub.kaiiiz.nctucs.net.	600	IN	NS	dns.kaiiiz.nctucs.net.</span><br><span class="line"></span><br><span class="line">;; ADDITIONAL SECTION:</span><br><span class="line">dns.kaiiiz.nctucs.net.	600	IN	A	35.229.184.206</span><br><span class="line"></span><br><span class="line">;; Query time: 6 msec</span><br><span class="line">;; SERVER: 35.229.184.206#53(35.229.184.206)</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>後面的 server 來自 <a href="http://dns.kaiiiz.nctucs.net" target="_blank" rel="noopener">dns.kaiiiz.nctucs.net</a> ，代表 slave 有設定成功</p>
+<h2 id="小結">小結</h2>
+<p>目前我們重要檔案的架構如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;</span><br><span class="line">└───var&#x2F;cache&#x2F;bind&#x2F;</span><br><span class="line">│   │</span><br><span class="line">│   └───zone</span><br><span class="line">│   │   │  db.kaiiiz.nctucs.net</span><br><span class="line">│   │   │  db.35.229.184</span><br><span class="line">│   │   │  db.sub.muller.nctucs.net</span><br><span class="line">│   │</span><br><span class="line">│   └───slaves</span><br><span class="line">│       │  db.sub.kaiiiz.nctucs.net</span><br><span class="line">│</span><br><span class="line">└───etc&#x2F;bind&#x2F;</span><br><span class="line">    │   named.conf</span><br><span class="line">    │   named.conf.local</span><br><span class="line">    │   named.conf.options</span><br><span class="line">    │   named.conf.default-zones</span><br></pre></td></tr></table></figure>
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/DNS/" rel="tag">#DNS</a> <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

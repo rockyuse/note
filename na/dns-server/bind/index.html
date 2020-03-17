@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          BIND - DNS Server - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+<li><a href="/note/timeline">Timeline</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-shell">Shell</a></li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+<li>Reinforcement Learning
+<ul>
+<li><a href="/note/ml/reinforcement/dqn">DQN</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="bind">BIND</h1>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install bind9</span><br></pre></td></tr></table></figure>
+<p>記得 bind 後面還有一個 <strong>9</strong></p>
+<h2 id="檔案配置">檔案配置</h2>
+<p>比較重要的檔案都位在 <strong>/etc/bind</strong> 這個目錄下，簡介一下幾個重要的檔案</p>
+<ul>
+<li>named.conf
+<ul>
+<li>BIND 的主要設定檔，預設裝好是 include 下面3個檔案
+<ul>
+<li><strong>named.conf.local</strong>
+<ul>
+<li>local config</li>
+</ul>
+</li>
+<li><strong>named.conf.options</strong>
+<ul>
+<li>一些 BIND 的設置</li>
+</ul>
+</li>
+<li><strong>named.conf.default-zones</strong>
+<ul>
+<li>紀錄一些預設的 zone，像是 .(root), localhost 正解及反解等等</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>一般不會動到 named.conf.default-zones，所以我們先 focus 在 <strong>named.conf.local</strong> 以及 <strong>named.conf.options</strong> 這兩個檔案。</p>
+<h2 id="預設路徑">預設路徑</h2>
+<p>首先打開 <strong>named.conf.options</strong> 這個檔案，會看到上面已經有預設定義好的一個路徑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">directory &quot;&#x2F;var&#x2F;cache&#x2F;bind&quot;;</span><br></pre></td></tr></table></figure>
+<p>之後我們用相對路徑的話，都會以這個路徑為基準。</p>
+<blockquote>
+<p>最好不要改預設的位址，不然遇到權限的問題可能會需要再手動調整</p>
+</blockquote>
+<h2 id="master">Master</h2>
+<p>最重要的當然就是自己這台 server，所以我們要為他設定一下正反解的資料，以我的為例：</p>
+<p>named.conf.local</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">zone &quot;kaiiiz.nctucs.net&quot; IN &#123;</span><br><span class="line">    type master;</span><br><span class="line">    file &quot;zone&#x2F;db.kaiiiz.nctucs.net&quot;;</span><br><span class="line">&#125;;</span><br><span class="line">zone &quot;184.229.35.in-addr.arpa&quot; &#123;</span><br><span class="line">    type master;</span><br><span class="line">    file &quot;zone&#x2F;db.35.229.184&quot;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我們在 named.conf.local 裡 <strong><a href="http://kaiiiz.nctucs.net" target="_blank" rel="noopener">kaiiiz.nctucs.net</a></strong> 這個 <strong>zone</strong> 設定了讀取檔案的位址，也就是：</p>
+<ul>
+<li>/var/cache/bind/zone/db.kaiiiz.nctucs.net 這個正解檔</li>
+<li>/var/cache/bind/zone/db.35.229.184 這個反解檔</li>
+</ul>
+<h2 id="master-zone-file">Master zone file</h2>
+<p><strong>正解檔：</strong></p>
+<p>/var/cache/bind/zone/db.kaiiiz.nctucs.net</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$TTL 600</span><br><span class="line">@       IN      SOA     dns.kaiiiz.nctucs.net. admin.kaiiiz.nctucs.net. (</span><br><span class="line">                        2018042409</span><br><span class="line">                        1800</span><br><span class="line">                        900</span><br><span class="line">                        1W</span><br><span class="line">                        1D )</span><br><span class="line"></span><br><span class="line">; main dns</span><br><span class="line">@       IN      NS      dns.kaiiiz.nctucs.net.</span><br><span class="line">dns.kaiiiz.nctucs.net. IN A 35.229.184.206</span><br></pre></td></tr></table></figure>
+<p><strong>反解檔：</strong></p>
+<p>/var/cache/bind/zone/db.35.229.184</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$TTL 600</span><br><span class="line">@       IN      SOA     dns.kaiiiz.nctucs.net. admin.nctucs.net. (</span><br><span class="line">                        2018042409</span><br><span class="line">                        1800</span><br><span class="line">                        900</span><br><span class="line">                        1W</span><br><span class="line">                        1D )</span><br><span class="line"></span><br><span class="line">; name server</span><br><span class="line">@       IN      NS      dns.kaiiiz.nctucs.net.</span><br><span class="line">206 IN PTR dns.kaiiiz.nctucs.net.</span><br></pre></td></tr></table></figure>
+<p>至於各個 record 的意義，可以參照<a href="http://linux.vbird.org/linux_server/0350dns.php#DNS_master_rr" target="_blank" rel="noopener">鳥哥</a>，裡面有詳細且完整的教學。</p>
+<h2 id="測試">測試</h2>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dig dns.kaiiiz.nctucs.net</span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;dns.kaiiiz.nctucs.net.		IN	A</span><br><span class="line"></span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">dns.kaiiiz.nctucs.net.	600	IN	A	35.229.184.206</span><br><span class="line"></span><br><span class="line">;; AUTHORITY SECTION:</span><br><span class="line">kaiiiz.nctucs.net.	600	IN	NS	dns.kaiiiz.nctucs.net.</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>能正確的拿到 A record 和 NS record，代表已經正確設定成功了～</p>
+<h2 id="問題與解法">問題與解法</h2>
+<h3 id="dig-沒反應">dig 沒反應</h3>
+<p>有可能是在 gcp 沒開 tcp/udp，在 <strong>VPC網路/防火牆規則</strong> 打開 tcp 和 udp 兩個port：</p>
+<p><img src="2018-05-04-01-57-11.png" alt=""></p>
+<h3 id="dig-很慢">dig 很慢</h3>
+<p>可能是只有開 tcp 的緣故，udp 開起來後就解決了</p>
+<h2 id="小結">小結</h2>
+<p>目前我們重要檔案的架構如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;</span><br><span class="line">└───var&#x2F;cache&#x2F;bind&#x2F;</span><br><span class="line">│   │</span><br><span class="line">│   └───zone</span><br><span class="line">│       │   db.kaiiiz.nctucs.net</span><br><span class="line">│       │   db.35.229.184</span><br><span class="line">│</span><br><span class="line">└───etc&#x2F;bind&#x2F;</span><br><span class="line">    │   named.conf</span><br><span class="line">    │   named.conf.local</span><br><span class="line">    │   named.conf.options</span><br><span class="line">    │   named.conf.default-zones</span><br></pre></td></tr></table></figure>
+
+</div>
+
+
+  <div class="book-comments">
+    
+<script src="https://utteranc.es/client.js"
+        repo="kaiiiz/csmap"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-03-17</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/DNS/" rel="tag">#DNS</a> <a class="tag-link" href="/note/tags/NA/" rel="tag">#NA</a> <a class="tag-link" href="/note/tags/NCTU/" rel="tag">#NCTU</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>
