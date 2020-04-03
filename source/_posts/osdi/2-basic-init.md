@@ -84,7 +84,7 @@ __bss_size = (__bss_end - __bss_start) >> 3;
 
 > ALIGN: 對齊到數字的倍數
 
-## Some Notes
+## Notes
 
 ### gdb
 
@@ -112,20 +112,21 @@ Print program counter
 
 ### Makefile
 
-* [[Linux] 簡單的 Makefile 使用 (% 萬用字元、$@ 特殊符號、.PHONY 假目標)](https://ephrain.net/linux-%E7%B0%A1%E5%96%AE%E7%9A%84-makefile-%E4%BD%BF%E7%94%A8-%E8%90%AC%E7%94%A8%E5%AD%97%E5%85%83%E3%80%81-%E7%89%B9%E6%AE%8A%E7%AC%A6%E8%99%9F%E3%80%81-phony-%E5%81%87%E7%9B%AE%E6%A8%99/)
-* [[Linux] Makefile中wildcard notdir patsubst使用方法](https://blog.xuite.net/auster.lai/twblog/520512252-%5BLinux%5D+Makefile%E4%B8%ADwildcard+notdir+patsubst%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95+)
+[[Linux] 簡單的 Makefile 使用 (% 萬用字元、$@ 特殊符號、.PHONY 假目標)](https://ephrain.net/linux-%E7%B0%A1%E5%96%AE%E7%9A%84-makefile-%E4%BD%BF%E7%94%A8-%E8%90%AC%E7%94%A8%E5%AD%97%E5%85%83%E3%80%81-%E7%89%B9%E6%AE%8A%E7%AC%A6%E8%99%9F%E3%80%81-phony-%E5%81%87%E7%9B%AE%E6%A8%99/)
+
+[[Linux] Makefile中wildcard notdir patsubst使用方法](https://blog.xuite.net/auster.lai/twblog/520512252-%5BLinux%5D+Makefile%E4%B8%ADwildcard+notdir+patsubst%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95+)
 
 ### ARM ASM
 
 #### Local labels
 
-Ref: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html
+> Ref: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html
 
 #### AArch64 identification registers
 
-Ref: [ARM® Cortex®-A53 MPCore Processor Technical Reference Manual](http://infocenter.arm.com/help/topic/com.arm.doc.ddi0500d/DDI0500D_cortex_a53_r0p2_trm.pdf) - 4.2.1
+> Ref: [ARM® Cortex®-A53 MPCore Processor Technical Reference Manual](http://infocenter.arm.com/help/topic/com.arm.doc.ddi0500d/DDI0500D_cortex_a53_r0p2_trm.pdf) - 4.2.1
 
-> https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH
+> Ref: https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH
 
 #### Registers in AArch64 state
 
@@ -137,16 +138,19 @@ Ref: [ARM® Cortex®-A53 MPCore Processor Technical Reference Manual](http://inf
     * 使用 `xzr/wzr` 來存取即是 zero register
     * 使用 `sp/wsp` 來存取即是 stack pointer
 
-Ref: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/BABBGCAC.html
+> Ref: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/BABBGCAC.html
 
 ### Linker Script
 
-* `.gnu.linkonce.XXX`: Mostly filled with zeroes (as it is used by the LKM loader internally)
-    * https://www.oreilly.com/library/view/mastering-assembly-programming/9781787287488/0cebebcf-1089-4933-ba0e-9078b154c156.xhtml
-* `PROVIDE`: Define a symbol only if it is referenced and is not defined by any object included in the link
-    * https://sourceware.org/binutils/docs/ld/PROVIDE.html#PROVIDE
+`.gnu.linkonce.XXX`: Mostly filled with zeroes (as it is used by the LKM loader internally)
+
+> Ref: https://www.oreilly.com/library/view/mastering-assembly-programming/9781787287488/0cebebcf-1089-4933-ba0e-9078b154c156.xhtml
+
+`PROVIDE`: Define a symbol only if it is referenced and is not defined by any object included in the link
+
+> Ref: https://sourceware.org/binutils/docs/ld/PROVIDE.html#PROVIDE
 
 
-[^1]: http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0489c/CIHGJHHH.html
-[^2]: https://sourceware.org/binutils/docs/ld/Input-Section-Keep.html#Input-Section-Keep
-[^3]: https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_21.html
+[^1]: [ARM Compiler toolchain Assembler Reference - MRS](http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0489c/CIHGJHHH.html)
+[^2]: [Input Section and Garbage Collection](https://sourceware.org/binutils/docs/ld/Input-Section-Keep.html#Input-Section-Keep)
+[^3]: [Optional Section Attributes](https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_21.html)

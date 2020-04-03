@@ -47,7 +47,7 @@ int main() {
 }
 ```
 
-## Some Notes
+## Notes
 
 ### CNTFRQ_EL0
 
@@ -68,3 +68,7 @@ asm volatile ("mrs %0, cntfrq_el0" : "=r"(f));
 ```
 
 [關於GNU Inline Assembly](http://wen00072.github.io/blog/2015/12/10/about-inline-asm/)
+
+### PMPASSWORD, PM_RSTC, PM_WDOG
+
+https://elinux.org/BCM2835_registers#PM

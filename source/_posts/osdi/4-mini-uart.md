@@ -109,32 +109,9 @@ int main() {
 }
 ```
 
-## Some Notes
+## Notes
 
 ### GPIO Documents
-
-#### GPFSELn
-
-> GPIO Function Select Registers
-
-The function select registers are used to define the operation of the general-purpose I/O 
-pins.
-
-![](https://i.imgur.com/Mslcbv0.png)
-
-#### GPPUD
-
-> GPIO Pull-up/down Register
-
-The GPIO Pull-up/down Register controls the actuation of the internal pull-up/down control line to ALL the GPIO pins. This register must be used in conjunction with the 2 `GPPUDCLKn` registers.
-
-![](https://i.imgur.com/sEHVnUi.png)
-
-#### GPPUDCLKn
-
-> GPIO Pull-up/down Clock Register
-
-The GPIO Pull-up/down Clock Registers control the actuation of internal pull-downs on the respective GPIO pins.
 
 These registers must be used in conjunction with the `GPPUD` register to effect GPIO Pull-up/down changes. The following sequence of events is required: 
 
@@ -145,7 +122,30 @@ These registers must be used in conjunction with the `GPPUD` register to effect 
 5. Write to `GPPUD` to remove the control signal
 6. Write to `GPPUDCLK0/1` to remove the clock
 
-![](https://i.imgur.com/KpM9XGr.png)
+#### GPFSELn
+
+GPIO Function Select Registers
+
+The function select registers are used to define the operation of the general-purpose I/O 
+pins.
+
+> Ref: BCM2835 ARM Peripher [^1] p91
+
+#### GPPUD
+
+GPIO Pull-up/down Register
+
+The GPIO Pull-up/down Register controls the actuation of the internal pull-up/down control line to ALL the GPIO pins. This register must be used in conjunction with the 2 `GPPUDCLKn` registers.
+
+> Ref: BCM2835 ARM Peripher [^1] p100
+
+#### GPPUDCLKn
+
+GPIO Pull-up/down Clock Register
+
+The GPIO Pull-up/down Clock Registers control the actuation of internal pull-downs on the respective GPIO pins.
+
+> Ref: BCM2835 ARM Peripher [^1] p101
 
 ### AUX Documents
 
@@ -153,50 +153,48 @@ These registers must be used in conjunction with the `GPPUD` register to effect 
 
 The `AUX_MU_CNTL_REG` provides access to some extra useful and nice features not found on a normal 16550 UART
 
-![](https://i.imgur.com/7grZUS1.png)
-
-![](https://i.imgur.com/CdLJnTE.png)
+> Ref: BCM2835 ARM Peripher [^1] p16
 
 #### AUX_MU_IER
 
 The `AUX_MU_IIR_REG` register shows the interrupt status. It also has two FIFO enable status bits and (when writing) FIFO clear bits. 
 
-![](https://i.imgur.com/jvNQjht.png)
+> Ref: BCM2835 ARM Peripher [^1] p13
 
 #### AUX_MU_LCR
 
 The `AUX_MU_LCR_REG` register controls the line data format and gives access to the baudrate register
 
-![](https://i.imgur.com/Uv8VN7I.png)
+> Ref: BCM2835 ARM Peripher [^1] p14
 
 #### AUX_MU_MCR
 
 The `AUX_MU_MCR_REG` register controls the 'modem' signals
 
-![](https://i.imgur.com/PRhfreT.png)
+> Ref: BCM2835 ARM Peripher [^1] p14
 
 #### AUX_MU_BAUD
 
 The `AUX_MU_BAUD` register allows direct access to the 16-bit wide baudrate counter
 
-![](https://i.imgur.com/4JMb3MJ.png)
+$$
+\text{baud rate} = \frac{\text{system clock freq}}{8 \times (\text{AUX_MU_BAUD} + 1)}
+$$
 
-$$
-\text{baud rate} = \frac{\text{system clock freq}}{8 \times \text{AUX\_MU\_BAUD} + 1}
-$$
+> Ref: BCM2835 ARM Peripher [^1] p19
 
 #### AUX_MU_IIR
 
 The `AUX_MU_IER_REG` register is primary used to enable interrupts 
 If the DLAB bit in the line control register is set this register gives access to the MS 8 bits of the baud rate
 
-![](https://i.imgur.com/vqVnBMx.png)
+> Ref: BCM2835 ARM Peripher [^1] p12
 
 #### AUX_MU_LSR
 
 The `AUX_MU_LSR_REG` register shows the data status
 
-![](https://i.imgur.com/Sxrxvr6.png)
+> Ref: BCM2835 ARM Peripher [^1] p15
 
 #### AUX_MU_IO
 
@@ -204,8 +202,8 @@ The `AUX_MU_IO_REG` register is primary used to write data to and read data from
 
 If the DLAB bit in the line control register is set this register gives access to the LS 8 bits of the baud rate
 
-![](https://i.imgur.com/DfSTI6b.png)
+> Ref: BCM2835 ARM Peripher [^1] p11
 
 ## Reference
 
-[BCM2835 ARM Peripher](https://cs140e.sergio.bz/docs/BCM2837-ARM-Peripherals.pdf)
+[^1]: [BCM2835 ARM Peripher](https://cs140e.sergio.bz/docs/BCM2837-ARM-Peripherals.pdf)

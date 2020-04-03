@@ -3,11 +3,18 @@
 ## OSDI
 
 - [Introduction](/note/osdi/0-intro)
+- [Memory Map](/note/osdi/0-memory-map)
 - [Environment](/note/osdi/1-env)
-- [Basic Initialization](/note/osdi/2-basic-init)
-- [UART](/note/osdi/3-uart)
-- [Mini UART](/note/osdi/4-mini-uart)
-- [Shell](/note/osdi/5-shell)
+- Lab1
+  - [Basic Initialization](/note/osdi/2-basic-init)
+  - [UART](/note/osdi/3-uart)
+  - [Mini UART](/note/osdi/4-mini-uart)
+  - [Simple Shell](/note/osdi/5-simple-shell)
+- Lab2
+  - [Mailbox](/note/osdi/6-mailbox)
+  - [PL011 UART](/note/osdi/7-pl011-uart)
+  - [Frame Buffer](/note/osdi/8-frame-buffer)
+  - [3rd Bootloader](/note/osdi/9-loadimg)
 
 ## Parallel Programming
 
