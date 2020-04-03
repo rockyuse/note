@@ -76,11 +76,24 @@ document.addEventListener('DOMContentLoaded', function () {
 <h2 id="osdi">OSDI</h2>
 <ul>
 <li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/0-memory-map">Memory Map</a></li>
 <li><a href="/note/osdi/1-env">Environment</a></li>
+<li>Lab1
+<ul>
 <li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
 <li><a href="/note/osdi/3-uart">UART</a></li>
 <li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
-<li><a href="/note/osdi/5-shell">Shell</a></li>
+<li><a href="/note/osdi/5-simple-shell">Simple Shell</a></li>
+</ul>
+</li>
+<li>Lab2
+<ul>
+<li><a href="/note/osdi/6-mailbox">Mailbox</a></li>
+<li><a href="/note/osdi/7-pl011-uart">PL011 UART</a></li>
+<li><a href="/note/osdi/8-frame-buffer">Frame Buffer</a></li>
+<li><a href="/note/osdi/9-loadimg">3rd Bootloader</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="parallel-programming">Parallel Programming</h2>
 <ul>
@@ -169,6 +182,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
   </div>
 
+  <div class="sidebar-toggle" onclick="sidebar_toggle()" onmouseover="add_inner()" onmouseleave="remove_inner()">
+  <div class="sidebar-toggle-inner"></div>
+</div>
+
+<script>
+function add_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.add('show')  
+}
+
+function remove_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.remove('show')
+}
+
+function sidebar_toggle() {
+    let sidebar_toggle = document.querySelector('.sidebar-toggle')
+    let sidebar = document.querySelector('.book-sidebar')
+    let content = document.querySelector('.off-canvas-content')
+    if (sidebar_toggle.classList.contains('extend')) { // show
+        sidebar_toggle.classList.remove('extend')
+        sidebar.classList.remove('hide')
+        content.classList.remove('extend')
+    }
+    else { // hide
+        sidebar_toggle.classList.add('extend')
+        sidebar.classList.add('hide')
+        content.classList.add('extend')
+    }
+}
+</script>
+
   <div class="off-canvas-content">
     <div class="columns">
       <div class="column col-10 col-lg-12">
@@ -219,15 +264,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   <div class="book-comments">
     
-<script src="https://utteranc.es/client.js"
-        repo="kaiiiz/note"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
 
 
+    <div id="disqus_thread"></div>
+    <script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://at881005.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 
 
 

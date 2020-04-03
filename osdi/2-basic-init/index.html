@@ -76,11 +76,24 @@ document.addEventListener('DOMContentLoaded', function () {
 <h2 id="osdi">OSDI</h2>
 <ul>
 <li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/0-memory-map">Memory Map</a></li>
 <li><a href="/note/osdi/1-env">Environment</a></li>
+<li>Lab1
+<ul>
 <li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
 <li><a href="/note/osdi/3-uart">UART</a></li>
 <li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
-<li><a href="/note/osdi/5-shell">Shell</a></li>
+<li><a href="/note/osdi/5-simple-shell">Simple Shell</a></li>
+</ul>
+</li>
+<li>Lab2
+<ul>
+<li><a href="/note/osdi/6-mailbox">Mailbox</a></li>
+<li><a href="/note/osdi/7-pl011-uart">PL011 UART</a></li>
+<li><a href="/note/osdi/8-frame-buffer">Frame Buffer</a></li>
+<li><a href="/note/osdi/9-loadimg">3rd Bootloader</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="parallel-programming">Parallel Programming</h2>
 <ul>
@@ -169,6 +182,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
   </div>
 
+  <div class="sidebar-toggle" onclick="sidebar_toggle()" onmouseover="add_inner()" onmouseleave="remove_inner()">
+  <div class="sidebar-toggle-inner"></div>
+</div>
+
+<script>
+function add_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.add('show')  
+}
+
+function remove_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.remove('show')
+}
+
+function sidebar_toggle() {
+    let sidebar_toggle = document.querySelector('.sidebar-toggle')
+    let sidebar = document.querySelector('.book-sidebar')
+    let content = document.querySelector('.off-canvas-content')
+    if (sidebar_toggle.classList.contains('extend')) { // show
+        sidebar_toggle.classList.remove('extend')
+        sidebar.classList.remove('hide')
+        content.classList.remove('extend')
+    }
+    else { // hide
+        sidebar_toggle.classList.add('extend')
+        sidebar.classList.add('hide')
+        content.classList.add('extend')
+    }
+}
+</script>
+
   <div class="off-canvas-content">
     <div class="columns">
       <div class="column col-10 col-lg-12">
@@ -211,24 +256,26 @@ document.addEventListener('DOMContentLoaded', function () {
 <blockquote>
 <p>ALIGN: 對齊到數字的倍數</p>
 </blockquote>
-<h2 id="some-notes">Some Notes</h2>
+<h2 id="notes">Notes</h2>
 <h3 id="gdb">gdb</h3>
 <p>Switch thread</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; info threads</span><br><span class="line">  Id   Target Id                    Frame </span><br><span class="line">  1    Thread 1.1 (CPU#0 [running]) 0x0000000000000000 in ?? ()</span><br><span class="line">* 2    Thread 1.2 (CPU#1 [running]) 0x0000000000000300 in ?? ()</span><br><span class="line">  3    Thread 1.3 (CPU#2 [running]) 0x0000000000000300 in ?? ()</span><br><span class="line">  4    Thread 1.4 (CPU#3 [running]) 0x0000000000000300 in ?? ()</span><br><span class="line"></span><br><span class="line">&gt; thread &#123;Id&#125;</span><br></pre></td></tr></table></figure>
 <p>Print program counter</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; x&#x2F;3i $pc</span><br><span class="line">&#x3D;&gt; 0x300:       mov     x5, #0xd8                       &#x2F;&#x2F; #216</span><br><span class="line">   0x304:       mrs     x6, mpidr_el1</span><br><span class="line">   0x308:       and     x6, x6, #0x3</span><br></pre></td></tr></table></figure>
 <h3 id="makefile">Makefile</h3>
-<ul>
-<li><a href="https://ephrain.net/linux-%E7%B0%A1%E5%96%AE%E7%9A%84-makefile-%E4%BD%BF%E7%94%A8-%E8%90%AC%E7%94%A8%E5%AD%97%E5%85%83%E3%80%81-%E7%89%B9%E6%AE%8A%E7%AC%A6%E8%99%9F%E3%80%81-phony-%E5%81%87%E7%9B%AE%E6%A8%99/" target="_blank" rel="noopener">[Linux] 簡單的 Makefile 使用 (% 萬用字元、$@ 特殊符號、.PHONY 假目標)</a></li>
-<li><a href="https://blog.xuite.net/auster.lai/twblog/520512252-%5BLinux%5D+Makefile%E4%B8%ADwildcard+notdir+patsubst%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95+" target="_blank" rel="noopener">[Linux] Makefile中wildcard notdir patsubst使用方法</a></li>
-</ul>
+<p><a href="https://ephrain.net/linux-%E7%B0%A1%E5%96%AE%E7%9A%84-makefile-%E4%BD%BF%E7%94%A8-%E8%90%AC%E7%94%A8%E5%AD%97%E5%85%83%E3%80%81-%E7%89%B9%E6%AE%8A%E7%AC%A6%E8%99%9F%E3%80%81-phony-%E5%81%87%E7%9B%AE%E6%A8%99/" target="_blank" rel="noopener">[Linux] 簡單的 Makefile 使用 (% 萬用字元、$@ 特殊符號、.PHONY 假目標)</a></p>
+<p><a href="https://blog.xuite.net/auster.lai/twblog/520512252-%5BLinux%5D+Makefile%E4%B8%ADwildcard+notdir+patsubst%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95+" target="_blank" rel="noopener">[Linux] Makefile中wildcard notdir patsubst使用方法</a></p>
 <h3 id="arm-asm">ARM ASM</h3>
 <h4 id="local-labels">Local labels</h4>
-<p>Ref: <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html" target="_blank" rel="noopener">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html</a></p>
-<h4 id="aarch64-identification-registers">AArch64 identification registers</h4>
-<p>Ref: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0500d/DDI0500D_cortex_a53_r0p2_trm.pdf" target="_blank" rel="noopener">ARM® Cortex®-A53 MPCore Processor Technical Reference Manual</a> - 4.2.1</p>
 <blockquote>
-<p><a href="https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH" target="_blank" rel="noopener">https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH</a></p>
+<p>Ref: <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html" target="_blank" rel="noopener">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0473c/Caccjfff.html</a></p>
+</blockquote>
+<h4 id="aarch64-identification-registers">AArch64 identification registers</h4>
+<blockquote>
+<p>Ref: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0500d/DDI0500D_cortex_a53_r0p2_trm.pdf" target="_blank" rel="noopener">ARM® Cortex®-A53 MPCore Processor Technical Reference Manual</a> - 4.2.1</p>
+</blockquote>
+<blockquote>
+<p>Ref: <a href="https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH" target="_blank" rel="noopener">https://developer.arm.com/docs/ddi0500/j/system-control/aarch64-register-summary/aarch64-identification-registers#CIHDGHEH</a></p>
 </blockquote>
 <h4 id="registers-in-aarch64-state">Registers in AArch64 state</h4>
 <p><img src="https://i.imgur.com/CCj3wsl.png" alt=""></p>
@@ -242,28 +289,26 @@ document.addEventListener('DOMContentLoaded', function () {
 </ul>
 </li>
 </ul>
+<blockquote>
 <p>Ref: <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/BABBGCAC.html" target="_blank" rel="noopener">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0801a/BABBGCAC.html</a></p>
+</blockquote>
 <h3 id="linker-script">Linker Script</h3>
-<ul>
-<li><code>.gnu.linkonce.XXX</code>: Mostly filled with zeroes (as it is used by the LKM loader internally)
-<ul>
-<li><a href="https://www.oreilly.com/library/view/mastering-assembly-programming/9781787287488/0cebebcf-1089-4933-ba0e-9078b154c156.xhtml" target="_blank" rel="noopener">https://www.oreilly.com/library/view/mastering-assembly-programming/9781787287488/0cebebcf-1089-4933-ba0e-9078b154c156.xhtml</a></li>
-</ul>
-</li>
-<li><code>PROVIDE</code>: Define a symbol only if it is referenced and is not defined by any object included in the link
-<ul>
-<li><a href="https://sourceware.org/binutils/docs/ld/PROVIDE.html#PROVIDE" target="_blank" rel="noopener">https://sourceware.org/binutils/docs/ld/PROVIDE.html#PROVIDE</a></li>
-</ul>
-</li>
-</ul>
+<p><code>.gnu.linkonce.XXX</code>: Mostly filled with zeroes (as it is used by the LKM loader internally)</p>
+<blockquote>
+<p>Ref: <a href="https://www.oreilly.com/library/view/mastering-assembly-programming/9781787287488/0cebebcf-1089-4933-ba0e-9078b154c156.xhtml" target="_blank" rel="noopener">https://www.oreilly.com/library/view/mastering-assembly-programming/9781787287488/0cebebcf-1089-4933-ba0e-9078b154c156.xhtml</a></p>
+</blockquote>
+<p><code>PROVIDE</code>: Define a symbol only if it is referenced and is not defined by any object included in the link</p>
+<blockquote>
+<p>Ref: <a href="https://sourceware.org/binutils/docs/ld/PROVIDE.html#PROVIDE" target="_blank" rel="noopener">https://sourceware.org/binutils/docs/ld/PROVIDE.html#PROVIDE</a></p>
+</blockquote>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1"  class="footnote-item"><p><a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0489c/CIHGJHHH.html" target="_blank" rel="noopener">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0489c/CIHGJHHH.html</a> <a href="#fnref1" class="footnote-backref">↩</a></p>
+<li id="fn1"  class="footnote-item"><p><a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0489c/CIHGJHHH.html" target="_blank" rel="noopener">ARM Compiler toolchain Assembler Reference - MRS</a> <a href="#fnref1" class="footnote-backref">↩</a></p>
 </li>
-<li id="fn2"  class="footnote-item"><p><a href="https://sourceware.org/binutils/docs/ld/Input-Section-Keep.html#Input-Section-Keep" target="_blank" rel="noopener">https://sourceware.org/binutils/docs/ld/Input-Section-Keep.html#Input-Section-Keep</a> <a href="#fnref2" class="footnote-backref">↩</a></p>
+<li id="fn2"  class="footnote-item"><p><a href="https://sourceware.org/binutils/docs/ld/Input-Section-Keep.html#Input-Section-Keep" target="_blank" rel="noopener">Input Section and Garbage Collection</a> <a href="#fnref2" class="footnote-backref">↩</a></p>
 </li>
-<li id="fn3"  class="footnote-item"><p><a href="https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_21.html" target="_blank" rel="noopener">https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_21.html</a> <a href="#fnref3" class="footnote-backref">↩</a></p>
+<li id="fn3"  class="footnote-item"><p><a href="https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_21.html" target="_blank" rel="noopener">Optional Section Attributes</a> <a href="#fnref3" class="footnote-backref">↩</a></p>
 </li>
 </ol>
 </section>
@@ -273,15 +318,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   <div class="book-comments">
     
-<script src="https://utteranc.es/client.js"
-        repo="kaiiiz/note"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
 
 
+    <div id="disqus_thread"></div>
+    <script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://at881005.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 
 
 

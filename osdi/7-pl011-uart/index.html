@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh_TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+
+    
+      <link rel="icon" href="/note/shell.png" />
+    
+
+    <title>
+        
+          PL011 UART - kaiiiz/note
+        
+    </title>
+
+    <!-- Spectre.css framework -->
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+
+    <!-- theme css & js -->
+    
+<link rel="stylesheet" href="/note/css/book.css">
+
+    
+<script src="/note/js/book.js"></script>
+
+
+    <!-- tocbot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+    
+    <!-- katex -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+    
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-112717568-5', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zooming/2.1.1/zooming.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const zooming = new Zooming()
+    zooming.listen('.book-content img')
+})
+</script>
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+
+<div class="book-container">
+  <div class="book-sidebar">
+    <div class="book-brand">
+  <a href="/note/">
+    <img src="/note/shell.png">
+    <span>KAIIIZ/NOTE</span>
+  </a>
+</div>
+    <div class="book-menu">
+  <ul>
+<li><a href="/note">Home</a></li>
+</ul>
+<h2 id="osdi">OSDI</h2>
+<ul>
+<li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/0-memory-map">Memory Map</a></li>
+<li><a href="/note/osdi/1-env">Environment</a></li>
+<li>Lab1
+<ul>
+<li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
+<li><a href="/note/osdi/3-uart">UART</a></li>
+<li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
+<li><a href="/note/osdi/5-simple-shell">Simple Shell</a></li>
+</ul>
+</li>
+<li>Lab2
+<ul>
+<li><a href="/note/osdi/6-mailbox">Mailbox</a></li>
+<li><a href="/note/osdi/7-pl011-uart">PL011 UART</a></li>
+<li><a href="/note/osdi/8-frame-buffer">Frame Buffer</a></li>
+<li><a href="/note/osdi/9-loadimg">3rd Bootloader</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="parallel-programming">Parallel Programming</h2>
+<ul>
+<li><a href="/note/pp/shared-memory">Shared Memory</a></li>
+<li>Pthread
+<ul>
+<li><a href="/note/pp/pthread/basic">Basic</a></li>
+<li><a href="/note/pp/pthread/sync">Synchronization</a></li>
+<li><a href="/note/pp/pthread/advanced">Advanced</a></li>
+<li><a href="/note/pp/pthread/thread-pool">Thread Pool</a></li>
+</ul>
+</li>
+<li>OpenMP
+<ul>
+<li><a href="/note/pp/openmp/basic">Basic</a></li>
+<li><a href="/note/pp/openmp/worksharing-constructs">Worksharing Constructs</a></li>
+<li><a href="/note/pp/openmp/synchronization">Synchronization</a></li>
+<li><a href="/note/pp/openmp/variable-scope">Variable Scope</a></li>
+</ul>
+</li>
+<li>MPI
+<ul>
+<li><a href="/note/pp/mpi/basic">Basic</a></li>
+<li><a href="/note/pp/mpi/p2p-comm">Point-to-Point Comm.</a></li>
+<li><a href="/note/pp/mpi/collective-comm">Collective Comm.</a></li>
+<li><a href="/note/pp/mpi/consolidating-data">Consolidating Data</a></li>
+<li><a href="/note/pp/mpi/additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li><a href="/note/pp/cuda">CUDA</a></li>
+<li><a href="/note/pp/opencl">OpenCL</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<ul>
+<li>Supervised Learning
+<ul>
+<li><a href="/note/ml/supervised/naive-bayes">Naive Bayes</a></li>
+<li><a href="/note/ml/supervised/decision-tree">Decision Tree</a></li>
+<li><a href="/note/ml/supervised/random-forest">Random Forest</a></li>
+<li><a href="/note/ml/supervised/linear-regression">Linear Regression</a></li>
+<li><a href="/note/ml/supervised/logistic-regression">Logistic Regression</a></li>
+</ul>
+</li>
+<li>Deep Learning
+<ul>
+<li><a href="/note/ml/deep/backpropagation">Backpropagation</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="network-services-adm">Network Services Adm.</h2>
+<ul>
+<li>Containers
+<ul>
+<li><a href="/note/na/lxc">LXC</a></li>
+</ul>
+</li>
+<li>DNS Server
+<ul>
+<li><a href="/note/na/dns-server/intro">Introduction</a></li>
+<li><a href="/note/na/dns-server/bind">BIND</a></li>
+<li><a href="/note/na/dns-server/delegation+slave">Delegation &amp; Slave</a></li>
+<li><a href="/note/na/dns-server/logging">Logging</a></li>
+<li><a href="/note/na/dns-server/view">View</a></li>
+<li><a href="/note/na/dns-server/security">Security</a></li>
+</ul>
+</li>
+<li><a href="/note/na/dhcp-server">DHCP Server</a></li>
+<li><a href="/note/na/firewall+nat-server">Firewall &amp; NAT Server</a></li>
+<li><a href="/note/na/ftp-server+openldap">FTP with LDAP-Backend</a></li>
+<li><a href="/note/na/http-proxy">HTTP Proxy</a></li>
+<li>Mail Server
+<ul>
+<li><a href="/note/na/mail-server/mta+mra">MTA、MRA</a></li>
+<li><a href="/note/na/mail-server/security">Security</a></li>
+<li><a href="/note/na/mail-server/anti-scam">Anti-Scam</a></li>
+<li><a href="/note/na/mail-server/anti-spam">Anti-Spam</a></li>
+<li><a href="/note/na/mail-server/webmail+alias">Webmail、Alias</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+
+
+<script src="/note/js/book-menu.js"></script>
+
+  </div>
+
+  <div class="sidebar-toggle" onclick="sidebar_toggle()" onmouseover="add_inner()" onmouseleave="remove_inner()">
+  <div class="sidebar-toggle-inner"></div>
+</div>
+
+<script>
+function add_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.add('show')  
+}
+
+function remove_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.remove('show')
+}
+
+function sidebar_toggle() {
+    let sidebar_toggle = document.querySelector('.sidebar-toggle')
+    let sidebar = document.querySelector('.book-sidebar')
+    let content = document.querySelector('.off-canvas-content')
+    if (sidebar_toggle.classList.contains('extend')) { // show
+        sidebar_toggle.classList.remove('extend')
+        sidebar.classList.remove('hide')
+        content.classList.remove('extend')
+    }
+    else { // hide
+        sidebar_toggle.classList.add('extend')
+        sidebar.classList.add('hide')
+        content.classList.add('extend')
+    }
+}
+</script>
+
+  <div class="off-canvas-content">
+    <div class="columns">
+      <div class="column col-10 col-lg-12">
+        <div class="book-navbar">
+          <!-- For Responsive Layout -->
+
+<header class="navbar">
+  <section class="navbar-section">
+    <a onclick="open_sidebar()">
+      <i class="icon icon-menu"></i>
+    </a>
+  </section>
+</header>
+
+        </div>
+        <div class="book-content">
+          <div class="book-post">
+  <h1 id="pl011-uart">PL011 UART</h1>
+<blockquote>
+<p><a href="https://github.com/kaiiiz/osdi2020/tree/c9818d3900a40139116e75d353a5a883a1c5f095" target="_blank" rel="noopener">https://github.com/kaiiiz/osdi2020/tree/c9818d3900a40139116e75d353a5a883a1c5f095</a></p>
+</blockquote>
+<h2 id="uart-init">UART Init</h2>
+<ol>
+<li>調整 UART0 Clk (clock-id: <a href="https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface#clocks" target="_blank" rel="noopener">https://github.com/raspberrypi/firmware/wiki/Mailbox-property-interface#clocks</a>)</li>
+<li>Map UART 到 GPIO Pin</li>
+<li>設定 Baud rate</li>
+</ol>
+<blockquote>
+<p>Caveat: GPIO 14, 15: PL011 UART should set ALT0</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">uart_init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    *UART0_CR = <span class="number">0</span>;  <span class="comment">// turn off UART0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Configure UART0 Clock Frequency */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> __attribute__((aligned(<span class="number">16</span>))) mbox[<span class="number">9</span>];</span><br><span class="line">    mbox[<span class="number">0</span>] = <span class="number">9</span> * <span class="number">4</span>;</span><br><span class="line">    mbox[<span class="number">1</span>] = MBOX_CODE_BUF_REQ;</span><br><span class="line">    <span class="comment">// tags begin</span></span><br><span class="line">    mbox[<span class="number">2</span>] = MBOX_TAG_SET_CLOCK_RATE;</span><br><span class="line">    mbox[<span class="number">3</span>] = <span class="number">12</span>;</span><br><span class="line">    mbox[<span class="number">4</span>] = MBOX_CODE_TAG_REQ;</span><br><span class="line">    mbox[<span class="number">5</span>] = <span class="number">2</span>;        <span class="comment">// UART clock</span></span><br><span class="line">    mbox[<span class="number">6</span>] = <span class="number">4000000</span>;  <span class="comment">// 4MHz</span></span><br><span class="line">    mbox[<span class="number">7</span>] = <span class="number">0</span>;        <span class="comment">// clear turbo</span></span><br><span class="line">    mbox[<span class="number">8</span>] = <span class="number">0x0</span>;      <span class="comment">// end tag</span></span><br><span class="line">    <span class="comment">// tags end</span></span><br><span class="line">    mbox_call(mbox, <span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Map UART to GPIO Pins */</span></span><br><span class="line">    <span class="comment">// 1. Change GPIO 14, 15 to alternate function</span></span><br><span class="line">    <span class="keyword">register</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> r = *GPFSEL1;</span><br><span class="line">    r &amp;= ~((<span class="number">7</span> &lt;&lt; <span class="number">12</span>) | (<span class="number">7</span> &lt;&lt; <span class="number">15</span>));  <span class="comment">// Reset GPIO 14, 15</span></span><br><span class="line">    r |= (<span class="number">4</span> &lt;&lt; <span class="number">12</span>) | (<span class="number">4</span> &lt;&lt; <span class="number">15</span>);     <span class="comment">// Set ALT0</span></span><br><span class="line">    *GPFSEL1 = r;</span><br><span class="line">    <span class="comment">// 2. Disable GPIO pull up/down (Because these GPIO pins use alternate functions, not basic input-output)</span></span><br><span class="line">    <span class="comment">// Set control signal to disable</span></span><br><span class="line">    *GPPUD = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// Wait 150 cycles</span></span><br><span class="line">    r = <span class="number">150</span>;</span><br><span class="line">    <span class="keyword">while</span> (r--) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">"nop"</span>)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Clock the control signal into the GPIO pads</span></span><br><span class="line">    *GPPUDCLK0 = (<span class="number">1</span> &lt;&lt; <span class="number">14</span>) | (<span class="number">1</span> &lt;&lt; <span class="number">15</span>);</span><br><span class="line">    <span class="comment">// Wait 150 cycles</span></span><br><span class="line">    r = <span class="number">150</span>;</span><br><span class="line">    <span class="keyword">while</span> (r--) &#123;</span><br><span class="line">        <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">"nop"</span>)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Remove the clock</span></span><br><span class="line">    *GPPUDCLK0 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Configure UART0 */</span></span><br><span class="line">    *UART0_IBRD = <span class="number">0x2</span>;        <span class="comment">// Set 115200 Baud</span></span><br><span class="line">    *UART0_FBRD = <span class="number">0xB</span>;        <span class="comment">// Set 115200 Baud</span></span><br><span class="line">    *UART0_LCRH = <span class="number">0b11</span> &lt;&lt; <span class="number">5</span>;  <span class="comment">// Set word length to 8-bits</span></span><br><span class="line">    *UART0_ICR = <span class="number">0x7FF</span>;       <span class="comment">// Clear Interrupts</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Enable UART */</span></span><br><span class="line">    *UART0_CR = <span class="number">0x301</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="uart-read">UART Read</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">uart_read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Check data ready field</span></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">"nop"</span>)</span></span>;</span><br><span class="line">    &#125; <span class="keyword">while</span> (*UART0_FR &amp; <span class="number">0x10</span>);</span><br><span class="line">    <span class="comment">// Read</span></span><br><span class="line">    <span class="keyword">char</span> r = (<span class="keyword">char</span>)(*UART0_DR);</span><br><span class="line">    <span class="comment">// Convert carrige return to newline</span></span><br><span class="line">    <span class="keyword">return</span> r == <span class="string">'\r'</span> ? <span class="string">'\n'</span> : r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="uart-write">UART Write</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">uart_write</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Check transmitter idle field</span></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="function"><span class="keyword">asm</span> <span class="title">volatile</span><span class="params">(<span class="string">"nop"</span>)</span></span>;</span><br><span class="line">    &#125; <span class="keyword">while</span> (*UART0_FR &amp; <span class="number">0x20</span>);</span><br><span class="line">    <span class="comment">// Write</span></span><br><span class="line">    *UART0_DR = c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="notes">Notes</h2>
+<h3 id="uartibrd">UARTIBRD</h3>
+<p>The UARTIBRD register is the integer part of the baud rate divisor value. All the bits<br>
+are cleared to 0 on reset.</p>
+<blockquote>
+<p>Baud rate divisor BAUDDIV = (FUARTCLK/ {16 * Baud rate})</p>
+</blockquote>
+<blockquote>
+<p>Ref: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0183f/DDI0183.pdf" target="_blank" rel="noopener">PrimeCell® UART (PL011)</a> - 3.3.5</p>
+</blockquote>
+<h3 id="uartfbrd">UARTFBRD</h3>
+<p>The UARTFBRD register is the fractional part of the baud rate divisor value. All the bits<br>
+are cleared to 0 on reset.</p>
+<blockquote>
+<p>Ref: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0183f/DDI0183.pdf" target="_blank" rel="noopener">PrimeCell® UART (PL011)</a> - 3.3.6</p>
+</blockquote>
+<h3 id="typical-baud-rates-and-integer-and-fractional-divisors">Typical baud rates and integer and fractional divisors</h3>
+<p><img src="https://i.imgur.com/UuKSpcu.png" alt=""></p>
+<h3 id="uartlcr-h">UARTLCR_H</h3>
+<p>The UARTLCR_H register is the line control register. This register accesses bits 29 to<br>
+22 of the UART bit rate and line control register, UARTLCR. All the bits are cleared to 0 when reset.</p>
+<blockquote>
+<p>Ref: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0183f/DDI0183.pdf" target="_blank" rel="noopener">PrimeCell® UART (PL011)</a> - 3.3.7</p>
+</blockquote>
+<h3 id="uarticr">UARTICR</h3>
+<p>The UARTICR register is the interrupt clear register and is write-only. On a write of 1,<br>
+the corresponding interrupt is cleared. A write of 0 has no effect.</p>
+<blockquote>
+<p>Ref: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0183f/DDI0183.pdf" target="_blank" rel="noopener">PrimeCell® UART (PL011)</a> - 3.3.13</p>
+</blockquote>
+<h3 id="uartfr">UARTFR</h3>
+<p>The UARTFR register is the flag register. After reset TXFF, RXFF, and BUSY are 0,<br>
+and TXFE and RXFE are 1.</p>
+<blockquote>
+<p>Ref: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0183f/DDI0183.pdf" target="_blank" rel="noopener">PrimeCell® UART (PL011)</a> - 3.3.3</p>
+</blockquote>
+<h3 id="uartdr">UARTDR</h3>
+<p>The UARTDR register is the data register.</p>
+<blockquote>
+<p>Ref: <a href="http://infocenter.arm.com/help/topic/com.arm.doc.ddi0183f/DDI0183.pdf" target="_blank" rel="noopener">PrimeCell® UART (PL011)</a> - 3.3.1</p>
+</blockquote>
+
+</div>
+
+
+  <div class="book-comments">
+    
+
+
+    <div id="disqus_thread"></div>
+    <script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://at881005.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
+
+
+
+  </div>
+
+
+
+<script src="/note/js/book-post.js"></script>
+
+        </div>
+      </div>
+      <div class="column col-2 hide-lg">
+        <div class="book-post-info">
+  
+    <div class="book-post-meta">
+
+  <div class="author">
+
+    <!-- Author image -->
+    <div class="author-img">
+      
+        <figure class="avatar avatar-lg">
+          <img src="/note/andy.png" alt="...">
+        </figure>
+      
+    </div>
+
+    <!-- Author title -->
+    <div class="author-title">
+      <div>Andy Zheng</div>
+      <div>2020-04-03</div>
+    </div>
+  </div>
+
+  
+    <div class="divider"></div>
+
+    <div class="link">
+      
+
+      <a class="tag-link" href="/note/tags/OSDI/" rel="tag">#OSDI</a>
+    </div>
+    
+  
+
+  <div class="divider"></div>
+</div>
+  
+
+  <div class="book-tocbot">
+</div>
+<div class="book-tocbot-menu">
+  <a class="book-toc-expand" onclick="expand_toc()">Expand all</a>
+  <a onclick="go_top()">Back to top</a>
+  <a onclick="go_bottom()">Go to bottom</a>
+</div>
+
+
+<script src="/note/js/book-toc.js"></script>
+
+</div>
+      </div>
+    </div>
+  </div>
+  
+  <a class="off-canvas-overlay" onclick="hide_canvas()"></a>
+</div>
+
+</body>
+</html>
+
+
+<script src="/note/js/book.js"></script>

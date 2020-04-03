@@ -11,7 +11,7 @@
 
     <title>
         
-          Simple Shell - kaiiiz/note
+          Memory Map - kaiiiz/note
         
     </title>
 
@@ -76,11 +76,24 @@ document.addEventListener('DOMContentLoaded', function () {
 <h2 id="osdi">OSDI</h2>
 <ul>
 <li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/0-memory-map">Memory Map</a></li>
 <li><a href="/note/osdi/1-env">Environment</a></li>
+<li>Lab1
+<ul>
 <li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
 <li><a href="/note/osdi/3-uart">UART</a></li>
 <li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
-<li><a href="/note/osdi/5-shell">Shell</a></li>
+<li><a href="/note/osdi/5-simple-shell">Simple Shell</a></li>
+</ul>
+</li>
+<li>Lab2
+<ul>
+<li><a href="/note/osdi/6-mailbox">Mailbox</a></li>
+<li><a href="/note/osdi/7-pl011-uart">PL011 UART</a></li>
+<li><a href="/note/osdi/8-frame-buffer">Frame Buffer</a></li>
+<li><a href="/note/osdi/9-loadimg">3rd Bootloader</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="parallel-programming">Parallel Programming</h2>
 <ul>
@@ -169,6 +182,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
   </div>
 
+  <div class="sidebar-toggle" onclick="sidebar_toggle()" onmouseover="add_inner()" onmouseleave="remove_inner()">
+  <div class="sidebar-toggle-inner"></div>
+</div>
+
+<script>
+function add_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.add('show')  
+}
+
+function remove_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.remove('show')
+}
+
+function sidebar_toggle() {
+    let sidebar_toggle = document.querySelector('.sidebar-toggle')
+    let sidebar = document.querySelector('.book-sidebar')
+    let content = document.querySelector('.off-canvas-content')
+    if (sidebar_toggle.classList.contains('extend')) { // show
+        sidebar_toggle.classList.remove('extend')
+        sidebar.classList.remove('hide')
+        content.classList.remove('extend')
+    }
+    else { // hide
+        sidebar_toggle.classList.add('extend')
+        sidebar.classList.add('hide')
+        content.classList.add('extend')
+    }
+}
+</script>
+
   <div class="off-canvas-content">
     <div class="columns">
       <div class="column col-10 col-lg-12">
@@ -186,48 +231,57 @@ document.addEventListener('DOMContentLoaded', function () {
         </div>
         <div class="book-content">
           <div class="book-post">
-  <h1 id="simple-shell">Simple Shell</h1>
-<blockquote>
-<p><a href="https://github.com/kaiiiz/osdi2020/tree/cda1a48b90bda0ac98a9d5cd3a711ae94c14bd63" target="_blank" rel="noopener">https://github.com/kaiiiz/osdi2020/tree/cda1a48b90bda0ac98a9d5cd3a711ae94c14bd63</a></p>
-</blockquote>
-<p>After setting up UART, you should implement a simple shell to let rpi3 interact with the host computer. The shell should be able to execute the following commands.</p>
-<ul>
-<li>help</li>
-<li>hello</li>
-<li>timestamp</li>
-<li>reboot</li>
-</ul>
-<h2 id="main-c">main.c</h2>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"shell.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> CMD_LEN 128</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> shell_status &#123;</span><br><span class="line">    Read,</span><br><span class="line">    Parse</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    shell_init();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">enum</span> shell_status status = Read;</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">char</span> cmd[CMD_LEN];</span><br><span class="line">        <span class="keyword">switch</span> (status) &#123;</span><br><span class="line">            <span class="keyword">case</span> Read:</span><br><span class="line">                shell_input(cmd);</span><br><span class="line">                status = Parse;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">case</span> Parse:</span><br><span class="line">                shell_controller(cmd);</span><br><span class="line">                status = Read;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="some-notes">Some Notes</h2>
-<h3 id="cntfrq-el0">CNTFRQ_EL0</h3>
-<p>This register is provided so that software can discover the frequency of the system counter. It must be programmed with this value as part of system initialization. The value of the register is not interpreted by hardware.</p>
-<blockquote>
-<p><a href="https://developer.arm.com/docs/ddi0595/c/aarch64-system-registers/cntfrq_el0" target="_blank" rel="noopener">https://developer.arm.com/docs/ddi0595/c/aarch64-system-registers/cntfrq_el0</a></p>
-</blockquote>
-<h3 id="cntpct-el0">CNTPCT_EL0</h3>
-<p>Holds the 64-bit physical count value.</p>
-<blockquote>
-<p><a href="https://developer.arm.com/docs/ddi0595/b/aarch64-system-registers/cntpct_el0" target="_blank" rel="noopener">https://developer.arm.com/docs/ddi0595/b/aarch64-system-registers/cntpct_el0</a></p>
-</blockquote>
-<h3 id="gnu-inline-assembly">GNU Inline Assembly</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asm volatile (&quot;mrs %0, cntfrq_el0&quot; : &quot;&#x3D;r&quot;(f));</span><br></pre></td></tr></table></figure>
-<p><a href="http://wen00072.github.io/blog/2015/12/10/about-inline-asm/" target="_blank" rel="noopener">關於GNU Inline Assembly</a></p>
+  <h1 id="memory-map">Memory Map</h1>
+<p><img src="https://i.imgur.com/fpoZSln.png" alt=""></p>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Size</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x40000000</td>
+<td></td>
+<td>Top</td>
+</tr>
+<tr>
+<td>0x3F000000</td>
+<td>16MB</td>
+<td>MMIO Base</td>
+</tr>
+<tr>
+<td>0x3B400000</td>
+<td>60MB</td>
+<td>VC Core Base</td>
+</tr>
+<tr>
+<td>0x3B3FC000</td>
+<td>16KB</td>
+<td>3rd Bootloader</td>
+</tr>
+</tbody>
+</table>
 
 </div>
 
 
   <div class="book-comments">
     
-<script src="https://utteranc.es/client.js"
-        repo="kaiiiz/note"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script>
 
 
+    <div id="disqus_thread"></div>
+    <script>
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://at881005.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener">comments powered by Disqus.</a></noscript>
 
 
 
@@ -258,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <!-- Author title -->
     <div class="author-title">
       <div>Andy Zheng</div>
-      <div>2020-03-17</div>
+      <div>2020-04-03</div>
     </div>
   </div>
 

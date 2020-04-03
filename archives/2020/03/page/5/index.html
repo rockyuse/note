@@ -76,11 +76,24 @@ document.addEventListener('DOMContentLoaded', function () {
 <h2 id="osdi">OSDI</h2>
 <ul>
 <li><a href="/note/osdi/0-intro">Introduction</a></li>
+<li><a href="/note/osdi/0-memory-map">Memory Map</a></li>
 <li><a href="/note/osdi/1-env">Environment</a></li>
+<li>Lab1
+<ul>
 <li><a href="/note/osdi/2-basic-init">Basic Initialization</a></li>
 <li><a href="/note/osdi/3-uart">UART</a></li>
 <li><a href="/note/osdi/4-mini-uart">Mini UART</a></li>
-<li><a href="/note/osdi/5-shell">Shell</a></li>
+<li><a href="/note/osdi/5-simple-shell">Simple Shell</a></li>
+</ul>
+</li>
+<li>Lab2
+<ul>
+<li><a href="/note/osdi/6-mailbox">Mailbox</a></li>
+<li><a href="/note/osdi/7-pl011-uart">PL011 UART</a></li>
+<li><a href="/note/osdi/8-frame-buffer">Frame Buffer</a></li>
+<li><a href="/note/osdi/9-loadimg">3rd Bootloader</a></li>
+</ul>
+</li>
 </ul>
 <h2 id="parallel-programming">Parallel Programming</h2>
 <ul>
@@ -169,6 +182,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
   </div>
 
+  <div class="sidebar-toggle" onclick="sidebar_toggle()" onmouseover="add_inner()" onmouseleave="remove_inner()">
+  <div class="sidebar-toggle-inner"></div>
+</div>
+
+<script>
+function add_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.add('show')  
+}
+
+function remove_inner() {
+  let inner = document.querySelector('.sidebar-toggle-inner')
+  inner.classList.remove('show')
+}
+
+function sidebar_toggle() {
+    let sidebar_toggle = document.querySelector('.sidebar-toggle')
+    let sidebar = document.querySelector('.book-sidebar')
+    let content = document.querySelector('.off-canvas-content')
+    if (sidebar_toggle.classList.contains('extend')) { // show
+        sidebar_toggle.classList.remove('extend')
+        sidebar.classList.remove('hide')
+        content.classList.remove('extend')
+    }
+    else { // hide
+        sidebar_toggle.classList.add('extend')
+        sidebar.classList.add('hide')
+        content.classList.add('extend')
+    }
+}
+</script>
+
   <div class="off-canvas-content">
     <div class="columns">
       <div class="column col-10 col-lg-12">
@@ -202,6 +247,41 @@ document.addEventListener('DOMContentLoaded', function () {
           <ul class="archive-list-item">
           
               <li>
+                <span>2020-04-03</span>
+                <a href="/note/osdi/9-loadimg/">
+                  Load Image by UART
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-04-03</span>
+                <a href="/note/osdi/8-frame-buffer/">
+                  Frame Buffer
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-04-03</span>
+                <a href="/note/osdi/7-pl011-uart/">
+                  PL011 UART
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-04-03</span>
+                <a href="/note/osdi/6-mailbox/">
+                  Mailbox
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-04-03</span>
+                <a href="/note/osdi/0-memory-map/">
+                  Memory Map
+                </a>
+              </li>
+          
+              <li>
                 <span>2020-03-17</span>
                 <a href="/note/pp/shared-memory/">
                   Shared Memory
@@ -224,20 +304,6 @@ document.addEventListener('DOMContentLoaded', function () {
           
               <li>
                 <span>2020-03-17</span>
-                <a href="/note/pp/pthread/thread-pool/">
-                  Thread Pool - Pthread
-                </a>
-              </li>
-          
-              <li>
-                <span>2020-03-17</span>
-                <a href="/note/pp/pthread/sync/">
-                  Synchronization - Pthread
-                </a>
-              </li>
-          
-              <li>
-                <span>2020-03-17</span>
                 <a href="/note/pp/pthread/basic/">
                   Pthread
                 </a>
@@ -247,6 +313,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 <span>2020-03-17</span>
                 <a href="/note/pp/pthread/advanced/">
                   Advanced - Pthread
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-03-17</span>
+                <a href="/note/pp/pthread/thread-pool/">
+                  Thread Pool - Pthread
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-03-17</span>
+                <a href="/note/pp/pthread/sync/">
+                  Synchronization - Pthread
                 </a>
               </li>
           
@@ -322,13 +402,6 @@ document.addEventListener('DOMContentLoaded', function () {
           
               <li>
                 <span>2020-03-17</span>
-                <a href="/note/na/mail-server/webmail+alias/">
-                  Webmail、Alias
-                </a>
-              </li>
-          
-              <li>
-                <span>2020-03-17</span>
                 <a href="/note/na/mail-server/security/">
                   Security
                 </a>
@@ -336,15 +409,8 @@ document.addEventListener('DOMContentLoaded', function () {
           
               <li>
                 <span>2020-03-17</span>
-                <a href="/note/osdi/4-mini-uart/">
-                  Mini UART
-                </a>
-              </li>
-          
-              <li>
-                <span>2020-03-17</span>
-                <a href="/note/osdi/5-shell/">
-                  Simple Shell
+                <a href="/note/na/mail-server/webmail+alias/">
+                  Webmail、Alias
                 </a>
               </li>
           
@@ -352,6 +418,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 <span>2020-03-17</span>
                 <a href="/note/osdi/3-uart/">
                   UART
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-03-17</span>
+                <a href="/note/osdi/5-simple-shell/">
+                  Simple Shell
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-03-17</span>
+                <a href="/note/osdi/4-mini-uart/">
+                  Mini UART
                 </a>
               </li>
           
@@ -385,6 +465,13 @@ document.addEventListener('DOMContentLoaded', function () {
           
               <li>
                 <span>2020-03-17</span>
+                <a href="/note/na/mail-server/anti-scam/">
+                  反詐騙郵件
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-03-17</span>
                 <a href="/note/na/mail-server/mta+mra/">
                   MTA (postfix)、MRA (dovecot)
                 </a>
@@ -394,13 +481,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <span>2020-03-17</span>
                 <a href="/note/na/mail-server/anti-spam/">
                   反垃圾郵件
-                </a>
-              </li>
-          
-              <li>
-                <span>2020-03-17</span>
-                <a href="/note/na/mail-server/anti-scam/">
-                  反詐騙郵件
                 </a>
               </li>
           
@@ -462,13 +542,6 @@ document.addEventListener('DOMContentLoaded', function () {
           
               <li>
                 <span>2020-03-17</span>
-                <a href="/note/ml/supervised/random-forest/">
-                  Random Forest
-                </a>
-              </li>
-          
-              <li>
-                <span>2020-03-17</span>
                 <a href="/note/ml/supervised/naive-bayes/">
                   Naive Bayes
                 </a>
@@ -476,8 +549,15 @@ document.addEventListener('DOMContentLoaded', function () {
           
               <li>
                 <span>2020-03-17</span>
-                <a href="/note/ml/supervised/logistic-regression/">
-                  Logistic Regression
+                <a href="/note/ml/supervised/random-forest/">
+                  Random Forest
+                </a>
+              </li>
+          
+              <li>
+                <span>2020-03-17</span>
+                <a href="/note/ml/supervised/linear-regression/">
+                  Linear Regression
                 </a>
               </li>
           
@@ -490,8 +570,8 @@ document.addEventListener('DOMContentLoaded', function () {
           
               <li>
                 <span>2020-03-17</span>
-                <a href="/note/ml/supervised/linear-regression/">
-                  Linear Regression
+                <a href="/note/ml/supervised/logistic-regression/">
+                  Logistic Regression
                 </a>
               </li>
           

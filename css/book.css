@@ -21,7 +21,8 @@ a:hover {
   text-decoration: none; }
 
 img {
-  max-width: 100%; }
+  max-width: 100%;
+  max-height: 100%; }
 
 .right {
   text-align: right; }
@@ -46,11 +47,17 @@ img {
 
 .off-canvas-content {
   height: 100%;
-  font-family: sans-serif; }
+  font-family: sans-serif;
+  transition: margin 200ms; }
   .off-canvas-content .book-content {
-    padding: 0 0.75rem; }
+    padding: 0 4rem; }
+    @media all and (max-width: 1280px) {
+      .off-canvas-content .book-content {
+        padding: 0 1.25rem; } }
     .off-canvas-content .book-content .book-post a:hover {
       text-decoration: underline; }
+    .off-canvas-content .book-content .book-post > *:first-child {
+      margin-top: 0 !important; }
     .off-canvas-content .book-content .book-post h1,
     .off-canvas-content .book-content .book-post h2,
     .off-canvas-content .book-content .book-post h3,
@@ -58,48 +65,48 @@ img {
     .off-canvas-content .book-content .book-post h5,
     .off-canvas-content .book-content .book-post h6 {
       font-weight: bold;
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.8rem;
-      border-bottom: 1px solid #ddd; }
-    .off-canvas-content .book-content .book-post h2,
-    .off-canvas-content .book-content .book-post h3,
-    .off-canvas-content .book-content .book-post h4,
-    .off-canvas-content .book-content .book-post h5,
-    .off-canvas-content .book-content .book-post h6 {
-      margin-top: 1.6rem; }
-    .off-canvas-content .book-content .book-post h1 {
-      font-size: 1.6rem; }
+      margin-bottom: 1rem;
+      margin-top: 1.7rem; }
+    .off-canvas-content .book-content .book-post h1,
     .off-canvas-content .book-content .book-post h2 {
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid #e7e7e7; }
+    .off-canvas-content .book-content .book-post h1 {
       font-size: 1.4rem; }
+    .off-canvas-content .book-content .book-post h2 {
+      font-size: 1.125rem; }
     .off-canvas-content .book-content .book-post h3 {
-      font-size: 1.2rem; }
-    .off-canvas-content .book-content .book-post h4 {
       font-size: 1rem; }
-    .off-canvas-content .book-content .book-post h5 {
+    .off-canvas-content .book-content .book-post h4 {
       font-size: 0.8rem; }
-    .off-canvas-content .book-content .book-post h6 {
+    .off-canvas-content .book-content .book-post h5 {
       font-size: 0.7rem; }
+    .off-canvas-content .book-content .book-post h6 {
+      font-size: 0.6rem;
+      color: grey; }
     .off-canvas-content .book-content .book-post p {
-      margin-bottom: 0.8rem; }
+      margin-bottom: 1rem; }
     .off-canvas-content .book-content .book-post hr {
-      border: 0.5px solid #ddd;
-      background-color: #ddd;
-      margin: 0.8rem 0; }
+      border: 1px solid #e7e7e7;
+      background-color: #e7e7e7;
+      margin: 1rem 0; }
     .off-canvas-content .book-content .book-post .table-wrapper {
       max-width: 100%;
       margin: 1.25rem 0;
       overflow: auto; }
       .off-canvas-content .book-content .book-post .table-wrapper table {
-        width: 100%; }
+        width: 100%;
+        border-spacing: 0px;
+        border-collapse: collapse; }
         .off-canvas-content .book-content .book-post .table-wrapper table th,
         .off-canvas-content .book-content .book-post .table-wrapper table td {
-          padding: 0.75rem;
-          border-top: 1px solid #ddd;
+          padding: 0.7rem;
+          border: 1px solid #e7e7e7;
           text-align: left; }
     .off-canvas-content .book-content .book-post ul,
     .off-canvas-content .book-content .book-post ol {
       list-style-position: outside;
-      margin: 0.8rem 0 0.8rem 1.4rem; }
+      margin: 0 0 1rem 1.4rem; }
       .off-canvas-content .book-content .book-post ul ol,
       .off-canvas-content .book-content .book-post ol ol {
         margin-top: 0;
@@ -112,7 +119,7 @@ img {
       .off-canvas-content .book-content .book-post ol p {
         margin: 0; }
     .off-canvas-content .book-content .book-post blockquote {
-      margin: 1.125rem 1.125rem 1.125rem 0;
+      margin: 1.125rem 0 1.125rem 0;
       padding: 0.2rem 1rem; }
       .off-canvas-content .book-content .book-post blockquote p {
         margin-bottom: 0.5rem; }
@@ -120,6 +127,9 @@ img {
         margin-bottom: 0; }
       .off-canvas-content .book-content .book-post blockquote ul:last-child {
         margin-bottom: 0; }
+      .off-canvas-content .book-content .book-post blockquote.right {
+        border-left: none;
+        border-right: .1rem solid #dadee4; }
     .off-canvas-content .book-content .book-post .note {
       margin: 1.125rem 1.125rem 1.125rem 0;
       padding: 0.2rem 1rem;
@@ -167,7 +177,8 @@ img {
         left: 0; }
     .off-canvas-content .book-content .book-post figcaption {
       text-align: center;
-      font-size: 0.7rem; }
+      font-size: 0.7rem;
+      margin: 0.5rem 0; }
     .off-canvas-content .book-content .book-post img {
       display: block;
       margin-left: auto;
@@ -179,14 +190,14 @@ img {
     .off-canvas-content .book-content #disqus_thread {
       margin: 50px 0; }
     .off-canvas-content .book-content .utterances {
-      max-width: 95%;
+      max-width: 100%;
       margin: 0; }
     .off-canvas-content .book-content pre, .off-canvas-content .book-content .highlight {
       font-family: consolas, Menlo, monospace;
       background: #f7f7f7;
       color: #4d4d4c;
-      line-height: 1.14rem;
-      margin: 0.8rem auto 0.8rem; }
+      line-height: 1.2rem;
+      margin: 1rem auto 1rem; }
     .off-canvas-content .book-content .gutter {
       -moz-user-select: none;
       -ms-user-select: none;
@@ -214,7 +225,7 @@ img {
       .off-canvas-content .book-content .highlight pre {
         border: 0;
         margin: 0;
-        padding: 10px 0; }
+        padding: 6px 0; }
       .off-canvas-content .book-content .highlight table {
         border: 0;
         margin: 0;
@@ -377,22 +388,24 @@ img {
         cursor: pointer; }
       .off-canvas-content .book-post-info .book-tocbot-menu a:hover {
         color: gray; }
+  .off-canvas-content.extend {
+    margin-left: 0; }
   @media all and (min-width: 1280px) {
     .off-canvas-content {
       margin-left: 12rem;
-      padding: 1.8rem 1.8rem; } }
+      padding: 2.2rem 2.2rem; } }
   @media all and (min-width: 960px) and (max-width: 1279px) {
     .off-canvas-content {
-      padding: 1.8rem 1.5rem; } }
+      padding: 2.2rem 1.5rem; } }
   @media all and (max-width: 959px) {
     .off-canvas-content {
-      padding: 1.8rem 0.75rem; } }
+      padding: 2.2rem 0.75rem; } }
 
 .book-navbar {
   padding-top: 0;
-  padding-right: 0.75rem;
+  padding-right: 4rem;
   padding-bottom: 1.5rem;
-  padding-left: 0.75rem; }
+  padding-left: 4rem; }
   .book-navbar i {
     color: #2f2f2f; }
   @media all and (min-width: 1280px) {
@@ -401,6 +414,10 @@ img {
   @media all and (max-width: 1279px) {
     .book-navbar {
       display: block; } }
+  @media all and (max-width: 1280px) {
+    .book-navbar {
+      padding-right: 1.25rem;
+      padding-left: 1.25rem; } }
 
 .book-sidebar {
   position: fixed;
@@ -411,9 +428,11 @@ img {
   transition: transform 0.2s; }
   .book-sidebar.show {
     transform: translateX(0); }
+  .book-sidebar.hide {
+    transform: translateX(-100%); }
   @media all and (min-width: 1280px) {
     .book-sidebar {
-      transform: translateX(0) !important; } }
+      transform: translateX(0); } }
   @media all and (max-width: 1279px) {
     .book-sidebar {
       transform: translateX(-100%); } }
@@ -496,6 +515,32 @@ img {
       color: #004ed0;
       font-weight: 600; }
 
+.sidebar-toggle {
+  position: fixed;
+  bottom: 0.6rem;
+  left: 12.7rem;
+  transition: left 200ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #686868;
+  border-radius: 50%;
+  width: 9px;
+  height: 9px; }
+  .sidebar-toggle.extend {
+    left: 0.7rem; }
+  @media all and (max-width: 1280px) {
+    .sidebar-toggle {
+      display: none; } }
+  .sidebar-toggle > .sidebar-toggle-inner {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: #686868;
+    display: none; }
+    .sidebar-toggle > .sidebar-toggle-inner.show {
+      display: block; }
+
 .book-archive h1,
 .book-archive h2 {
   margin: 0; }
@@ -510,7 +555,7 @@ img {
   font-size: 1rem;
   padding-bottom: 0.75rem;
   margin-bottom: 0.75rem;
-  border-bottom: 1px solid #ddd; }
+  border-bottom: 1px solid #e7e7e7; }
 
 .book-archive .years {
   padding-bottom: 1.25rem; }
